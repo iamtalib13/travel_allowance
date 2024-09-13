@@ -1,0 +1,271 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-03-19 13:45:13.487588",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "employee_details_tab",
+  "employee_details_section",
+  "employee_id",
+  "division",
+  "branch",
+  "column_break_b3vkr",
+  "first_name",
+  "last__name",
+  "phone",
+  "column_break_v7t1p",
+  "designation",
+  "department",
+  "ta_category",
+  "section_break_oykvz",
+  "onward_journey_section",
+  "onward_from",
+  "date_and_time_from",
+  "mode_of_transport",
+  "travel_km",
+  "ticket",
+  "fare_amount",
+  "column_break_atrzr",
+  "onward_to",
+  "other",
+  "date_and_time_to",
+  "purpose",
+  "add_btn",
+  "section_break_ywsrr",
+  "total_visit_time",
+  "da_claim",
+  "halting",
+  "lodging",
+  "total_amount",
+  "ta_tab"
+ ],
+ "fields": [
+  {
+   "fieldname": "date_and_time_from",
+   "fieldtype": "Datetime",
+   "label": "Date And Time (From)"
+  },
+  {
+   "fieldname": "date_and_time_to",
+   "fieldtype": "Datetime",
+   "label": "Date And Time (To)"
+  },
+  {
+   "fieldname": "mode_of_transport",
+   "fieldtype": "Select",
+   "label": "Mode of transport",
+   "options": "\nBike\nCar\nBus\nTrain"
+  },
+  {
+   "depends_on": "eval:doc.mode_of_transport===\"Bus\" || doc.mode_of_transport===\"Train\"",
+   "fieldname": "ticket",
+   "fieldtype": "Data",
+   "label": "Ticket Amount"
+  },
+  {
+   "fieldname": "fare_amount",
+   "fieldtype": "Data",
+   "label": "Fare Amount"
+  },
+  {
+   "fieldname": "column_break_atrzr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_oykvz",
+   "fieldtype": "Tab Break",
+   "label": "Travel Form"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_ywsrr",
+   "fieldtype": "Section Break",
+   "label": "Allowances"
+  },
+  {
+   "depends_on": "eval:doc.mode_of_transport===\"Bike\" || doc.mode_of_transport===\"Car\"",
+   "fieldname": "travel_km",
+   "fieldtype": "Data",
+   "label": "Travel KM"
+  },
+  {
+   "fieldname": "employee_details_section",
+   "fieldtype": "Section Break",
+   "label": "Employee Details"
+  },
+  {
+   "fieldname": "employee_id",
+   "fieldtype": "Link",
+   "label": "Employee ID",
+   "options": "Employee"
+  },
+  {
+   "fetch_from": "employee_id.first_name",
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "label": "First Name"
+  },
+  {
+   "fetch_from": "employee_id.last_name",
+   "fieldname": "last__name",
+   "fieldtype": "Data",
+   "label": "Last  Name"
+  },
+  {
+   "fetch_from": "employee_id.designation",
+   "fieldname": "designation",
+   "fieldtype": "Data",
+   "label": "Designation"
+  },
+  {
+   "fetch_from": "employee_id.department",
+   "fieldname": "department",
+   "fieldtype": "Data",
+   "label": "Department"
+  },
+  {
+   "fieldname": "column_break_b3vkr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "employee_details_tab",
+   "fieldtype": "Tab Break",
+   "label": "Employee Details"
+  },
+  {
+   "fieldname": "column_break_v7t1p",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "employee_id.division",
+   "fieldname": "division",
+   "fieldtype": "Data",
+   "label": "Division"
+  },
+  {
+   "fetch_from": "employee_id.branch",
+   "fieldname": "branch",
+   "fieldtype": "Data",
+   "label": "Branch"
+  },
+  {
+   "fetch_from": "employee_id.cell_number",
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "Phone"
+  },
+  {
+   "fieldname": "ta_category",
+   "fieldtype": "Data",
+   "label": "TA Category"
+  },
+  {
+   "fieldname": "purpose",
+   "fieldtype": "Small Text",
+   "label": "Purpose"
+  },
+  {
+   "depends_on": "eval:doc.designation != 'Block Development Officer' && doc.designation !='Business Development Executive'",
+   "fieldname": "da_claim",
+   "fieldtype": "Data",
+   "label": "DA Claim"
+  },
+  {
+   "depends_on": "eval:frappe.user.has_role('System Manager')",
+   "fieldname": "total_visit_time",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Total Visit Time"
+  },
+  {
+   "depends_on": "eval:doc.designation != 'Block Development Officer' && doc.designation !='Business Development Executive'",
+   "fieldname": "halting",
+   "fieldtype": "Data",
+   "label": "Halting"
+  },
+  {
+   "depends_on": "eval:doc.designation != 'Block Development Officer' && doc.designation !='Business Development Executive'",
+   "fieldname": "lodging",
+   "fieldtype": "Data",
+   "label": "Lodging"
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Data",
+   "label": "Total Amount"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "onward_journey_section",
+   "fieldtype": "Section Break",
+   "label": "Onward Journey"
+  },
+  {
+   "fieldname": "add_btn",
+   "fieldtype": "Button",
+   "label": "Add"
+  },
+  {
+   "fieldname": "onward_from",
+   "fieldtype": "Data",
+   "label": "From "
+  },
+  {
+   "fieldname": "onward_to",
+   "fieldtype": "Link",
+   "label": "To",
+   "options": "City Category"
+  },
+  {
+   "depends_on": "eval:doc.onward_to===\"Other\"",
+   "fieldname": "other",
+   "fieldtype": "Data",
+   "label": "Other",
+   "mandatory_depends_on": "eval:doc.onward_to===\"Other\""
+  },
+  {
+   "fieldname": "ta_tab",
+   "fieldtype": "Tab Break",
+   "label": "TA"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-03-21 17:46:57.946429",
+ "modified_by": "Administrator",
+ "module": "Travel Allowance",
+ "name": "Sahayog Travel Allowance",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Employee",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

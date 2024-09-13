@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ToDo List</title>
+    <script
+      src="https://unpkg.com/htmx.org@1.9.12"
+      integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="{{ bootstrap_include }}" />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h2>ToDo List</h2>
+      <form
+        id="todo-form"
+        hx-post="/api/method/To-Do"
+        hx-target="#todo-list"
+        hx-swap="beforeend"
+      >
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            name="title"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea
+            class="form-control"
+            id="description"
+            name="description"
+            rows="3"
+            required
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add ToDo</button>
+      </form>
+
+      <h3 class="mt-4">Current ToDo Items</h3>
+      <ul id="todo-list">
+        {% for todo in todos %}
+        <li>{{ todo.title }}: {{ todo.description }} - {{ todo.status }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </body>
+</html>

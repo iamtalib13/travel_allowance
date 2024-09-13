@@ -1,0 +1,241 @@
+<style>
+  /* home page CSS */
+  .logo {
+    width: 90px;
+  }
+
+  .ta-Container {
+    padding: 20px 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .intro {
+    margin-left: 15px;
+  }
+
+  .emp-name {
+    margin-top: 18px;
+    font-size: large;
+  }
+
+  .welcome-text {
+    font-weight: bold;
+    font-size: xx-large;
+  }
+
+  .ta-request-container {
+    display: flex;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+  }
+
+  a.ta-Details {
+    text-decoration: none;
+  }
+
+  .ta-Details {
+    padding: 20px 40px;
+    background-color: white;
+    border-radius: 5px;
+  }
+
+  #pending {
+    margin-right: 10px;
+  }
+
+  .NewRequest {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    margin: 10px 0px;
+    transition: transform 0.3s ease, cursor 0.3s ease, text-decoration 0.3s ease;
+  }
+
+  .ListRecords {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 0 60px;
+    transition: transform 0.3s ease, cursor 0.3s ease, text-decoration 0.3s ease;
+  }
+
+  .ListRecords:hover {
+    transform: translateY(-2px);
+    cursor: pointer;
+    text-decoration: none;
+    color: #468cbf;
+  }
+
+  .NewRequest:hover {
+    transform: translateY(-2px);
+    cursor: pointer;
+    text-decoration: none;
+    color: #468cbf;
+  }
+  .NewRequest,
+  .ListRecords {
+    color: #468cbf;
+    text-decoration: none;
+  }
+
+  .create-icon {
+    width: 60px;
+    height: 60px;
+    margin-right: 8px;
+  }
+
+  .label {
+    font-weight: 700;
+    margin-right: 8px;
+    font-size: x-large;
+  }
+
+  .ta-Approval-Container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 15px 0px;
+  }
+
+  .count {
+    margin-right: 5px;
+  }
+
+  /* Responsive CSS */
+  @media (max-width: 768px) {
+    /* Adjust container direction and padding */
+    .ta-Container {
+      padding: 10px;
+    }
+
+    /* Adjust intro text */
+    .intro {
+      margin-left: 5px;
+      width: 100%;
+    }
+
+    .emp-name {
+      font-size: medium;
+      margin-top: 10px;
+    }
+
+    .welcome-text {
+      font-size: large;
+    }
+
+    /* Request container adjustments */
+    .ta-request-container {
+      display: flex;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+
+    /* Adjust the TA details links */
+    .ta-Details {
+      padding: 0px 0px;
+      width: 100%;
+      margin-left: 15px;
+    }
+    .ta-Details a {
+      display: flex;
+    }
+
+    .NewRequest,
+    .ListRecords {
+      align-items: center;
+      padding: 5px 0px;
+    }
+
+    .create-icon {
+      width: 50px; /* Reduced icon size */
+      height: 50px; /* Reduced icon size */
+      margin-bottom: 8px;
+    }
+
+    .label {
+      font-size: large;
+    }
+
+    /* Approval container adjustments */
+    .ta-Approval-Container {
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .ta-Approval-Container a.ta-Details {
+      margin-right: 0;
+      width: 100%;
+    }
+
+    /* Adjustments for smaller screen font sizes */
+    .emp-name {
+      font-size: 16px;
+    }
+
+    .welcome-text {
+      font-size: 16px;
+    }
+
+    .label {
+      font-size: 18px;
+    }
+
+    .ta-pending {
+      font-size: 14px;
+    }
+
+    .count {
+      font-size: 14px;
+    }
+  }
+
+  /* Maintain hover effect on mobile devices */
+  @media (hover: hover) {
+    .ListRecords:hover,
+    .NewRequest:hover {
+      transform: translateY(-6px);
+      cursor: pointer;
+      text-decoration: none;
+    }
+  }
+</style>
+
+<div class="ta-Container">
+  <div class="logo-img">
+    <img src="/files/budget.png" alt="Icon" class="logo" />
+  </div>
+
+  <div class="intro">
+    <div class="emp-name" id="emp-name"></div>
+    <h4 class="welcome-text">Welcome to Travel Allowance Management</h4>
+  </div>
+</div>
+
+<div class="ta-request-container">
+  <a class="NewRequest" href="#">
+    <img src="/files/transport (2).png" alt="Icon" class="create-icon" />
+    <span class="title">
+      <span class="label"> TA Claim</span>
+      <div class="sublabel">Go to Travel Claim</div>
+    </span>
+  </a>
+
+  <a class="ListRecords" href="#">
+    <img src="/files/travel (4).png" alt="Icon" class="create-icon" />
+    <span class="title">
+      <span class="label">My Travel</span>
+      <div class="sublabel">Travel Claim Records</div>
+    </span>
+  </a>
+
+  <a id="pending" href="/app/ta-approval">
+    <h3 class="title">TA Request</h3>
+    <p class="ta-pending"><span class="count"></span>Pending</p>
+  </a>
+</div>
+<script></script>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Handsontable with Full Functionality</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/handsontable@10.0.0/dist/handsontable.full.min.css"
+    />
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+      }
+
+      .header,
+      .footer {
+        background-color: #f8f9fa;
+        padding: 1rem;
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+      }
+
+      .header {
+        top: 0;
+      }
+
+      .footer {
+        bottom: 0;
+      }
+
+      .content {
+        margin-left: 0;
+        padding: 2rem;
+        padding-top: 5rem;
+        padding-bottom: 4rem;
+        overflow: auto;
+      }
+
+      #example {
+        width: 100%;
+        height: calc(100vh - 9rem);
+      }
+      #excel-canvas {
+        margin-top: 25px;
+      }
+
+      .highlight {
+        animation: highlight 2s ease-in-out;
+      }
+
+      @keyframes highlight {
+        0% {
+          background-color: #ffff99;
+        }
+        100% {
+          background-color: transparent;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="header">
+      <h1 class="text-center">Travel Allowance</h1>
+    </header>
+
+    <main class="content">
+      <!-- Handsontable container -->
+      <div id="excel-canvas"></div>
+
+      <!-- Buttons for Handsontable actions -->
+      <div id="buttons-container">
+        <button id="add-row-btn" class="btn btn-primary">Add Row</button>
+        <button id="delete-row-btn" class="btn btn-danger">
+          Delete Selected Rows
+        </button>
+      </div>
+
+      <!-- Messages for Requests and Report sections -->
+      <div id="no-requests" style="display: none">
+        <h2>You don't have any pending requests.</h2>
+      </div>
+      <div id="no-reports" style="display: none">
+        <h2>You don't have any reports.</h2>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <nav class="nav justify-content-center">
+        <a class="nav-link active" href="#" id="my-travel">My Travel</a>
+        <a class="nav-link" href="#" id="requests">Requests</a>
+        <a class="nav-link" href="#" id="report">Report</a>
+      </nav>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handsontable@10.0.0/dist/handsontable.full.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const container = document.getElementById("excel-canvas");
+
+        // Initialize Handsontable
+        const hot = new Handsontable(container, {
+          data: [],
+          colHeaders: [
+            "Action",
+            "From",
+            "Date From",
+            "Time From",
+            "To",
+            "Date To",
+            "Time To",
+            "Total Time",
+            "Purpose",
+            "Travel Mode",
+            "Total km",
+            "Ticket Amt",
+            "Fare Amount",
+            "Allowance Type",
+            "DA",
+            "Halting",
+            "Lodging",
+            "Total",
+          ],
+          columns: [
+            { data: "selected", type: "checkbox", className: "htCenter" },
+            { data: "from_location", type: "text" },
+            { data: "from_date", type: "date", dateFormat: "DD-MM-YYYY" },
+            { data: "from_time", type: "time", timeFormat: "HH:mm" },
+            { data: "to_location", type: "text" },
+            { data: "to_date", type: "date", dateFormat: "DD-MM-YYYY" },
+            { data: "to_time", type: "time", timeFormat: "HH:mm" },
+            { data: "total_time", type: "text" },
+            { data: "purpose", type: "text" },
+            { data: "travel_mode", type: "text" },
+            { data: "total_km", type: "numeric" },
+            { data: "ticket_amount", type: "numeric", format: "0,0.00" },
+            { data: "fare_amount", type: "numeric", format: "0,0.00" },
+            { data: "allowance_type", type: "text" },
+            { data: "final_da_amount", type: "numeric", format: "0,0.00" },
+            { data: "final_halt_amount", type: "numeric", format: "0,0.00" },
+            { data: "final_lodge_amount", type: "numeric", format: "0,0.00" },
+            { data: "total_amount", type: "numeric", format: "0,0.00" },
+          ],
+          rowHeaders: true,
+          stretchH: "all",
+          autoColumnSize: false,
+          manualColumnResize: true,
+          manualRowResize: true,
+          filters: false,
+          dropdownMenu: false,
+          contextMenu: true,
+          sortIndicator: true,
+          columnHeaderHeight: 40,
+          height: 400,
+          licenseKey: "non-commercial-and-evaluation",
+        });
+
+        // Add Row button event
+        document
+          .getElementById("add-row-btn")
+          .addEventListener("click", function () {
+            const newRow = {
+              from_location: "",
+              from_date: "",
+              from_time: "",
+              to_location: "",
+              to_date: "",
+              to_time: "",
+              total_time: "",
+              purpose: "",
+              travel_mode: "",
+              total_km: "",
+              ticket_amount: "",
+              fare_amount: "",
+              allowance_type: "",
+              final_da_amount: "",
+              final_halt_amount: "",
+              final_lodge_amount: "",
+              total_amount: "",
+            };
+            const newRowIndex = hot.countRows();
+            hot.alter("insert_row", newRowIndex);
+            hot.setDataAtRowProp(newRowIndex, newRow);
+
+            // Scroll to the newly added row
+            scrollToNewRow(newRowIndex);
+          });
+
+        function scrollToNewRow(newRowIndex) {
+          // First, try to scroll to the new row
+          hot.scrollViewportTo(newRowIndex);
+
+          // Then, select the first cell of the new row
+          hot.selectCell(newRowIndex, 0);
+
+          // Use setTimeout to ensure the DOM has updated
+          setTimeout(() => {
+            // Get the table viewport element
+            const tableViewport = hot.view.wt.wtTable.holder;
+
+            // Get the new row element
+            const newRowElement = hot.getCell(newRowIndex, 0).parentNode;
+
+            // Calculate the scroll position to center the new row
+            const scrollPosition =
+              newRowElement.offsetTop -
+              tableViewport.clientHeight / 2 +
+              newRowElement.offsetHeight / 2;
+
+            // Smoothly scroll to the calculated position
+            tableViewport.scrollTo({
+              top: scrollPosition,
+              behavior: "smooth",
+            });
+
+            // Add highlight class to the new row
+            newRowElement.classList.add("highlight");
+
+            // Remove the highlight class after animation
+            setTimeout(() => {
+              newRowElement.classList.remove("highlight");
+            }, 2000);
+          }, 100);
+        }
+
+        // Delete Selected Rows button event
+        document
+          .getElementById("delete-row-btn")
+          .addEventListener("click", function () {
+            const selectedRows = [];
+            hot.getData().forEach((row, index) => {
+              if (row.selected) {
+                selectedRows.push(index);
+              }
+            });
+            selectedRows.sort((a, b) => b - a); // Sort in reverse order to avoid shifting issues
+            selectedRows.forEach((rowIndex) => {
+              hot.alter("remove_row", rowIndex);
+            });
+          });
+
+        // Fetch data from server
+        async function fetchData() {
+          try {
+            const response = await fetch(
+              "/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_list"
+            );
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            hot.loadData(data.message);
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          }
+        }
+
+        fetchData(); // Initial data fetch
+
+        // Handle form submission and update table
+        document.addEventListener("htmx:afterRequest", function (event) {
+          if (event.detail.xhr.response) {
+            fetchData(); // Refresh data on form submission
+          }
+        });
+
+        // Tab navigation
+        document
+          .getElementById("requests")
+          .addEventListener("click", function () {
+            document.getElementById("excel-canvas").style.display = "none";
+            document.getElementById("buttons-container").style.display = "none";
+            document.getElementById("no-requests").style.display = "block";
+            document.getElementById("no-reports").style.display = "none";
+          });
+
+        document
+          .getElementById("report")
+          .addEventListener("click", function () {
+            document.getElementById("excel-canvas").style.display = "none";
+            document.getElementById("buttons-container").style.display = "none";
+            document.getElementById("no-requests").style.display = "none";
+            document.getElementById("no-reports").style.display = "block";
+          });
+
+        document
+          .getElementById("my-travel")
+          .addEventListener("click", function () {
+            document.getElementById("excel-canvas").style.display = "block";
+            document.getElementById("buttons-container").style.display =
+              "block";
+            document.getElementById("no-requests").style.display = "none";
+            document.getElementById("no-reports").style.display = "none";
+          });
+      });
+    </script>
+  </body>
+</html>

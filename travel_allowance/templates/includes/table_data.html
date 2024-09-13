@@ -1,0 +1,33 @@
+{% set records = frappe.db.get_all('Travel Allowances', fields=["*"]) %}
+<tbody>
+  {% for record in records %}
+  <tr>
+    <td>{{ loop.index }}</td>
+    <td class="d-none">{{ record.name }}</td>
+    <td>{{ record.first_name }} {{ record.last_name }}</td>
+    <td>{{ record.status }}</td>
+    <td>{{ record.from_location }}</td>
+    <td>{{ record.from_date }}</td>
+    <td>{{ record.from_time }}</td>
+    <td>{{ record.to_location }}</td>
+    <td>{{ record.to_date }}</td>
+    <td>{{ record.to_time }}</td>
+    <td>{{ record.total_time }}</td>
+    <td>{{ record.purpose }}</td>
+    <td>{{ record.travel_mode }}</td>
+    <td>{{ record.total_km }}</td>
+    <td>{{ record.ticket_amount }}</td>
+    <td><img src="{{ record.upload_ticket }}" alt="Ticket" width="50" /></td>
+    <td>{{ record.fare_amount }}</td>
+    <td>{{ record.allowance_type }}</td>
+    <td>{{ record.final_da_amount }}</td>
+    <td>{{ record.final_halt_amount }}</td>
+    <td>{{ record.final_lodge_amount }}</td>
+    <td>
+      <img src="{{ record.upload_lodging }}" alt="Lodging Bill" width="50" />
+    </td>
+    <td>{{ record.final_local_amount }}</td>
+    <td>{{ record.total_amount }}</td>
+  </tr>
+  {% endfor %}
+</tbody>

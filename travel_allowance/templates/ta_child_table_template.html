@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0;
+        border-radius: 1px;
+        color: black;
+        table-layout: fixed; /* Ensure table can overflow */
+      }
+
+      thead {
+        border: 2px solid #ccc;
+      }
+
+      th,
+      td {
+        border: none;
+        padding: 15px 10px;
+        text-align: center;
+        font-size: 14px; /* Standard font size */
+
+        width: 110px; /* Equal width for all columns */
+      }
+      .column_heading th {
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      .row_custom_border {
+        border: 2px solid #ccc; /* Adjust color and thickness as needed */
+        border-radius: 10px; /* Adjust the border-radius value as needed */
+        cursor: pointer;
+      }
+
+      .total-amt {
+        color: #3e9c35;
+        font-weight: bold;
+      }
+
+      .heading span {
+        color: #746d6d;
+        font-size: 11px;
+      }
+
+      .table-title {
+        display: flex;
+        align-items: center;
+        margin-top: 18px;
+        gap: 10px;
+      }
+
+      .tb-title h3 {
+        display: inline-block;
+        margin: 0;
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+      }
+      #hide_name {
+        display: none;
+      }
+
+      .arrow {
+        border: solid black;
+        border-width: 0 3px 3px 0;
+        display: inline-block;
+        padding: 3px;
+      }
+
+      .right {
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+      }
+
+      span.hidden-arrow {
+        visibility: hidden;
+        background-color: #f2f2f2;
+      }
+
+      #load-more-btn {
+        background-color: rgb(11 104 106);
+        color: #f2f2f2;
+        border: none;
+        padding: 8px 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        float: inline-end;
+        font-size: 14px;
+      }
+
+      button#load-more-btn:focus {
+        outline: none;
+      }
+
+      #show-less-btn {
+        background-color: rgb(11 104 106);
+        color: #f2f2f2;
+        border: none;
+        padding: 8px 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+
+      button#show-less-btn:focus {
+        outline: none;
+      }
+
+      .delete-icon {
+        cursor: pointer;
+        width: 28px;
+        height: 28px;
+      }
+
+      .delete-icon:hover {
+        cursor: pointer;
+      }
+
+      .editBtn {
+        width: 35px;
+        height: 35px;
+        border: none;
+      }
+
+      input#select_all {
+        border: 2px solid;
+      }
+
+      input.row_checkbox {
+        border: 2px solid;
+      }
+      .btn-submit {
+        background-color: #248b28; /* Green */
+        border: none;
+        color: white;
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+
+        cursor: pointer;
+        border-radius: 8px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      .btn-submit:focus {
+        outline: none;
+      }
+
+      .btn-submit:active {
+        background-color: #3e8e41;
+        transform: scale(0.95);
+        outline: none;
+      }
+
+      #deleteBtn {
+        background-color: rgb(203 80 97);
+        color: white;
+        border: none;
+        padding: 2px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .delete_btn {
+        background-color: #db3636;
+        color: #fff;
+        padding: 4px 10px;
+        border-radius: 4px;
+        /* cursor: pointer; */
+        font-size: 16px;
+        box-shadow: none;
+        border: none;
+      }
+
+      .delete_btn:focus {
+        outline: none;
+      }
+      .submit_btn {
+        background-color: #248b28;
+        color: #fff;
+        padding: 4px 10px;
+        border-radius: 4px;
+        /* cursor: pointer; */
+        font-size: 16px;
+        box-shadow: none;
+        border: none;
+        margin-right: 10px;
+      }
+      .submit_btn:focus {
+        outline: none;
+      }
+
+      .showLessMoreBtn {
+        margin: 10px 0;
+      }
+
+      /* CSS for the modal popup */
+      .dialog {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+      }
+
+      .dialog-content {
+        background-color: #fefefe;
+        margin: 10% auto; /* Centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 60%; /* Width of modal */
+        border-radius: 5px; /* Rounded corners */
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Add shadow */
+      }
+
+      span.close_icon {
+        text-align: end;
+        float: right;
+      }
+
+      .close_icon img {
+        width: 45px;
+        height: 45px;
+      }
+      .close_icon:hover,
+      .close_icon:focus {
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      /* Add some spacing between label and input */
+      .dialog-content label {
+        margin-bottom: 8px;
+        display: block;
+        font-weight: bold;
+        font-size: medium;
+      }
+
+      .dialog-content input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      .dialog_header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 20px;
+      }
+
+      /* Grid layout for the form */
+      #rowDetailsForm {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Two columns of equal width */
+        gap: 20px; /* Space between columns */
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Add responsive styles */
+      @media only screen and (max-width: 600px) {
+        .dialog-content {
+          width: 90%;
+        }
+
+        #rowDetailsForm {
+          grid-template-columns: 1fr; /* One column on smaller screens */
+        }
+      }
+
+      /* Add responsive styles */
+      @media only screen and (max-width: 600px) {
+        .tb-title h3 {
+          font-size: 14px;
+        }
+
+        td {
+          font-weight: 600;
+          font-size: 8px;
+        }
+
+        .heading span {
+          font-size: 6px;
+        }
+
+        .arrow {
+          border-width: 0 1px 1px 0;
+          padding: 2px;
+        }
+      }
+
+      .table-container {
+        overflow-x: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="table-title">
+      <div class="tb-title">
+        <h3>Travel History</h3>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr class="column_heading">
+            <!-- Header checkbox for selecting all -->
+            <th>
+              <input
+                type="checkbox"
+                id="select_all"
+                onchange="toggleSelectAll(this)"
+              />
+            </th>
+            <th>Action</th>
+
+            <th id="hide_name">Name</th>
+            <th>Sr. No.</th>
+            <th>Is Local Conveyance</th>
+            <th>From Location</th>
+            <th>Date and Time Start</th>
+            <th>To Location</th>
+            <th>Date and Time End</th>
+            <th>Purpose</th>
+            <th>Mode of Transport</th>
+            <th>Travel KM</th>
+            <th>Fare Amt</th>
+            <th>DA</th>
+            <th>Halting Amt</th>
+            <th>Lodging Amt</th>
+            <th>Local Expense Amt</th>
+            <th>Total</th>
+            <th>Total Visit Hour</th>
+            <th>City Class</th>
+            <th>Allowance Type</th>
+            <th>Uploaded Ticket Image</th>
+            <th>Uploaded Lodging Bill Image</th>
+            <th>No. of Day Stay Lodge</th>
+          </tr>
+        </thead>
+        <tbody id="ta_chart_table_body">
+          {% for index, row in enumerate(data) %}
+          <tr
+            class="row_custom_border {{ 'hidden' if index >= 5 else '' }}"
+            onclick="showRowDetails({{ index }})"
+          >
+            <!-- Checkbox for each row -->
+            <td>
+              <input
+                type="checkbox"
+                class="row_checkbox"
+                onchange="toggleDeleteButton()"
+              />
+            </td>
+            <td>
+              <!-- Conditional rendering based on the status field -->
+              {% if row.status == "Not Set" %}
+              <button
+                class="btn-submit"
+                onclick="handleSubmitClick({{ index }}, '{{ row.name }}', this)"
+              >
+                Submit
+              </button>
+              {% elif row.status == "Pending" %}
+              <span>Submitted</span>
+              {% elif row.status == "Approved" %}
+              <span>Approved</span>
+              {% elif row.status == "Rejected" %}
+              <span>Rejected</span>
+              {% endif %}
+            </td>
+
+            <!--<td>
+              <button
+                class="editBtn"
+                onclick="editRow({{ index }})"
+                title="Edit"
+              > 
+                <img src="/files/pen (1).png" alt="Edit" />
+              </button>
+            </td>-->
+
+            <td id="hide_name">{{ row.name }}</td>
+
+            <td>{{ index + 1 }}</td>
+            <td>{{ row.local_conveyance }}</td>
+            <td>{{ row.from_location }}</td>
+            <td>{{ row.date_and_time_start }}</td>
+            <td>{{ row.to_location }}</td>
+            <td>{{ row.date_and_time_end }}</td>
+            <td>{{ row.purpose }}</td>
+            <td>{{ row.mode_of_transport }}</td>
+            <td>{{ row.kilometer_of_travelling }}</td>
+            <td>₹{{ row.fare_amount }}</td>
+            <td>₹{{ row.daily_allowance }}</td>
+            <td>₹{{ row.halting_amount }}</td>
+            <td>₹{{ row.lodging_amount }}</td>
+            <td>₹{{ row.local_conveyance_other_expenses_amount }}</td>
+            <td class="total-amt">₹{{ row.total }}</td>
+            <td>{{ row.total_visit_hour }}</td>
+            <td>{{ row.city_class }}</td>
+            <td>{{ row.allowance_type }}</td>
+
+            <td>
+              {% if row.uploaded_ticket_image and row.uploaded_ticket_image !=
+              '-' %}
+              <a
+                href="#"
+                onclick="openImage('{{ row.uploaded_ticket_image }}', 'Ticket Image')"
+                >View Ticket Image</a
+              >
+              {% else %} - {% endif %}
+            </td>
+
+            <td>
+              {% if row.uploaded_lodging_bill_image and
+              row.uploaded_lodging_bill_image != '-' %}
+              <a
+                href="#"
+                onclick="openImage('{{ row.uploaded_lodging_bill_image }}', 'Lodging Bill Image')"
+                >View Lodging Bill Image</a
+              >
+              {% else %} - {% endif %}
+            </td>
+
+            <td>{{ row.day_stay_lodge }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <!-- Div to display delete button -->
+    <!-- Div to display action buttons -->
+    <div id="actionButtonContainer">
+      <button
+        class="submit_btn"
+        style="display: none"
+        onclick="submitSelectedRows()"
+      >
+        Submit Selected Rows
+      </button>
+      <button
+        class="delete_btn"
+        style="display: none"
+        onclick="deleteSelectedRows()"
+      >
+        Delete Selected Rows
+      </button>
+    </div>
+
+    <div class="showLessMoreBtn">
+      <button id="load-more-btn" onclick="loadMore()">Show More</button>
+      <button id="show-less-btn" style="display: none" onclick="showLess()">
+        Show Less
+      </button>
+    </div>
+    <!-- Modal Popup Dialog Box -->
+    <!-- <div id="rowDetailsDialog" class="dialog">
+      <div class="dialog-content">
+        <span class="close_icon" onclick="closeRowDetails()" title="Close">
+          <img src="/files/close.png" alt="Close" />
+        </span>
+        <div class="dialog_header">
+          <h3 id="modalTitle">Row Details</h3>
+          <div style="text-align: right; margin-top: 20px">
+            <button id="editBtn" type="button" onclick="editRow()">Edit</button>
+           <button id="deleteBtn" type="button" onclick="deleteRow()">
+              Delete
+            </button>
+          </div>
+        </div>
+        <form id="rowDetailsForm">
+         // Form fields will be added here dynamically 
+        </form>
+      </div>
+    </div>-->
+
+    <script>
+
+                    /*function toggleSelectAll(selectAllCheckbox) {
+                      const checkboxes = document.querySelectorAll('.row_checkbox');
+                      checkboxes.forEach(checkbox => {
+                        checkbox.checked = selectAllCheckbox.checked;
+                      });
+                      toggleDeleteButton();
+                    }*/
+
+                    /*function toggleDeleteButton() {
+                      const checkboxes = document.querySelectorAll('.row_checkbox');
+                      const deleteButtonContainer = document.getElementById('deleteButtonContainer');
+                      const anyCheckboxChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+                      deleteButtonContainer.style.display = anyCheckboxChecked ? 'block' : 'none';
+                    }*/
+
+                    /*function deleteSelectedRows() {
+                      const checkboxes = document.querySelectorAll('.row_checkbox:checked');
+                      const selectedRowIndices = [];
+
+                      // Find the indices of the selected rows
+                      checkboxes.forEach(checkbox => {
+                        const rowIndex = checkbox.closest('tr').rowIndex - 1; // Adjust for header row
+                        selectedRowIndices.push(rowIndex);
+                      });
+
+                      // Confirm deletion
+                      if (selectedRowIndices.length > 0 && confirm("Are you sure you want to delete the selected records?")) {
+                        // Iterate over selected rows and delete them
+                        selectedRowIndices.forEach(rowIndex => {
+                          const rowData = data[rowIndex];
+                          const recordName = rowData.name;
+
+                          // Send AJAX request to delete the record
+                          frappe.call({
+                            method: 'travel_allowance.travel_allowance.doctype.travel_allowance.travel_allowance.delete_ta_record',
+                            args: {
+                              record_name: recordName
+                            },
+                            callback: function(response) {
+                              if (response.message === 'success') {
+                                // Remove the row from the table
+                                const tableBody = document.getElementById("ta_chart_table_body");
+                                const row = tableBody.getElementsByTagName("tr")[rowIndex];
+                                tableBody.removeChild(row);
+
+                                // Update the data array
+                                data.splice(rowIndex, 1);
+                              } else {
+                                alert('Failed to delete record.');
+                              }
+                            }
+                          });
+                        });
+
+                        // Clear the selected checkboxes
+                        checkboxes.forEach(checkbox => {
+                          checkbox.checked = false;
+                        });
+
+                        // Hide the delete button
+                        const deleteButtonContainer = document.getElementById('deleteButtonContainer');
+                        deleteButtonContainer.style.display = 'none';
+
+                        // Refresh the window after successful deletion
+                        window.location.reload();
+                      }
+                    }*/
+
+                    function handleSubmitClick(rowIndex, recordName, submitButton) {
+                      if (confirm(`Are you sure you want to submit the record: ${recordName}?`)) {
+                        // Disable the button during submission
+                        submitButton.disabled = true;
+
+                        // Call backend function to update status
+                        frappe.call({
+                          method: 'travel_allowance.travel_allowance.doctype.travel_allowance.travel_allowance.update_record_status',
+                          args: {
+                            record_name: recordName,
+                            status: 'Pending'  // Set status as per your requirement
+                          },
+                          callback: function(response) {
+                            if (response.message === 'Record status updated successfully.') {
+
+                              // Set a timer to reload the page after 2 seconds
+                              setTimeout(function() {
+                                location.reload();
+                              }, 500);
+
+
+                              // Optionally refresh or update UI as needed
+                            } else {
+                              alert('Failed to submit record.');
+                              // Re-enable the button on failure
+                              submitButton.disabled = false;
+                            }
+                          }
+                        });
+                      }
+                    }
+
+                    function toggleSelectAll(selectAllCheckbox) {
+                      const checkboxes = document.querySelectorAll('.row_checkbox');
+                      checkboxes.forEach(checkbox => {
+                          checkbox.checked = selectAllCheckbox.checked;
+                      });
+                      toggleDeleteButton();
+                  }
+
+                  function toggleDeleteButton() {
+                      const checkboxes = document.querySelectorAll('.row_checkbox');
+                      const actionButtonContainer = document.getElementById('actionButtonContainer');
+                      const selectedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+
+                      const anyCheckboxChecked = selectedCheckboxes.length > 0;
+                      const hasNotSetStatus = selectedCheckboxes.some(checkbox => {
+                          const rowIndex = checkbox.closest('tr').rowIndex - 1;
+                          return data[rowIndex] && data[rowIndex].status === 'Not Set';
+                      });
+
+                      actionButtonContainer.style.display = anyCheckboxChecked ? 'block' : 'none';
+                      document.querySelector('.submit_btn').style.display = hasNotSetStatus ? 'inline-block' : 'none';
+                      document.querySelector('.delete_btn').style.display = anyCheckboxChecked ? 'inline-block' : 'none';
+                  }
+
+                  function deleteSelectedRows() {
+                      const checkboxes = document.querySelectorAll('.row_checkbox:checked');
+                      const selectedRowIndices = [];
+
+                      checkboxes.forEach(checkbox => {
+                          const rowIndex = checkbox.closest('tr').rowIndex - 1;
+                          selectedRowIndices.push(rowIndex);
+                      });
+
+                      // Confirm deletion
+                      if (selectedRowIndices.length > 0 && confirm("Are you sure you want to delete the selected records?")) {
+                        // Iterate over selected rows and delete them
+                        selectedRowIndices.forEach(rowIndex => {
+                          const rowData = data[rowIndex];
+                          const recordName = rowData.name;
+
+                          // Send AJAX request to delete the record
+                          frappe.call({
+                            method: 'travel_allowance.travel_allowance.doctype.travel_allowance.travel_allowance.delete_ta_record',
+                            args: {
+                              record_name: recordName
+                            },
+                            callback: function(response) {
+                              if (response.message === 'success') {
+                                // Remove the row from the table
+                                const tableBody = document.getElementById("ta_chart_table_body");
+                                const row = tableBody.getElementsByTagName("tr")[rowIndex];
+                                tableBody.removeChild(row);
+
+                                // Update the data array
+                                data.splice(rowIndex, 1);
+                              } else {
+                                alert('Failed to delete record.');
+                              }
+                            }
+                          });
+                        });
+
+                        // Clear the selected checkboxes
+                        checkboxes.forEach(checkbox => {
+                          checkbox.checked = false;
+                        });
+
+                        // Hide the delete button
+                        actionButtonContainer.style.display = 'none';
+
+                        // Refresh the window after successful deletion
+                        window.location.reload();
+                      }
+                  }
+
+                  function submitSelectedRows() {
+                      const checkboxes = document.querySelectorAll('.row_checkbox:checked');
+                      const selectedRowIndices = [];
+
+                      checkboxes.forEach(checkbox => {
+                          const rowIndex = checkbox.closest('tr').rowIndex - 1;
+                          selectedRowIndices.push(rowIndex);
+                      });
+
+                      if (selectedRowIndices.length > 0 && confirm("Are you sure you want to submit the selected records?")) {
+                          selectedRowIndices.forEach(rowIndex => {
+                              const rowData = data[rowIndex];
+                              const recordName = rowData.name;
+
+                              frappe.call({
+                                  method: 'travel_allowance.travel_allowance.doctype.travel_allowance.travel_allowance.update_record_status',
+                                  args: {
+                                      record_name: recordName,
+                                      status: 'Pending'
+                                  },
+                                  callback: function(response) {
+                                      if (response.message === 'Record status updated successfully.') {
+                                          alert('Records submitted successfully.');
+                                          window.location.reload();
+                                      } else {
+                                          alert('Failed to submit record.');
+                                      }
+                                  }
+                              });
+                          });
+
+                          checkboxes.forEach(checkbox => {
+                              checkbox.checked = false;
+                          });
+
+                          actionButtonContainer.style.display = 'none';
+                      }
+                  }
+
+                    function openImage(imageSrc, altText) {
+
+                      // Extract the image name from the image source
+                      const imageName = imageSrc.substring(imageSrc.lastIndexOf('/') + 1);
+
+                      // Create a new window with the image
+                      const imageWindow = window.open("", "_blank");
+
+                      // Write HTML content to the new window
+                      imageWindow.document.write(`
+                        <html>
+                        <head>
+                        <title>${imageName}</title>
+                        <style>
+                          body {
+                            margin: 0;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                             height: 100vh;
+                          }
+                          img {
+                            max-width: 90%;
+                            max-height: 90%;
+                          }
+                        </style>
+                        </head>
+                        <body>
+                          <img src="${imageSrc}" alt="${altText}" />
+                        </body>
+                        </html>
+                      `);
+                    }
+
+
+                    // Define the 'data' variable here by rendering it in a <script> tag
+                    const data = {{ data | tojson | safe }};
+
+                    const fieldToHeadingMap = {
+                      local_conveyance: "Is Local Conveyance",
+                      from_location: "From Location",
+                      date_and_time_start: "Date and Time Start",
+                      to_location: "To Location",
+                      date_and_time_end: "Date and Time End",
+                      purpose: "Purpose",
+                      mode_of_transport: "Mode of Transport",
+                      kilometer_of_travelling: "Travel KM",
+                      fare_amount: "Fare Amt",
+                      daily_allowance: "DA",
+                      halting_amount: "Halting Amt",
+                      lodging_amount: "Lodging Amt",
+                      local_conveyance_other_expenses_amount: "Local Expense Amt",
+                      total: "Total",
+                      total_visit_hour: "Total Visit Hour",
+                      city_class: "City Class",
+                      da_claimed: "DA Claimed",
+                      uploaded_ticket_image: "Uploaded Ticket Image",
+                      uploaded_lodging_bill_image: "Uploaded Lodging Bill Image",
+                      day_stay_lodge: "No. of Day Stay Lodge"
+                    };
+
+
+                    function showRowDetails(rowIndex) {
+                      const rowData = data[rowIndex]; // Assuming 'data' is your array of row data
+                      const rowDetailsForm = document.getElementById("rowDetailsForm");
+                      rowDetailsForm.innerHTML = ""; // Clear previous form fields
+
+                      // Set custom title
+                      document.getElementById("modalTitle").textContent = `Details for Row ${
+                        rowIndex + 1
+                      }`;
+
+                      // Iterate over the properties of the row data and create input fields dynamically
+                      for (const key in rowData) {
+                        if (rowData.hasOwnProperty(key)) {
+                          const value = rowData[key];
+
+                          // Check if the field has a corresponding label in the fieldToHeadingMap
+                          if (!fieldToHeadingMap.hasOwnProperty(key)) continue;
+
+
+                          const formGroup = document.createElement("div");
+                          formGroup.classList.add("form-group");
+
+                          const label = document.createElement("label");
+                          label.textContent = fieldToHeadingMap[key] + ":";
+                          formGroup.appendChild(label);
+
+                          let input;
+                          if (typeof value === "boolean") {
+                            input = document.createElement("input");
+                            input.type = "checkbox";
+                            input.checked = value;
+                            input.readOnly = true;
+                          } else if (typeof value === "string" && value.length > 100) {
+                            input = document.createElement("textarea");
+                            input.rows = 4;
+                            input.value = value;
+                            input.readOnly = true;
+                          }  else if (key === "uploaded_ticket_image" || key === "uploaded_lodging_bill_image") {
+                            // For image links, create an anchor element that opens the image in a new tab
+                            input = document.createElement("a");
+                            input.href = value;
+                            input.textContent = "View Image";
+                            input.title = `Path: ${value}`;
+                            input.target = "_blank";
+                          }  else {
+                            input = document.createElement("input");
+                            input.type = "text";
+                            input.value = value;
+                            input.readOnly = true;
+                          }
+
+                          formGroup.appendChild(input);
+                          rowDetailsForm.appendChild(formGroup);
+                        }
+                      }
+
+                      // Show the dialog box
+                      const rowDetailsDialog = document.getElementById("rowDetailsDialog");
+                      rowDetailsDialog.style.display = "block";
+
+                      // Set the delete button to pass the index to deleteRow function
+                      const deleteBtn = document.getElementById("deleteBtn");
+                      deleteBtn.setAttribute("data-row-index", rowIndex);
+
+                      // Set the edit button to pass the index to editRow function
+                      const editBtn = document.getElementById("editBtn");
+                      editBtn.setAttribute("data-row-index", rowIndex);
+                    }
+
+
+                    function closeRowDetails() {
+                      const rowDetailsDialog = document.getElementById("rowDetailsDialog");
+                      rowDetailsDialog.style.display = "none";
+                    }
+
+                    window.addEventListener("click", function (event) {
+                      const modal = document.getElementById("rowDetailsDialog");
+                      if (event.target == modal) {
+                        modal.style.display = "none";
+                      }
+                    });
+
+                    function editRow(rowIndex) {
+                      const rowData = data[rowIndex]; // Assuming `data` is defined elsewhere
+                      const recordName = rowData.name;
+
+                      // Switch to the desired tab
+                      document.getElementById('travel-allowance-travel_allowance_details_section-tab').click();
+
+                      // Introduce a short delay to ensure tab switch completes
+                      setTimeout(function() {
+                          // Send an AJAX request to the server to fetch record details
+                          frappe.call({
+                              method: 'travel_allowance.travel_allowance.doctype.travel_allowance.travel_allowance.get_recordName',
+                              args: {
+                                  record_name: recordName
+                              },
+                              callback: function(response) {
+                                  if (response.message) {
+                                      const recordData = response.message[0];
+                                      const parent = recordData.parent;
+                                      const isLocalCheck = recordData.local_conveyance;
+
+                                      // Set values using Frappe's recommended way to ensure updates
+                                      frappe.run_serially([
+                                          () => {
+                                              // Clear common fields first
+                                              frappe.model.set_value('Travel Allowance', parent, 'check_no', 0);
+                                              frappe.model.set_value('Travel Allowance', parent, 'check_yes', 0);
+                                              frappe.model.set_value('Travel Allowance', parent, 'from_location', '');
+                                              frappe.model.set_value('Travel Allowance', parent, 'to_location', '');
+                                              frappe.model.set_value('Travel Allowance', parent, 'local_to_location', '');
+                                              frappe.model.set_value('Travel Allowance', parent, 'date_and_time_from', '');
+                                              frappe.model.set_value('Travel Allowance', parent, 'date_and_time_to', '');
+                                              frappe.model.set_value('Travel Allowance', parent, 'local_date_and_time_to', '');
+                                              frappe.model.set_value('Travel Allowance', parent, 'mode_of_transport', '');
+                                              frappe.model.set_value('Travel Allowance', parent, 'fare_amount', '');
+                                              frappe.model.set_value('Travel Allowance', parent, 'daily_allowance', '');
+                                              frappe.model.set_value('Travel Allowance', parent, 'halting_amount', '');
+                                              frappe.model.set_value('Travel Allowance', parent, 'lodging_amount', '');
+                                              frappe.model.set_value('Travel Allowance', parent, 'total', '');
+                                              frappe.model.set_value('Travel Allowance', parent, 'total_visit_hour', '');
+                                              frappe.model.set_value('Travel Allowance', parent, 'city_class', '');
+                                              frappe.model.set_value('Travel Allowance', parent, 'da_claimed', '');
+                                              frappe.model.set_value('Travel Allowance', parent, 'purpose', '');
+                                              frappe.model.set_value('Travel Allowance', parent, 'local_mode_of_travel', '');
+                                              frappe.model.set_value('Travel Allowance', parent, 'other_expenses', '');
+                                          },
+                                          () => {
+                                              // Populate the form fields with the fetched data
+                                              if (isLocalCheck == 'No') {
+                                                  return frappe.run_serially([
+                                                      () => frappe.model.set_value('Travel Allowance', parent, 'check_no', 1),
+                                                      () => frappe.model.set_value('Travel Allowance', parent, 'from_location', recordData.from_location),
+                                                      () => frappe.model.set_value('Travel Allowance', parent, 'to_location', recordData.to_location),
+                                                      () => frappe.model.set_value('Travel Allowance', parent, 'date_and_time_from', recordData.date_and_time_start),
+                                                      () => frappe.model.set_value('Travel Allowance', parent, 'date_and_time_to', recordData.date_and_time_end),
+                                                      () => frappe.model.set_value('Travel Allowance', parent, 'purpose', recordData.purpose),
+                                                      () => frappe.model.set_value('Travel Allowance', parent, 'ta_mode_of_transport', recordData.mode_of_transport),
+                                                      () => frappe.model.set_value('Travel Allowance', parent, 'travel_km', recordData.kilometer_of_travelling),
+                                                      () => frappe.model.set_value('Travel Allowance', parent, 'fare_amount', recordData.fare_amount),
+                                                      () => frappe.model.set_value('Travel Allowance', parent, 'daily_allowance', recordData.daily_allowance),
+                                                      () => frappe.model.set_value('Travel Allowance', parent, 'halting_amount', recordData.halting_amount),
+                                                      () => frappe.model.set_value('Travel Allowance', parent, 'lodging_amount', recordData.lodging_amount),
+                                                      () => frappe.model.set_value('Travel Allowance', parent, 'total_amount', recordData.total),
+                                                      () => frappe.model.set_value('Travel Allowance', parent, 'total_visit_hour', recordData.total_visit_hour),
+                                                      () => frappe.model.set_value('Travel Allowance', parent, 'city_class', recordData.city_class),
+                                                      () => frappe.model.set_value('Travel Allowance', parent, 'da_claimed', recordData.da_claimed)
+                                                  ]);
+                                              } else if (isLocalCheck == 'Yes') {
+                                                  return frappe.run_serially([
+                                                      () => frappe.model.set_value('Travel Allowance', parent, 'check_yes', 1),
+                                                      () => frappe.model.set_value('Travel Allowance', parent, 'from_location', recordData.from_location),
+                                                      () => frappe.model.set_value('Travel Allowance', parent, 'local_to_location', recordData.to_location),
+                                                      () => frappe.model.set_value('Travel Allowance', parent, 'date_and_time_from', recordData.date_and_time_start),
+                                                      () => frappe.model.set_value('Travel Allowance', parent, 'local_date_and_time_to', recordData.date_and_time_end),
+                                                      () => frappe.model.set_value('Travel Allowance', parent, 'purpose', recordData.purpose),
+                                                      () => frappe.model.set_value('Travel Allowance', parent, 'local_mode_of_travel', recordData.mode_of_transport),
+                                                      () => frappe.model.set_value('Travel Allowance', parent, 'other_expenses', recordData.local_conveyance_other_expenses_amount)
+                                                  ]);
+                                              }
+                                          }
+                                      ]).then(() => {
+                                          // Optionally refresh the form to ensure all fields are updated
+                                          frappe.model.refresh();
+                                      });
+                                  }
+                              }
+                          });
+                      }, 500); // Adjust the delay as needed to ensure the tab switch completes
+                    }
+
+                    /*
+                    function deleteRow(rowIndex) {
+                      //const rowIndex = parseInt(document.getElementById("deleteBtn").getAttribute("data-row-index"));
+                      const rowData = data[rowIndex]; // Assuming 'data' is your array of row data
+                      const recordName = rowData.name; // Assuming 'name' is the unique identifier for the record
+
+                      if (confirm("Are you sure you want to delete this record?")) {
+                        // Send an AJAX request to the server to delete the record
+                        frappe.call({
+                          method: 'travel_allowance.travel_allowance.doctype.travel_allowance.travel_allowance.delete_ta_record',
+                          args: {
+                            record_name: recordName
+                          },
+                          callback: function(response) {
+                            // Check if the deletion was successful
+                            if (response.message === 'success') {
+                              alert('Record deleted successfully.');
+                              closeRowDetails(); // Close the modal after successful deletion
+
+                              // Remove the row from the table
+                              const tableBody = document.getElementById("ta_chart_table_body");
+                              const row = tableBody.getElementsByTagName("tr")[rowIndex];
+                              tableBody.removeChild(row);
+
+                              // Update the data array
+                              data.splice(rowIndex, 1);
+
+                              // Update row indices in the table and delete button
+                              const rows = tableBody.getElementsByTagName("tr");
+                              for (let i = 0; i < rows.length; i++) {
+                                rows[i].onclick = function() { showRowDetails(i); };
+                                rows[i].getElementsByTagName("td")[1].textContent = i + 1; // Update Sr. No.
+                              }
+                              // Refresh the page to reflect changes
+                              location.reload();
+                            } else {
+                              alert('Failed to delete record.');
+                            }
+                          }
+                        });
+                      }
+                    }*/
+
+
+                    /********************loading more button functionality************************/
+
+                    let startIndex = 5; // Starting index for loading more rows
+      let rowsPerPage = 5; // Number of rows to display per click
+
+      function initializeTable() {
+          let tableBody = document.getElementById("ta_chart_table_body");
+          let rows = tableBody.getElementsByTagName("tr");
+
+          // Hide all rows beyond the initial set
+          for (let i = rowsPerPage; i < rows.length; i++) {
+              rows[i].classList.add("hidden");
+          }
+
+          // Show or hide the "Show Less" button based on total number of rows
+          if (rows.length > rowsPerPage) {
+              document.getElementById("show-less-btn").style.display = "none";
+              document.getElementById("load-more-btn").style.display = "inline-block";
+          } else {
+              document.getElementById("load-more-btn").style.display = "none";
+              document.getElementById("show-less-btn").style.display = "none";
+          }
+      }
+
+      function loadMore() {
+          let tableBody = document.getElementById("ta_chart_table_body");
+          let rows = tableBody.getElementsByTagName("tr");
+
+          // Show more rows
+          for (let i = startIndex; i < startIndex + rowsPerPage && i < rows.length; i++) {
+              rows[i].classList.remove("hidden");
+          }
+
+          startIndex += rowsPerPage;
+
+          // Update button visibility
+          if (startIndex >= rows.length) {
+              document.getElementById("load-more-btn").style.display = "none";
+          }
+
+          // Show the "Show Less" button if more rows are visible than the initial count
+          if (startIndex > rowsPerPage) {
+              document.getElementById("show-less-btn").style.display = "inline-block";
+          }
+      }
+
+      function showLess() {
+          let tableBody = document.getElementById("ta_chart_table_body");
+          let rows = tableBody.getElementsByTagName("tr");
+
+          // Hide rows beyond the initial set
+          for (let i = startIndex - rowsPerPage; i < startIndex && i < rows.length; i++) {
+              rows[i].classList.add("hidden");
+          }
+
+          startIndex -= rowsPerPage;
+
+          // Update button visibility
+          if (startIndex <= rowsPerPage) {
+              document.getElementById("show-less-btn").style.display = "none";
+          }
+
+          // Show the "Load More" button
+          document.getElementById("load-more-btn").style.display = "inline-block";
+      }
+
+      // Initialize table on page load
+      document.addEventListener("DOMContentLoaded", initializeTable);
+    </script>
+  </body>
+</html>

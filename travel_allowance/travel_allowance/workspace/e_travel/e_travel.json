@@ -1,0 +1,37 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"Cj2ACVIxF4\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Home Page (TA)\",\"col\":12}}]",
+ "creation": "2024-04-18 13:10:24.589258",
+ "custom_blocks": [
+  {
+   "custom_block_name": "Home Page (TA)",
+   "label": "Home Page (TA)"
+  }
+ ],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "branch",
+ "idx": 0,
+ "is_hidden": 0,
+ "label": "E-Travel",
+ "links": [],
+ "modified": "2024-07-25 16:40:32.583465",
+ "modified_by": "Administrator",
+ "module": "Travel Allowance",
+ "name": "E-Travel",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "Employee"
+  }
+ ],
+ "sequence_id": 2.0,
+ "shortcuts": [],
+ "title": "E-Travel"
+}

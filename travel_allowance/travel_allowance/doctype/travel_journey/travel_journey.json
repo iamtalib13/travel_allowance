@@ -1,0 +1,110 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-04-18 10:38:13.283877",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "from",
+  "date_and_time_from",
+  "to",
+  "other_location",
+  "date_and_time_to",
+  "mode_of_transport",
+  "kilometer_of_travelling",
+  "ticket_amount",
+  "fare_amount",
+  "upload_ticket",
+  "purpose"
+ ],
+ "fields": [
+  {
+   "columns": 1,
+   "fieldname": "from",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "From"
+  },
+  {
+   "columns": 1,
+   "fieldname": "date_and_time_from",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Date And Time (From)"
+  },
+  {
+   "columns": 1,
+   "fieldname": "to",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "To"
+  },
+  {
+   "columns": 1,
+   "fieldname": "date_and_time_to",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Date And Time (To)"
+  },
+  {
+   "columns": 1,
+   "fieldname": "mode_of_transport",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Mode of Transport"
+  },
+  {
+   "columns": 1,
+   "fieldname": "kilometer_of_travelling",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Kilometer of Travelling"
+  },
+  {
+   "columns": 1,
+   "fieldname": "ticket_amount",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Ticket Amount"
+  },
+  {
+   "columns": 1,
+   "fieldname": "fare_amount",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Fare Amount"
+  },
+  {
+   "fieldname": "upload_ticket",
+   "fieldtype": "Data",
+   "label": "Upload Ticket"
+  },
+  {
+   "columns": 1,
+   "fieldname": "purpose",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Purpose"
+  },
+  {
+   "columns": 1,
+   "fieldname": "other_location",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Other Location"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-04-18 11:44:23.196890",
+ "modified_by": "Administrator",
+ "module": "Travel Allowance",
+ "name": "Travel Journey",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

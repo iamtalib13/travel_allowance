@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Saha Policy</title>
+    <script src="https://unpkg.com/htmx.org@1.10.3/dist/htmx.min.js"></script>
+
+    <!-- Pico CSS cdn link -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
+  </head>
+  <body class="container">
+    <nav>
+      <ul>
+        <li><strong>Sahayog Policy</strong></li>
+      </ul>
+      <ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Products</a></li>
+      </ul>
+    </nav>
+    <main class="grid">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+    </main>
+    <form>
+      <!-- Input inside label -->
+      <label>
+        First name
+        <input
+          name="first_name"
+          placeholder="First name"
+          autocomplete="given-name"
+        />
+      </label>
+
+      <!-- Input outside label -->
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Email" autocomplete="email" />
+    </form>
+  </body>
+</html>

@@ -1,0 +1,3524 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Travel Allowance</title>
+
+    <!--HTMX Link-->
+    <script src="https://unpkg.com/htmx.org@2.0.1"></script>
+    <!--<link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />-->
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+    <!--Handsontable CSS-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/handsontable@10.0.0/dist/handsontable.full.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/handsontable@10.0.0/dist/handsontable.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!--Include the Flatpickr CSS and JS:-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        /*  overflow: hidden; Prevent the page from having a scrollbar */
+      }
+
+      .ta-container {
+        margin: 0;
+        padding: 0;
+      }
+      */ .ta-form-container {
+        background-color: #fff;
+        padding: 22px 0px 0 0px;
+        border-radius: 8px;
+      }
+
+      .ta-form-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      */ .ta-row-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .ta-from-row {
+        display: flex;
+        align-items: center; /* Align items vertically */
+        flex-wrap: wrap; /* Ensure single row */
+        gap: 10px; /* Space between fields */
+        border: 1px solid #d0d7de;
+        border-radius: 4px;
+        font-size: 14px;
+        padding: 5px;
+      }
+      .ta-to-row {
+        display: flex;
+        align-items: center; /* Align items vertically */
+        flex-wrap: wrap; /* Ensure single row */
+        gap: 10px; /* Space between fields */
+        border: 1px solid #d0d7de;
+        border-radius: 4px;
+        font-size: 14px;
+        padding: 5px;
+      }
+      .ta-local-row {
+        display: flex;
+        align-items: center; /* Align items vertically */
+        flex-wrap: wrap; /* Ensure single row */
+        gap: 10px; /* Space between fields */
+        border: 1px solid #d0d7de;
+        border-radius: 4px;
+        font-size: 14px;
+        padding: 8px;
+      }
+
+      .ta-time-and-purpose {
+        display: flex;
+        justify-content: center;
+        align-items: center; /* Align items vertically */
+        flex-wrap: wrap; /* Ensure single row */
+        gap: 10px; /* Space between fields */
+        border: 1px solid #d0d7de;
+        border-radius: 4px;
+        font-size: 14px;
+        padding: 14px 5px;
+      }
+      .ta-allowances-row {
+        display: flex;
+        align-items: center; /* Align items vertically */
+        flex-wrap: wrap; /* Ensure single row */
+        gap: 10px; /* Space between fields */
+        border: 1px solid #d0d7de;
+        border-radius: 4px;
+        font-size: 14px;
+        padding: 10px;
+        margin-top: 20px;
+      }
+
+      .ta-form-group {
+        display: flex;
+        flex-direction: column;
+        padding: 0 5px;
+      }
+
+      .ta-form-group label {
+        font-size: 14px;
+      }
+
+      .ta-form-group input,
+      .ta-form-group select,
+      .ta-form-group textarea {
+        padding: 8px 5px;
+        font-size: 11px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      .field-error {
+        border: 1px solid red;
+        color: red;
+        background-color: #fff5f5;
+      }
+
+      .field-error::placeholder {
+        color: red; /* Ensure the placeholder text also turns red */
+      }
+
+      .ta-form-btn {
+        display: flex;
+        justify-content: center;
+        padding: 0 5px;
+      }
+
+      .add-button {
+        padding: 6px 16px;
+
+        /*background: linear-gradient(
+          to right,
+          rgba(0, 128, 222, 1),
+          rgba(97, 202, 255, 1)
+        );*/
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: large;
+        font-weight: 700;
+        margin-top: 12px;
+        background-color: #286840;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      .add-button:hover {
+        /*background: linear-gradient(
+          to right,
+          rgba(0, 128, 222, 1),
+          rgba(97, 202, 255, 1)
+        );*/
+        background-color: #2f7a4c;
+        transform: scale(1.05);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1024px) {
+        .ta-form-group {
+          min-width: 160px; /* Reduce width for smaller screens */
+        }
+      }
+
+      @media (max-width: 768px) {
+        .ta-form-container {
+          padding: 15px;
+        }
+        .ta-form-row {
+          gap: 5px; /* Reduce space between fields */
+        }
+      }
+
+      /* Hide fields by default */
+      .hidden {
+        display: none;
+      }
+      #return-response {
+        margin: 20px;
+        width: 100%;
+      }
+
+      .ta-nav {
+        position: sticky;
+        top: 0; /* Ensures it sticks to the top of the viewport */
+        background: linear-gradient(
+          to right,
+          rgba(0, 128, 222, 1),
+          rgba(97, 202, 255, 1)
+        );
+        color: #ffffff;
+        padding: 8px 20px;
+        margin: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000; /* Ensures it stays above other content */
+      }
+      a.ta-home {
+        font-size: larger;
+        font-weight: bold;
+        padding: 0 10px;
+        text-decoration: none;
+        color: #fff;
+      }
+      a.ta-heading {
+        font-size: 20px;
+        font-weight: bold;
+        text-decoration: none;
+        color: #fff;
+      }
+      a.user-details {
+        display: flex;
+        text-decoration: none;
+        color: #fff;
+        cursor: pointer;
+      }
+      .user-info {
+        text-align: end;
+      }
+      .user-icon {
+        margin: 0 5px;
+      }
+      .current-user {
+        font-size: large;
+        font-weight: bold;
+        padding: 0;
+        margin: 0;
+      }
+      .user-designation {
+        padding: 0;
+        margin: 0;
+      }
+      .logout-btn {
+        padding: 5px 10px;
+        background-color: #fff;
+        color: #000;
+        position: relative;
+        cursor: pointer;
+      }
+      .logout-btn:active {
+        background-color: transparent;
+      }
+      .logout-btn:hover {
+        background-color: #e9ecef;
+      }
+
+      .description {
+        font-size: 12px;
+      }
+
+      .page-content {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      /* Table styles */
+      #taRecordTable {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 14px;
+        text-align: left;
+        height: 500px;
+      }
+
+      #taRecordTable th,
+      #taRecordTable td {
+        padding: 10px 15px;
+        border: 1px solid #b9bdb9;
+        white-space: nowrap; /* Prevent line wrapping */
+        text-align: center;
+      }
+
+      /* Header styling */
+      #taRecordTable thead th {
+        background-color: #f2f2f2;
+        color: #333;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      /* Hover effects */
+      #taRecordTable tbody tr:hover {
+        background-color: #f1f1f1;
+      }
+
+      /* Center align specific columns */
+      #taRecordTable td:nth-child(4),
+      #taRecordTable td:nth-child(5),
+      #taRecordTable td:nth-child(6),
+      #taRecordTable td:nth-child(7),
+      #taRecordTable td:nth-child(8),
+      #taRecordTable td:nth-child(9),
+      #taRecordTable td:nth-child(10),
+      #taRecordTable td:nth-child(13),
+      #taRecordTable td:nth-child(14),
+      #taRecordTable td:nth-child(15),
+      #taRecordTable td:nth-child(16),
+      #taRecordTable td:nth-child(17),
+      #taRecordTable td:nth-child(18),
+      #taRecordTable td:nth-child(19) {
+        text-align: center;
+      }
+
+      /* Checkbox column */
+      #taRecordTable td:first-child {
+        text-align: center;
+        width: 50px;
+      }
+      .action-btns {
+        display: flex;
+        justify-content: space-between;
+      }
+      /* Highlighting total column */
+      #taRecordTable td:last-child {
+        font-weight: bold;
+        color: #000;
+        background-color: #e7f3ff;
+      }
+
+      /* Table header alignment */
+      #taRecordTable th {
+        text-align: center;
+      }
+
+      /* Styling for no records row */
+      #taRecordTable .text-center {
+        text-align: center;
+        font-weight: bold;
+        color: #999;
+      }
+
+      /* Fixed Serial Number Column */
+      th.fixed-serial,
+      td.fixed-serial {
+        position: sticky;
+        left: 0;
+        background-color: #e6e4e4 !important;
+        z-index: 2;
+      }
+
+      .pending-row td {
+        border: #000;
+        background-color: rgb(194 237 251); /* Yellow for Pending */
+        color: #000;
+      }
+
+      .approved-row td {
+        border: #000;
+        background-color: #d4edda; /* Green for Approved */
+        color: #286840;
+      }
+
+      .clickable-cell {
+        cursor: pointer;
+      }
+
+      .excel-container {
+        padding: auto;
+      }
+
+      .content {
+        margin-left: 0;
+        padding: 0 2rem;
+        overflow: auto;
+      }
+      /*.handsontable th {
+         font-weight: bold;
+        border: 1px solid #78b9f4;
+      }*/
+
+      /* Scrollbar styling */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+
+      #excel-canvas {
+        margin-top: 8px;
+        overflow-y: auto;
+      }
+
+      .ht_master .wtHolder {
+        height: auto;
+      }
+
+      .handsontable td,
+      .handsontable th {
+        border-top-width: 0;
+        border-left-width: 0;
+        height: 22px;
+        empty-cells: show;
+        line-height: 21px;
+        padding: 0 4px;
+        background-color: #fff;
+        vertical-align: middle;
+        overflow: hidden;
+        outline-width: 0;
+        white-space: nowrap;
+        text-align: center;
+      }
+      .handsontable .htRight {
+        text-align: center;
+      }
+      .htAutocompleteArrow {
+        display: none;
+      }
+
+      .footer {
+        background-color: #f8f9fa;
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+        bottom: 0;
+      }
+
+      a.tab {
+        padding: 5px 0px;
+        cursor: pointer;
+
+        transition: background-color 0.3s ease;
+      }
+
+      a.tab img {
+        vertical-align: middle;
+        margin-right: 5px;
+      }
+
+      a.tab p {
+        text-align: center;
+        text-decoration: none;
+        color: rgb(1, 111, 190);
+        margin-bottom: 0;
+      }
+
+      @media (max-width: 600px) {
+        .tab {
+          font-size: 14px;
+          padding: 8px 12px;
+        }
+      }
+      p.user-designation {
+        font-size: 14px;
+      }
+      .submit-btn {
+        padding: 6px 16px; /* Increased padding for better click area */
+        border: none;
+        border-radius: 8px; /* Slightly larger border-radius for a smoother look */
+        color: #fff; /* White text color */
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        margin-right: 10px;
+        transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform transition for button press effect */
+
+        background-color: #2f84c1; /* Solid background color */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+      }
+
+      .submit-btn:hover {
+        background-color: #357abd; /* Darker shade on hover */
+        transform: scale(1.05); /* Slightly enlarge the button on hover */
+        color: #fff; /* White text color */
+      }
+
+      .submit-btn:focus {
+        outline: none; /* Remove the default focus outline */
+      }
+
+      .submit-btn:active {
+        background-color: #2a5d9e; /* Even darker shade when button is pressed */
+        transform: scale(0.98); /* Slightly shrink the button when pressed */
+      }
+
+      /* Delete Button Gradient */
+      /*.delete-btn {
+        background: #ff0000;
+      }
+
+      .delete-btn:hover {
+        background: #fb2c2c;
+        color: #fff;
+      }*/
+
+      /* Select All Button Gradient */
+      .select-all-btn {
+        background: #007486;
+      }
+
+      .select-all-btn:hover {
+        background: #35aaac;
+        color: #fff;
+      }
+
+      .htColumn0 {
+        display: none;
+      }
+
+      /* CSS for the overlay */
+      #please-wait-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      }
+
+      .overlay-content {
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      .add-local-btn {
+        padding: 5px 18px;
+        background: linear-gradient(
+          to right,
+          rgba(0, 128, 222, 1),
+          rgba(97, 202, 255, 1)
+        );
+        color: #fff;
+        border: none;
+        border-radius: 40px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 700;
+        margin-top: 12px;
+      }
+
+      /*.ta-local-container{
+      display: flex;
+      justify-content: space-between;
+    }*/
+
+      .local-container {
+        display: flex;
+      }
+      .ta-local-container {
+        padding-bottom: 12px;
+      }
+      .ta-local-btn {
+        padding: 10px 20px;
+      }
+      #month-filter {
+        font-size: 14px;
+        margin-right: 10px;
+      }
+      button.btn.reset-btn:active {
+        outline: none;
+        border: none;
+      }
+      .form-select:focus,
+      .form-control:focus {
+        border-color: #86b7fe;
+        outline: 0;
+        box-shadow: none;
+      }
+      .form-check-input {
+        border-color: rgb(58, 58, 58);
+      }
+      .form-check-input:focus {
+        border-color: #86b7fe;
+        outline: 0;
+        box-shadow: none;
+      }
+
+      /* Popup styles */
+      .dynamic-popup {
+        display: none; /* Hidden by default */
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(
+          0,
+          0,
+          0,
+          0.5
+        ); /* Black background with opacity */
+      }
+
+      .dynamic-popup-content {
+        background-color: #fff;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 800px;
+      }
+
+      .dynamic-popup-close-btn {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .dynamic-popup-close-btn:hover,
+      .dynamic-popup-close-btn:focus {
+        color: black;
+        text-decoration: none;
+      }
+
+      .dynamic-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .dynamic-table th,
+      .dynamic-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+
+      .dynamic-table th {
+        background-color: #f2f2f2;
+      }
+      .custom-row-border-bottom {
+        border-bottom: 1px solid #dee2e6;
+        padding-bottom: 30px;
+      }
+      .custom-border {
+        border: 1px solid green;
+        padding: 10px 5px;
+        border-radius: 10px;
+      }
+      .row-padding {
+        margin-bottom: 20px;
+      }
+      /*.input-with-icon {
+  position: relative;
+}*/
+
+      /*.input-with-icon .form-control {
+  padding-right: 2.5rem; 
+}*/
+
+      /*.input-with-icon .calendar-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2em;
+  color: #999;
+  pointer-events: none; 
+}*/
+
+      .form-control,
+      .form-select {
+        color: #616c77;
+      }
+      .location-icon {
+        margin-top: 5px;
+        margin-right: 2px;
+      }
+
+      .sidebar {
+        height: 100vh;
+        width: 250px;
+        background-color: #343a40;
+        padding: 1rem;
+        position: fixed;
+
+        left: 0;
+      }
+      .sidebar a {
+        color: #ffffff;
+        text-decoration: none;
+        display: block;
+        padding: 0.75rem 1rem;
+        margin-bottom: 0.5rem;
+        border-radius: 0.25rem;
+        transition: background-color 0.2s;
+      }
+      .sidebar a:hover,
+      .sidebar .active {
+        background-color: #495057;
+        color: #ffffff;
+      }
+
+      /* home page CSS */
+      .logo {
+        width: 90px;
+      }
+
+      /*.ta-Container {
+  padding: 20px 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}*/
+
+      .intro {
+        margin-left: 15px;
+      }
+
+      .emp-name {
+        margin-top: 18px;
+        font-size: large;
+      }
+
+      .welcome-text {
+        font-weight: bold;
+        font-size: xx-large;
+      }
+
+      .ta-request-container {
+        display: flex;
+        padding: 10px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+      }
+
+      a.ta-Details {
+        text-decoration: none;
+      }
+
+      .ta-Details {
+        padding: 20px 40px;
+        background-color: white;
+        border-radius: 5px;
+      }
+
+      #pending {
+        margin-right: 10px;
+      }
+
+      .NewRequest {
+        display: inline-flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        margin: 10px 0px;
+        transition: transform 0.3s ease, cursor 0.3s ease,
+          text-decoration 0.3s ease;
+      }
+
+      .ListRecords {
+        display: inline-flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        padding: 0 60px;
+        transition: transform 0.3s ease, cursor 0.3s ease,
+          text-decoration 0.3s ease;
+      }
+
+      .ListRecords:hover {
+        transform: translateY(-2px);
+        cursor: pointer;
+        text-decoration: none;
+        color: #468cbf;
+      }
+
+      .NewRequest:hover {
+        transform: translateY(-2px);
+        cursor: pointer;
+        text-decoration: none;
+        color: #468cbf;
+      }
+      .NewRequest,
+      .ListRecords {
+        color: #468cbf;
+        text-decoration: none;
+      }
+
+      .create-icon {
+        width: 60px;
+        height: 60px;
+        margin-right: 8px;
+      }
+
+      .label {
+        font-weight: 700;
+        margin-right: 8px;
+        font-size: x-large;
+      }
+
+      .ta-Approval-Container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 15px 0px;
+      }
+
+      .count {
+        margin-right: 5px;
+      }
+
+      /* Responsive CSS */
+      @media (max-width: 768px) {
+        /* Adjust container direction and padding */
+        .ta-Container {
+          padding: 10px;
+        }
+
+        /* Adjust intro text */
+        .intro {
+          margin-left: 5px;
+          width: 100%;
+        }
+
+        .emp-name {
+          font-size: medium;
+          margin-top: 10px;
+        }
+
+        .welcome-text {
+          font-size: large;
+        }
+
+        /* Request container adjustments */
+        .ta-request-container {
+          display: flex;
+          padding: 5px;
+          margin-bottom: 10px;
+        }
+
+        /* Adjust the TA details links */
+        .ta-Details {
+          padding: 0px 0px;
+          width: 100%;
+          margin-left: 15px;
+        }
+        .ta-Details a {
+          display: flex;
+        }
+
+        .NewRequest,
+        .ListRecords {
+          align-items: center;
+          padding: 5px 0px;
+        }
+
+        .create-icon {
+          width: 50px; /* Reduced icon size */
+          height: 50px; /* Reduced icon size */
+          margin-bottom: 8px;
+        }
+
+        .label {
+          font-size: large;
+        }
+
+        /* Approval container adjustments */
+        .ta-Approval-Container {
+          flex-direction: column;
+          gap: 5px;
+        }
+
+        .ta-Approval-Container a.ta-Details {
+          margin-right: 0;
+          width: 100%;
+        }
+
+        /* Adjustments for smaller screen font sizes */
+        .emp-name {
+          font-size: 16px;
+        }
+
+        .welcome-text {
+          font-size: 16px;
+        }
+
+        .label {
+          font-size: 18px;
+        }
+
+        .ta-pending {
+          font-size: 14px;
+        }
+
+        .count {
+          font-size: 14px;
+        }
+      }
+
+      /* Maintain hover effect on mobile devices */
+      @media (hover: hover) {
+        .ListRecords:hover,
+        .NewRequest:hover {
+          transform: translateY(-6px);
+          cursor: pointer;
+          text-decoration: none;
+        }
+      }
+
+      .amount-summary {
+        padding: 1rem;
+        border: 1px solid #387e38;
+        border-radius: 8px;
+        background-color: #eaf5ee;
+        color: #286840;
+      }
+
+      .summary-item {
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .amount-value {
+        font-weight: bold;
+        color: #286840;
+        float: right;
+      }
+      .summary-heading {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    {% if frappe.session.user != "Guest" %}
+    <div class="ta-container container-fluid">
+      <nav class="nav ta-nav">
+        <a href="/app" class="ta-home">&lt; Home</a>
+        <a class="ta-heading">Travel Allowance</a>
+        <!-- Dropdown for user details and logout -->
+        <div class="dropdown">
+          <a
+            class="user-details d-flex align-items-center dropdown-toggle"
+            id="user-details"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <div class="user-info me-2">
+              <h4
+                class="current-user m-0"
+                hx-get="/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_employee_name"
+                hx-trigger="load"
+                hx-target="this"
+                hx-vals='js:{"email": "{{ frappe.session.user }}"}'
+              ></h4>
+              <p
+                class="user-designation m-0"
+                hx-get="/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_employee_designation"
+                hx-trigger="load"
+                hx-target="this"
+                hx-vals='js:{"email":  "{{ frappe.session.user }}"}'
+              ></p>
+            </div>
+            <span class="user-icon">
+              <img src="/files/user (5).png" alt="" width="40" />
+            </span>
+          </a>
+
+          <!-- Dropdown Menu -->
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="user-details"
+          >
+            <li><a class="dropdown-item logout-btn">Logout</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="content" id="main-content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-2">
+              <div class="sidebar">
+                <!-- Button to trigger modal -->
+                <button
+                  class="btn create-ta text-white my-3 mx-3"
+                  id="create-ta"
+                  style="font-weight: 700; font-size: 18px"
+                  data-bs-toggle="modal"
+                  data-bs-target="#travelFormModal"
+                  onclick="checkTACategory()"
+                >
+                  Create +
+                </button>
+
+                <!--<a class="nav-link tab active" id="my-home" hx-target="#home">
+                <img src="/files/home (1).png" width="30" alt="Home" />
+              Home
+              </a>-->
+                <a href="#" class="nav-link tab active" id="my-travel">
+                  <img
+                    src="/files/profile (2).png"
+                    width="30"
+                    alt="My Travel"
+                  />
+                  My Travel
+                </a>
+
+                <a href="/app/ta-approval" class="nav-link tab" id="requests">
+                  <img
+                    src="/files/notification.png"
+                    width="30"
+                    alt="Requests"
+                  />
+                  Requests
+                </a>
+                <a href="#" class="nav-link tab" id="report">
+                  <img src="/files/test.png" width="30" alt="Reports" />
+                  Reports
+                </a>
+              </div>
+            </div>
+
+            <div class="col-md-10">
+              <div id="home" style="display: none">
+                <div class="ta-Container">
+                  <div class="logo-img">
+                    <img src="/files/budget.png" alt="Icon" class="logo" />
+                  </div>
+
+                  <div class="intro">
+                    <div class="emp-name" id="emp-name"></div>
+                    <h4 class="welcome-text">
+                      Welcome to Travel Allowance Management
+                    </h4>
+                  </div>
+                </div>
+
+                <div class="ta-request-container">
+                  <a
+                    class="NewRequest"
+                    href="#"
+                    data-bs-toggle="modal"
+                    data-bs-target="#travelFormModal"
+                  >
+                    <img
+                      src="/files/transport (2).png"
+                      alt="Icon"
+                      class="create-icon"
+                    />
+                    <span class="title">
+                      <span class="label"> TA Claim</span>
+                      <div class="sublabel">Go to Travel Claim</div>
+                    </span>
+                  </a>
+
+                  <a class="ListRecords" href="#">
+                    <img
+                      src="/files/travel (4).png"
+                      alt="Icon"
+                      class="create-icon"
+                    />
+                    <span class="title">
+                      <span class="label">My Travel</span>
+                      <div class="sublabel">Travel Claim Records</div>
+                    </span>
+                  </a>
+
+                  <a id="pending" href="/app/ta-approval">
+                    <h3 class="title">TA Request</h3>
+                    <p class="ta-pending"><span class="count"></span>Pending</p>
+                  </a>
+                </div>
+              </div>
+              <div id="ta-records-tbl" class="mt-3 px-3">
+                <div class="col d-flex align-items-center">
+                  <div id="table-heading">
+                    <h5>Travel Claim Report</h5>
+                    <!-- <span id="current-month"></span>-->
+                  </div>
+
+                  <div class="ms-auto">
+                    <!--TA Record submit button-->
+                    <button class="btn submit-btn" id="ta-submit-btn">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+                <div class="table-responsive" id="taRecordTable">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Serial No.</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                        <th>From</th>
+                        <th>Date From</th>
+                        <th>Time From</th>
+                        <th>To</th>
+                        <th>Date To</th>
+                        <th>Time To</th>
+                        <th>Total Time</th>
+                        <th>Purpose</th>
+                        <th>Travel Mode</th>
+                        <th>Total km</th>
+                        <th>Ticket Amt</th>
+                        <th>Fare Amount</th>
+                        <th>Upload Ticket</th>
+                        <th>Allowance Type</th>
+                        <th>DA</th>
+                        <th>Halting</th>
+                        <th>Lodging</th>
+                        <th>Local Conveyance</th>
+                        <th>Total</th>
+
+                        <th>Upload Lodging</th>
+                        <th class="d-none">Name</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+                <!--Handsonable Table for TA Records-->
+                <div id="excel-canvas" class="excel-container"></div>
+
+                <!--Show Message For No records created yet-->
+                <div id="no-records-message" style="display: none">
+                  You don't have any records yet. Click
+                  <!-- Button to trigger modal -->
+                  <a
+                    class="btn create-ta"
+                    id="create-ta"
+                    onclick="checkTACategory()"
+                    style="
+                      font-weight: 700;
+                      font-size: 18px;
+                      border: none;
+                      cursor: pointer;
+                      text-decoration: underline;
+                    "
+                    data-bs-toggle="modal"
+                    data-bs-target="#travelFormModal"
+                  >
+                    here
+                  </a>
+                  to add your first record or you can click on Create+ button.
+                </div>
+              </div>
+              <div id="ta-request" class="px-3" style="display: none">
+                <div class="container-fluid">
+                  {% include 'templates/includes/ta-approval.html' %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--Travel Allowance Form as Modal/Popup-->
+        <div class="container-fluid">
+          <!--<h2>Travel Allowance Form</h2>-->
+          <div
+            class="modal fade"
+            id="travelFormModal"
+            tabindex="-1"
+            aria-labelledby="travelFormModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5
+                    id="modalTitle"
+                    class="modal-title"
+                    id="travelFormModalLabel"
+                  >
+                    Travel Allowance Form
+                  </h5>
+                  <!--<button type="button" class="btn reset-btn" aria-label="Reset" data-bs-toggle="tooltip"  title="Reset" onclick="resetForm()">
+                  <img src="/files/icons8-reset-48.png" alt="" width="20">
+                </button>-->
+
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form id="travel-form" onsubmit="handleFormSubmit(event)">
+                    <div class="container-fluid">
+                      <div class="row row-padding">
+                        <h6>Source Details</h6>
+                        <div class="col-md-3 d-flex">
+                          <span class="location-icon">
+                            <img
+                              src="/files/icons8-location-40.png"
+                              alt="Icon"
+                              width="20"
+                              class="icon-img"
+                            />
+                          </span>
+                          <select
+                            class="form-select"
+                            id="from_location"
+                            name="from_location"
+                            required
+                          >
+                            <option value="">Select a city...</option>
+                          </select>
+                        </div>
+                        <div
+                          class="col-md-3 hidden"
+                          id="from_location_other_group"
+                        >
+                          <input
+                            class="form-control"
+                            type="text"
+                            id="from_location_other"
+                            name="from_location_other"
+                            placeholder="Other Location"
+                          />
+                          <!--<span class="description">Enter location for 'Other'.</span>-->
+                        </div>
+
+                        <div class="col-md-3">
+                          <div class="input-with-icon">
+                            <input
+                              class="form-control"
+                              type="date"
+                              id="from_date"
+                              name="from_date"
+                              placeholder="Start Date"
+                              required
+                            />
+                            <!-- <i class="fa-regular fa-calendar-days calendar-icon"></i>-->
+                          </div>
+                        </div>
+
+                        <div class="col-md-3">
+                          <input
+                            class="form-control"
+                            type="time"
+                            id="from_time"
+                            name="from_time"
+                            placeholder="Start Time"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div class="row row-padding custom-row-border-bottom">
+                        <h6>Destination Details</h6>
+                        <div class="col-md-3 d-flex">
+                          <span class="location-icon">
+                            <img
+                              src="/files/icons8-location-40 (1).png"
+                              alt="Icon"
+                              width="23"
+                              height="25"
+                              class="icon-img"
+                            />
+                          </span>
+                          <select
+                            class="form-select"
+                            id="to_location"
+                            name="to_location"
+                            required
+                            hx-get="/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.check_submit"
+                            hx-trigger="change"
+                            hx-target="#return-response"
+                            hx-include="[name='allowance_type']"
+                          >
+                            <option value="">Select a city...</option>
+                          </select>
+                        </div>
+                        <div
+                          class="col-md-3 hidden"
+                          id="to_location_other_group"
+                        >
+                          <input
+                            class="form-control"
+                            type="text"
+                            id="to_location_other"
+                            name="to_location_other"
+                            placeholder="Other Location"
+                          />
+
+                          <!--<span class="description">Enter location for 'Other'.</span>-->
+                        </div>
+                        <div class="col-md-3">
+                          <div class="input-with-icon">
+                            <input
+                              class="form-control"
+                              type="date"
+                              id="to_date"
+                              name="to_date"
+                              placeholder="End Date"
+                              required
+                            />
+                            <!-- <i class="fa-regular fa-calendar-days calendar-icon"></i>-->
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <input
+                            class="form-control"
+                            type="time"
+                            id="to_time"
+                            name="to_time"
+                            placeholder="End Time"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row row-padding custom-row-border-bottom">
+                        <div class="col-md-6">
+                          <label for="total_time">Total Time (in hours)</label>
+                          <input
+                            class="form-control"
+                            class="total_time"
+                            id="total_time"
+                            readonly
+                          />
+                        </div>
+
+                        <div class="col-md-6">
+                          <label for="purpose">Purpose of Travel</label>
+                          <input
+                            class="form-control"
+                            id="purpose"
+                            name="purpose"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div class="row row-padding custom-row-border-bottom">
+                        <h6 class="pb-3">Travel Mode Details</h6>
+                        <div class="col-md-3">
+                          <select
+                            class="form-select form-control"
+                            id="travel_mode"
+                            name="travel_mode"
+                            required
+                          >
+                            <option value="">Select Travel mode</option>
+                            <option value="Bike">Bike</option>
+                            <option value="Train">Train</option>
+                            <option value="Bus">Bus</option>
+                            <option value="Car">Car</option>
+                            <option value="Auto">Auto</option>
+                            <option value="Cab">Cab</option>
+                          </select>
+                        </div>
+                        <!-- Total km field (hidden by default) -->
+                        <div class="col-md-3 hidden" id="total_km_group">
+                          <input
+                            class="form-control"
+                            type="number"
+                            id="total_km"
+                            name="total_km"
+                          />
+                          <small
+                            class="form-text text-muted"
+                            style="margin-left: 5px"
+                          >
+                            Enter Total Kilometer
+                          </small>
+                        </div>
+                        <!-- Ticket Amount field (hidden by default) -->
+                        <div class="col-md-3 hidden" id="ticket_amount_group">
+                          <input
+                            class="form-control"
+                            type="number"
+                            id="ticket_amount"
+                            name="ticket_amount"
+                          />
+                          <small
+                            class="form-text text-muted"
+                            style="margin-left: 5px"
+                          >
+                            Enter Ticket Amount
+                          </small>
+                        </div>
+                        <div class="col-md-3 hidden" id="upload_ticket_group">
+                          <!--<label for="attachment">Upload Ticket </label>-->
+                          <input
+                            class="form-control"
+                            type="file"
+                            id="upload_ticket"
+                            name="upload_ticket"
+                            accept=".pdf,.jpg,.jpeg,.png"
+                          />
+                          <small
+                            class="form-text text-muted"
+                            style="margin-left: 5px"
+                          >
+                            Upload Ticket
+                          </small>
+                        </div>
+                      </div>
+
+                      <div class="row row-padding custom-row-border-bottom">
+                        <h6 class="pb-3">Allowances Details:</h6>
+                        <div class="col-md-3">
+                          <select
+                            class="form-select"
+                            id="allowance_type"
+                            name="allowance_type"
+                            required
+                          >
+                            <option value="">Select Allowances</option>
+                            <option value="DA">DA</option>
+                            <option value="Halting">Halting</option>
+                            <option value="Lodging">Lodging</option>
+                            <option value="DA and Lodging">
+                              DA and Lodging
+                            </option>
+                          </select>
+                        </div>
+
+                        <!-- Lodging Amount field (hidden by default) -->
+                        <div class="col-md-3 hidden" id="lodging_amount_group">
+                          <input
+                            class="form-control"
+                            type="number"
+                            id="lodging_amount"
+                            name="lodging_amount"
+                          />
+                          <small
+                            class="form-text text-muted"
+                            style="margin-left: 5px"
+                          >
+                            Enter Lodging Amount
+                          </small>
+                        </div>
+                        <!-- Total Days Stay in Lodge field (hidden by default) -->
+                        <div class="col-md-3 hidden" id="day_stay_lodge_group">
+                          <input
+                            class="form-control"
+                            type="number"
+                            id="day_stay_lodge"
+                            name="day_stay_lodge"
+                          />
+                          <small
+                            class="form-text text-muted"
+                            style="margin-left: 5px"
+                          >
+                            Enter Total Days Stay in Lodge (e.g., 1, 2, 3...).
+                          </small>
+                        </div>
+                        <div class="col-md-3 hidden" id="upload_lodging_group">
+                          <input
+                            class="form-control"
+                            type="file"
+                            id="upload_lodging"
+                            name="upload_lodging"
+                            accept=".pdf,.jpg,.jpeg,.png"
+                          />
+                          <small
+                            class="form-text text-muted"
+                            style="margin-left: 5px"
+                          >
+                            Upload Lodging Bill
+                          </small>
+                        </div>
+                      </div>
+
+                      <div class="row row-padding">
+                        <div class="col">
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              id="local_conveyance"
+                              name="local_conveyance"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="right"
+                            />
+                            <label
+                              class="form-check-label"
+                              for="local_conveyance"
+                            >
+                              Local Conveyance
+                            </label>
+                            <br />
+                            <small class="form-text text-muted">
+                              Check this box if you have local travel expenses
+                              during your trip (e.g., taxi, auto).
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row row-padding">
+                        <!-- Local Conveyance Form Container (initially hidden) -->
+                        <div id="local-container" class="hidden" inert>
+                          <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                              <thead class="table-light">
+                                <tr>
+                                  <th style="width: 10%">Date</th>
+                                  <th style="width: 15%">From</th>
+                                  <th style="width: 15%">To</th>
+                                  <th style="width: 20%">Purpose</th>
+                                  <th style="width: 20%">Travel Mode</th>
+                                  <th style="width: 10%">Amount</th>
+                                  <th style="width: 10%">Action</th>
+                                </tr>
+                              </thead>
+                              <tbody id="local-conveyance-body">
+                                <!-- Rows will be added here dynamically -->
+                              </tbody>
+                            </table>
+                          </div>
+                          <button
+                            type="button"
+                            id="add_row_btn"
+                            class="btn btn-primary"
+                            aria-label="Add a new row to the table"
+                          >
+                            Add Row
+                          </button>
+                        </div>
+                      </div>
+
+                      <div class="row row-padding custom-border hidden">
+                        <div class="col-md-3 hidden" id="fare_amount_group">
+                          <label for="fare_amount">Fare Amount</label>
+                          <input
+                            class="form-control"
+                            type="number"
+                            id="fare_amount"
+                            name="fare_amount"
+                            readonly
+                          />
+                        </div>
+                        <!-- Add a placeholder to show the final DA amount -->
+                        <div class="col-md-3 hidden" id="da_amount_group">
+                          <label for="final_da_amount">DA Amount</label>
+                          <input
+                            class="form-control"
+                            id="final_da_amount"
+                            name="final_da_amount"
+                            readonly
+                          />
+                        </div>
+                        <!-- Final Lodging Amount field (hidden by default) -->
+                        <div
+                          class="col-md-3 hidden"
+                          id="final_lodge_amount_group"
+                        >
+                          <label for="final_lodge_amount"
+                            >Total Lodging Amount</label
+                          >
+                          <input
+                            class="form-control"
+                            type="number"
+                            id="final_lodge_amount"
+                            name="final_lodge_amount"
+                            readonly
+                          />
+                        </div>
+                        <!-- Final Halting Amount field (hidden by default) -->
+                        <div
+                          class="col-md-3 hidden"
+                          id="final_halt_amount_group"
+                        >
+                          <label for="final_halt_amount">Halting Amount</label>
+                          <input
+                            class="form-control"
+                            type="number"
+                            id="final_halt_amount"
+                            name="final_halt_amount"
+                            readonly
+                          />
+                        </div>
+                        <div
+                          class="col-md-3 hidden"
+                          id="final_local_amount_group"
+                        >
+                          <label for="local_amount"
+                            >Local Conveyance Amount</label
+                          >
+                          <input
+                            class="form-control"
+                            type="number"
+                            id="final_local_amount"
+                            name="final_local_amount"
+                            readonly
+                          />
+                        </div>
+
+                        <div class="col-md-3 hidden" id="tatal_amount_group">
+                          <label for="total_amount">Total Amount</label>
+                          <input
+                            class="form-control"
+                            type=""
+                            id="total_amount"
+                            name="total_amount"
+                            readonly
+                          />
+                        </div>
+                      </div>
+                      <!--For client side to show amount summary to user-->
+                      <div class="amount-summary hidden" id="amount-summary">
+                        <h6 class="summary-heading">Allowances Summary:</h6>
+                        <p id="fare_amount_summary" class="summary-item hidden">
+                          Fare Amount: <span class="amount-value"></span>
+                        </p>
+                        <p id="da_amount_summary" class="summary-item hidden">
+                          DA Amount: <span class="amount-value"></span>
+                        </p>
+                        <p
+                          id="final_lodge_amount_summary"
+                          class="summary-item hidden"
+                        >
+                          Lodging Amount: <span class="amount-value"></span>
+                        </p>
+                        <p
+                          id="final_halt_amount_summary"
+                          class="summary-item hidden"
+                        >
+                          Halting Amount: <span class="amount-value"></span>
+                        </p>
+                        <p
+                          id="final_local_amount_summary"
+                          class="summary-item hidden"
+                        >
+                          Local Conveyance Amount:
+                          <span class="amount-value"></span>
+                        </p>
+                        <hr />
+                        <p
+                          id="total_amount_summary"
+                          class="summary-item hidden"
+                        >
+                          Total Amount: <span class="amount-value"></span>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col text-center">
+                        <button
+                          type="submit"
+                          class="add-button"
+                          id="add-button"
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--For user info only-->
+        <p id="total_duration" class="hidden"></p>
+        <p id="fare" class="hidden"></p>
+        <p id="da"></p>
+        <p id="halt"></p>
+        <p id="lodge"></p>
+
+        <!-- Display Total Amount -->
+        <div id="total-amount" class="hidden">Total Amount: 0</div>
+
+        <!--for calculations hidden for end user (Important for backend calculation)-->
+        <p id="da-amount" class="hidden"></p>
+        <p id="lodging-amount" class="hidden"></p>
+        <p id="halting-amount" class="hidden"></p>
+        <div id="return-response" class="hidden"></div>
+
+        <!-- Response Container for Feedback -->
+        <div id="response-container"></div>
+
+        <!-- Overlay HTML -->
+        <div id="please-wait-overlay" style="display: none">
+          <div class="overlay-content">
+            <p>Please wait...</p>
+          </div>
+        </div>
+
+        <!-- Popup HTML to show local conveyance child table -->
+        <div id="local-conveyance-popup" class="dynamic-popup">
+          <div class="dynamic-popup-content">
+            <span class="dynamic-popup-close-btn">&times;</span>
+            <h4>Local Conveyance Details</h4>
+            <div id="local-conveyance-container"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="no-reports" style="display: none">
+      <h2>You don't have any reports.</h2>
+    </div>
+
+    {% else %} {% include "/templates/includes/not-found.html" %} {% endif %}
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+      //Check TA category is set or not...onload event
+      checkTACategory();
+
+      async function checkTACategory() {
+        try {
+          // Perform the fetch request to call the server method
+          const response = await fetch(
+            `/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.check_ta_category`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          const data = await response.json();
+          console.log(data);
+
+          if (data) {
+            if (data.message.error) {
+              // Display SweetAlert message for errors
+              Swal.fire({
+                icon: "warning",
+                title: "TA Category Issue",
+                text: data.message.error,
+                confirmButtonText: "OK",
+              }).then(() => {
+                document.getElementById("travelFormModal").style.display =
+                  "none";
+
+                // Use jQuery to hide the backdrop
+                $(".modal-backdrop").remove(); // Remove the backdrop
+              });
+            } else {
+              // Optionally handle successful response here
+              console.log("TA Category check:", data.success);
+              // Show the modal only if TA Category check is successful
+            }
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "No response received from the server.",
+              confirmButtonText: "OK",
+            });
+          }
+        } catch (error) {
+          console.error("Fetch error:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Fetch Error",
+            text: "There was an error contacting the server.",
+            confirmButtonText: "OK",
+          });
+        }
+      }
+
+      //function to logout session
+      document
+        .querySelector(".logout-btn")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+
+          fetch("/api/method/logout", {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          })
+            .then((response) => {
+              if (response.ok) {
+                console.log("Logged out successfully");
+                // Redirect to the #login section
+                window.location.replace("/login"); // Use replace to prevent going back to the previous page
+              } else {
+                console.error("Failed to log out");
+              }
+            })
+            .catch((error) => {
+              console.error("Error during logout:", error);
+            });
+        });
+
+      // Function to toggle sections visibility
+      function toggleSection(showSectionId, hideSectionId, activeTabId) {
+        const showSection = document.getElementById(showSectionId);
+        const hideSection = document.getElementById(hideSectionId);
+
+        if (showSection.style.display === "none") {
+          showSection.style.display = "block";
+          hideSection.style.display = "none";
+        }
+
+        setActiveTab(activeTabId);
+      }
+
+      // Function to remove "active" class from all tabs and add it to the clicked tab
+      function setActiveTab(activeTabId) {
+        // Get all sidebar links
+        const tabs = document.querySelectorAll(".nav-link.tab");
+
+        // Remove "active" class from all tabs
+        tabs.forEach(function (tab) {
+          tab.classList.remove("active");
+        });
+
+        // Add "active" class to the clicked tab
+        const activeTab = document.getElementById(activeTabId);
+        if (activeTab) {
+          activeTab.classList.add("active");
+        }
+      }
+
+      // Event listener for "Home" link
+      document
+        .getElementById("my-travel")
+        .addEventListener("click", function (event) {
+          event.preventDefault(); // Prevent the default anchor behavior
+          toggleSection("ta-records-tbl", "ta-request", "my-travel");
+        });
+
+      // Event listener for "Requests" link
+      document
+        .getElementById("requests")
+        .addEventListener("click", function (event) {
+          event.preventDefault(); // Prevent the default anchor behavior
+          toggleSection("ta-request", "ta-records-tbl", "requests");
+        });
+
+      var tooltipTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      );
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+      });
+
+      /* for Local conveyance functionality of hide or unhide on check*/
+      document.addEventListener("DOMContentLoaded", function () {
+        const checkbox = document.getElementById("local_conveyance");
+        const container = document.getElementById("local-container");
+        const tbody = document.getElementById("local-conveyance-body");
+        const addRowButton = document.getElementById("add_row_btn");
+
+        // Replace these with the actual IDs or selectors for your from_date and to_date inputs
+        const fromDateInput = document.getElementById("from_date");
+        const toDateInput = document.getElementById("to_date");
+
+        function createRow() {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+              <td><input type="date" name="local_date[]" class="form-control form-control-sm local-date"></td>
+              <td><input type="text" name="from_local[]" class="form-control form-control-sm"></td>
+              <td><input type="text" name="to_local[]" class="form-control form-control-sm"></td>
+              <td><input type="text" name="purpose[]" class="form-control form-control-sm"></td>
+              <td>
+                  <select name="local_travel_mode[]" class="form-select form-select-sm">
+                      <option value="">Select</option>
+                      <option value="Auto">Auto</option>
+                      <option value="Cab">Cab</option>
+                      <option value="Public Transport">Public Transport</option>
+                  </select>
+              </td>
+              <td><input type="number" name="local_amt[]" class="form-control form-control-sm local-amt"></td>
+              <td><button type="button" class="btn btn-danger btn-sm remove-row-button">Remove</button></td>
+          `;
+          return row;
+        }
+
+        function addRow() {
+          tbody.appendChild(createRow());
+          addLocalConveyanceEventListeners();
+        }
+
+        function clearLocalConveyanceRows() {
+          // Remove all rows
+          while (tbody.children.length > 0) {
+            tbody.removeChild(tbody.lastChild);
+          }
+          // Optionally add a new empty row for next use
+          tbody.appendChild(createRow());
+          calculateTotalLocalAmount(); // Reset total amount
+        }
+
+        function calculateTotalLocalAmount() {
+          const localAmtInputs = document.querySelectorAll(".local-amt");
+          let totalLocalAmount = 0;
+
+          localAmtInputs.forEach((input) => {
+            const amount = parseFloat(input.value) || 0;
+            totalLocalAmount += amount;
+          });
+
+          // Update the final local amount input field
+          document
+            .getElementById("final_local_amount_group")
+            .classList.remove("hidden");
+          document.getElementById("final_local_amount").value =
+            totalLocalAmount;
+
+          document
+            .getElementById("final_local_amount_summary")
+            .classList.remove("hidden");
+          document.querySelector(
+            `#final_local_amount_summary .amount-value`
+          ).textContent = "₹" + totalLocalAmount.toFixed(2);
+
+          calculateTotalAmount();
+        }
+
+        function validateDate(date) {
+          const fromDate = new Date(fromDateInput.value);
+          const toDate = new Date(toDateInput.value);
+          const inputDate = new Date(date);
+          return inputDate >= fromDate && inputDate <= toDate;
+        }
+
+        function toggleRequiredAttributes(isRequired) {
+          const localInputs = document.querySelectorAll(
+            "#local-conveyance-body input, #local-conveyance-body select"
+          );
+          localInputs.forEach((input) => {
+            if (isRequired) {
+              input.setAttribute("required", "required");
+            } else {
+              input.removeAttribute("required");
+            }
+          });
+        }
+
+        function addLocalConveyanceEventListeners() {
+          const localAmtInputs = document.querySelectorAll(".local-amt");
+          localAmtInputs.forEach((input) => {
+            input.addEventListener("input", calculateTotalLocalAmount);
+          });
+
+          const localDateInputs = document.querySelectorAll(".local-date");
+          localDateInputs.forEach((input) => {
+            input.addEventListener("change", function () {
+              if (!validateDate(this.value)) {
+                alert('Date must be between the "From Date" and "To Date".');
+                this.value = ""; // Clear the invalid date
+              }
+            });
+          });
+        }
+
+        checkbox.addEventListener("change", function () {
+          if (this.checked) {
+            container.classList.remove("hidden");
+            container.removeAttribute("inert");
+            if (tbody.children.length === 0) {
+              addRow();
+            }
+            toggleRequiredAttributes(true);
+          } else {
+            container.classList.add("hidden");
+            container.setAttribute("inert", "");
+            clearLocalConveyanceRows();
+            toggleRequiredAttributes(false);
+          }
+        });
+
+        addRowButton.addEventListener("click", addRow);
+
+        tbody.addEventListener("click", function (e) {
+          if (e.target.classList.contains("remove-row-button")) {
+            if (tbody.children.length > 1) {
+              e.target.closest("tr").remove();
+              calculateTotalLocalAmount(); // Update total after row removal
+            } else {
+              alert("You cannot remove the last row.");
+            }
+          }
+        });
+
+        // Initialize event listeners for existing rows
+        addLocalConveyanceEventListeners();
+      });
+
+      // form submit to create ta record
+      async function handleFormSubmit(event) {
+        event.preventDefault(); // Prevent default form submission behavior
+
+        const form = event.target;
+        const submitButton = document.getElementById("add-button");
+        submitButton.disabled = true; // Disable the button to prevent multiple submissions
+        const formData = new FormData();
+
+        // Append text fields
+        formData.append(
+          "from_location",
+          document.getElementById("from_location").value
+        );
+        formData.append(
+          "to_location",
+          document.getElementById("to_location").value
+        );
+        formData.append(
+          "from_date",
+          document.getElementById("from_date").value
+        );
+        formData.append(
+          "from_time",
+          document.getElementById("from_time").value
+        );
+        formData.append("to_date", document.getElementById("to_date").value);
+        formData.append("to_time", document.getElementById("to_time").value);
+        formData.append(
+          "total_time",
+          document.getElementById("total_time").value
+        );
+        formData.append("purpose", document.getElementById("purpose").value);
+        formData.append(
+          "travel_mode",
+          document.getElementById("travel_mode").value
+        );
+        formData.append("total_km", document.getElementById("total_km").value);
+        formData.append(
+          "ticket_amount",
+          document.getElementById("ticket_amount").value
+        );
+        formData.append(
+          "fare_amount",
+          document.getElementById("fare_amount").value
+        );
+        formData.append(
+          "allowance_type",
+          document.getElementById("allowance_type").value
+        );
+        formData.append(
+          "final_da_amount",
+          document.getElementById("final_da_amount").value
+        );
+        formData.append(
+          "lodging_amount",
+          document.getElementById("lodging_amount").value
+        );
+        formData.append(
+          "day_stay_lodge",
+          document.getElementById("day_stay_lodge").value
+        );
+        formData.append(
+          "final_lodge_amount",
+          document.getElementById("final_lodge_amount").value
+        );
+        formData.append(
+          "final_halt_amount",
+          document.getElementById("final_halt_amount").value
+        );
+        formData.append(
+          "final_local_amount",
+          document.getElementById("final_local_amount").value
+        );
+        formData.append(
+          "total_amount",
+          document.getElementById("total_amount").value
+        );
+
+        // Append file inputs
+        const uploadTicketFile =
+          document.getElementById("upload_ticket").files[0];
+        if (uploadTicketFile) {
+          formData.append("upload_ticket", uploadTicketFile);
+        }
+
+        const uploadLodgingFile =
+          document.getElementById("upload_lodging").files[0];
+        if (uploadLodgingFile) {
+          formData.append("upload_lodging", uploadLodgingFile);
+        }
+
+        // Collect local conveyance data only if the checkbox is checked
+        if (document.querySelector("#local_conveyance").checked) {
+          const localConveyanceRows = document.querySelectorAll(
+            "#local-conveyance-body tr"
+          );
+          const localConveyanceData = [];
+          let hasInvalidFields = false; // Flag to check if any field is invalid
+
+          localConveyanceRows.forEach((row) => {
+            const date = row.querySelector('input[name="local_date[]"]').value;
+            const from = row.querySelector('input[name="from_local[]"]').value;
+            const to = row.querySelector('input[name="to_local[]"]').value;
+            const purpose = row.querySelector('input[name="purpose[]"]').value;
+            const mode = row.querySelector(
+              'select[name="local_travel_mode[]"]'
+            ).value;
+            const amount = row.querySelector('input[name="local_amt[]"]').value;
+
+            if (date && from && to && purpose && mode && amount) {
+              localConveyanceData.push({
+                local_date: date,
+                from_local: from,
+                to_local: to,
+                purpose: purpose,
+                local_travel_mode: mode,
+                local_amt: amount,
+              });
+            } else {
+              hasInvalidFields = true;
+            }
+          });
+
+          /*if (hasInvalidFields) {
+            await Swal.fire({
+              title: "Error",
+              text: "Some local conveyance fields are missing or invalid. Please check and try again.",
+              icon: "error",
+            });
+            submitButton.disabled = false;
+            return;
+          }*/
+
+          formData.append(
+            "local_conveyance",
+            JSON.stringify(localConveyanceData)
+          );
+          formData.append("local_conveyance_count", localConveyanceData.length);
+        } else {
+          // Handle the case where the checkbox is not checked
+          formData.append("local_conveyance", JSON.stringify([]));
+          formData.append("local_conveyance_count", 0);
+        }
+
+        try {
+          // Log formData entries for debugging
+          for (const [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+          }
+
+          // Get the total amount from the form
+          const totalAmount = formData.get("total_amount");
+
+          // Show confirmation dialog
+          const confirmation = await Swal.fire({
+            title: "Confirm Submission",
+            text: `Total Amount: ${totalAmount}. Do you want to proceed?`,
+            icon: "info",
+            showCancelButton: true,
+            confirmButtonText: "Yes, submit",
+            cancelButtonText: "No, cancel",
+          });
+
+          if (confirmation.isConfirmed) {
+            // Make the POST request using Fetch API
+            const response = await fetch(
+              "/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.create_record",
+              {
+                method: "POST",
+                body: formData, // Use FormData object
+              }
+            );
+            // Log the response
+            const result = await response.json();
+            console.log("Server response:", result);
+
+            // Handle the response
+            if (result.message.status === "success") {
+              await Swal.fire({
+                title: "Success",
+                text: "Your TA has been added successfully!",
+                icon: "success",
+              });
+
+              form.reset(); // Clear the form
+              fetchData(); // Fetch updated data
+              resetSelectElements(); // Reset select elements to default
+              hideConditionalElements(); // Hide elements that were conditionally shown
+
+              // Show "Please wait" overlay
+              document.getElementById("please-wait-overlay").style.display =
+                "flex";
+
+              // Wait for 2 seconds before refreshing the page
+              setTimeout(() => {
+                location.reload(); // Refresh the page
+              }, 2000); // Delay of 2000 milliseconds (2 seconds)
+            } else {
+              await Swal.fire({
+                title: "Error",
+                text: result.message || "Submission failed. Please try again.",
+                icon: "error",
+              });
+            }
+          } else {
+            await Swal.fire({
+              title: "Cancelled",
+              text: "Your submission has been cancelled.",
+              icon: "info",
+            });
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          await Swal.fire({
+            title: "Error",
+            text: "Submission failed. Please try again.",
+            icon: "error",
+          });
+        } finally {
+          submitButton.disabled = false; // Re-enable the button
+        }
+      }
+
+      // Reset select elements to their default option
+      function resetSelectElements() {
+        document.querySelectorAll("#travel-form select").forEach((select) => {
+          select.selectedIndex = 0;
+        });
+      }
+
+      // Hide conditionally shown elements
+      function hideConditionalElements() {
+        document.querySelectorAll(".hidden").forEach((element) => {
+          element.style.display = "none";
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", async function () {
+        const cityNames = await fetchCityCategories();
+        console.log("City Names:", cityNames); // Log the city names
+        populateCityDropdown(cityNames, "from_location");
+        populateCityDropdown(cityNames, "to_location");
+        // Handle changes to the 'from_location' dropdown
+        document
+          .getElementById("from_location")
+          .addEventListener("change", function () {
+            handleOtherOption(this, "from_location_other_group");
+            validateLocations(); // Call validation when from_location changes
+          });
+        // Handle changes to the 'to_location' dropdown
+        document
+          .getElementById("to_location")
+          .addEventListener("change", function () {
+            handleOtherOption(this, "to_location_other_group");
+            validateLocations(); // Call validation when to_location changes
+          });
+      });
+      function validateLocations() {
+        const fromLocation = document.getElementById("from_location");
+        const toLocation = document.getElementById("to_location");
+        const submitButton = document.querySelector('button[type="submit"]');
+        // Check if both locations are the same and not 'Other'
+        if (
+          fromLocation.value === toLocation.value &&
+          fromLocation.value !== "Other"
+        ) {
+          alert("From and To locations cannot be the same.");
+          document.getElementById("to_location").value = "";
+          //toLocation.classList.add("field-error"); // Apply error styling to To location
+          submitButton.disabled = true; // Disable the submit button
+        } else {
+          //toLocation.classList.remove("field-error"); // Remove error styling
+          submitButton.disabled = false; // Enable the submit button
+        }
+      }
+      function handleOtherOption(selectElement, otherFieldGroupId) {
+        const otherFieldGroup = document.getElementById(otherFieldGroupId);
+        const inputField = otherFieldGroup.querySelector("input"); // Find the input field within the group
+        const selectedValue = selectElement.value;
+        // Make the input field readonly or editable based on selection
+        if (selectedValue === "Other") {
+          //inputField.removeAttribute("readonly"); // Make it editable
+          inputField.required = true;
+          otherFieldGroup.classList.remove("hidden");
+        } else {
+          // inputField.value = ""; // Clear the input field
+          // inputField.setAttribute("readonly", "readonly"); // Make it readonly
+          inputField.required = false;
+          otherFieldGroup.classList.add("hidden");
+        }
+      }
+
+      document
+        .getElementById("from_location_other")
+        .addEventListener("change", function () {
+          validateOtherLocations(); // Call validation when to_location changes
+        });
+
+      document
+        .getElementById("to_location_other")
+        .addEventListener("change", function () {
+          validateOtherLocations(); // Call validation when to_location changes
+        });
+      function validateOtherLocations() {
+        const fromLocationOther = document.getElementById(
+          "from_location_other"
+        ).value;
+        const toLocationOther =
+          document.getElementById("to_location_other").value;
+        if (fromLocationOther === toLocationOther) {
+          alert(
+            "From and To locations cannot be the same when 'Other' is selected."
+          );
+          document.getElementById("to_location_other").value = "";
+          submitButton.disabled = true; // Disable the submit button
+        } else {
+          //removeTooltip(toLocation); // Remove error styling
+          submitButton.disabled = false; // Enable the submit button
+        }
+      }
+
+      // Get city category doctype to access cities of destination
+      async function fetchCityCategories() {
+        try {
+          const response = await fetch(
+            "/api/method/travel_allowance.travel_allowance.doctype.city_category.city_category.get_city_categories"
+          );
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const data = await response.json();
+          // Log the response for debugging
+          console.log("API Response:", data.message);
+          if (data.message.status === "success") {
+            // Extract and return only the city names
+            const cityNames = data.message.message.map((item) => item.city);
+            return cityNames;
+          } else {
+            console.error("Error fetching city categories:", data.message);
+            return [];
+          }
+        } catch (error) {
+          console.error("Error fetching city categories:", error);
+          return [];
+        }
+      }
+      function populateCityDropdown(cityNames, dropdownId) {
+        const dropdown = document.getElementById(dropdownId);
+        // Clear existing options
+        dropdown.innerHTML = '<option value="">Select a city...</option>';
+        cityNames.forEach((city) => {
+          const option = document.createElement("option");
+          option.value = city; // Use the city name for the value
+          option.textContent = city; // Use the city name for display
+          dropdown.appendChild(option);
+        });
+        // Add 'Other' option if it does not exist
+        if (![...dropdown.options].some((option) => option.value === "Other")) {
+          const otherOption = document.createElement("option");
+          otherOption.value = "Other";
+          otherOption.textContent = "Other";
+          dropdown.appendChild(otherOption);
+        }
+      }
+
+      // Function for calculating total duration time of travel
+      async function calculateTotalDuration() {
+        const fromDate = document.getElementById("from_date").value;
+        const fromTime = document.getElementById("from_time").value;
+        const toDate = document.getElementById("to_date").value;
+        const toTime = document.getElementById("to_time").value;
+
+        if (fromDate && fromTime && toDate && toTime) {
+          const startDateTime = new Date(`${fromDate}T${fromTime}`);
+          const endDateTime = new Date(`${toDate}T${toTime}`);
+
+          // Client-side validation
+          if (startDateTime > endDateTime) {
+            alert("Start date-time should not be greater than end date-time.");
+            document.getElementById("to_time").value = ""; // Reset the to_time field
+            document.getElementById("to_date").value = "";
+            return;
+          }
+
+          // Check if the start and end times are the same
+          if (startDateTime.getTime() === endDateTime.getTime()) {
+            alert("Start time and end time should not be the same.");
+            document.getElementById("to_time").value = ""; // Reset the to_time field
+            document.getElementById("to_date").value = "";
+            return;
+          }
+
+          try {
+            // Send data to the server for further validation and calculation
+            const response = await fetch(
+              "/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.calculate_total_duration",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  from_date: fromDate,
+                  from_time: fromTime,
+                  to_date: toDate,
+                  to_time: toTime,
+                }),
+              }
+            );
+
+            const data = await response.json();
+
+            // Check if response contains the expected structure
+            if (response.ok && data.message) {
+              if (data.message.status === "success") {
+                document.getElementById("total_time").value =
+                  data.message.total_hours || "N/A";
+                document.getElementById(
+                  "total_duration"
+                ).textContent = `Total Duration: ${
+                  data.total_duration || "N/A"
+                }`;
+
+                allowanceTypeSelect();
+              } else {
+                // Display error message from the server
+                alert(
+                  data.message.error || "An error occurred during calculation."
+                );
+                document.getElementById("to_time").value = ""; // Reset the to_time field
+              }
+            } else {
+              alert("Unexpected response from server.");
+              document.getElementById("to_time").value = ""; // Reset the to_time field
+            }
+          } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred while calculating the total duration.");
+            document.getElementById("to_time").value = ""; // Reset the to_time field
+          }
+        }
+      }
+
+      // Function to fetch and update allowance amounts in p tag
+      function fetchAndUpdateAllowances() {
+        const allowanceType = document.getElementById("allowance_type").value;
+        const toLocation = document.getElementById("to_location").value;
+        if (allowanceType || toLocation) {
+          fetch(
+            `/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.check_submit?to_location=${encodeURIComponent(
+              toLocation
+            )}`
+          )
+            .then((response) => response.json())
+            .then((data) => {
+              if (data) {
+                const allowancesData = data.message;
+                console.log("Allowances:", allowancesData);
+                // Extract and set DA amount
+                const daAmount = allowancesData.DA || "No DA amount available";
+                document.getElementById(
+                  "da-amount"
+                ).textContent = `DA Amount: ${daAmount}`;
+                // Extract and set Lodging amount
+                const lodgingAmount =
+                  allowancesData.Lodging || "No Lodging amount available";
+                document.getElementById(
+                  "lodging-amount"
+                ).textContent = `Lodging Amount: ${lodgingAmount}`;
+                // Extract and set Halting amount
+                const haltingAmount =
+                  allowancesData.Halting || "No Halting amount available";
+                document.getElementById(
+                  "halting-amount"
+                ).textContent = `Halting Amount: ${haltingAmount}`;
+                calculateTotalDuration();
+                allowanceTypeSelect();
+              } else {
+                console.error("Error fetching allowances:", data.error);
+              }
+            })
+            .catch((error) => {
+              console.error("Fetch error:", error);
+            });
+        }
+      }
+
+      // Event listeners on to_location field( destination input field)
+      document
+        .getElementById("to_location")
+        .addEventListener("change", fetchAndUpdateAllowances);
+
+      // Event listeners for handling the travel mode section and calculate fare amount
+      document.addEventListener("DOMContentLoaded", function () {
+        const travelMode = document.getElementById("travel_mode");
+        const allowanceType = document.getElementById("allowance_type");
+        const fromLocation = document.getElementById("from_location");
+        const toLocation = document.getElementById("to_location");
+        const fromDate = document.getElementById("from_date");
+        const fromTime = document.getElementById("from_time");
+        const toDate = document.getElementById("to_date");
+        const toTime = document.getElementById("to_time");
+        const totalKmGroup = document.getElementById("total_km_group");
+        const ticketAmountGroup = document.getElementById(
+          "ticket_amount_group"
+        );
+        const totalKmInput = document.getElementById("total_km");
+        const ticketAmountInput = document.getElementById("ticket_amount");
+        const lodgingAmountGroup = document.getElementById(
+          "lodging_amount_group"
+        );
+        const dayStayLodgeGroup = document.getElementById(
+          "day_stay_lodge_group"
+        );
+        const finalLodgingAmount = document.getElementById(
+          "final_lodge_amount_summary"
+        );
+        const finalHaltingAmount = document.getElementById(
+          "final_halt_amount_summary"
+        );
+
+        const finalDaAmount = document.getElementById("da_amount_summary");
+        const lodgingAmount = document.getElementById("lodging_amount");
+
+        const dayStayLodgeInput = document.getElementById("day_stay_lodge");
+        const uploadTicketGroup = document.getElementById(
+          "upload_ticket_group"
+        );
+        const uploadTicketInput = document.getElementById("upload_ticket");
+
+        const uploadLodgingGroup = document.getElementById(
+          "upload_lodging_group"
+        );
+        const uploadLodgingInput = document.getElementById("upload_lodging");
+        // Add event listener to travel mode dropdown
+        travelMode.addEventListener("change", function () {
+          const selectedValue = this.value;
+          // Check if locations and dates are filled
+          if (!fromLocation.value || !toLocation.value) {
+            alert("Please select the locations first.");
+            travelMode.value = ""; // Reset the dropdown selection
+            return;
+          }
+          if (
+            !fromDate.value ||
+            !fromTime.value ||
+            !toDate.value ||
+            !toTime.value
+          ) {
+            // If any of the date or time fields are empty, show an alert and reset the dropdown
+            alert(
+              "Please fill in all date and time fields before selecting a travel mode."
+            );
+            travelMode.value = ""; // Reset the dropdown selection
+            return;
+          }
+          // Show/hide fields based on travel mode
+          if (selectedValue === "Bike" || selectedValue === "Car") {
+            document.getElementById("ticket_amount").value = 0;
+            totalKmGroup.classList.remove("hidden");
+            ticketAmountGroup.classList.add("hidden");
+            uploadTicketGroup.classList.add("hidden");
+            totalKmInput.required = true; // Make total km input mandatory
+            ticketAmountInput.required = false; // Remove requirement from ticket amount
+            uploadTicketInput.required = false;
+          } else if (selectedValue === "Train" || selectedValue === "Bus") {
+            document.getElementById("total_km").value = 0;
+            ticketAmountGroup.classList.remove("hidden");
+            uploadTicketGroup.classList.remove("hidden");
+            totalKmGroup.classList.add("hidden");
+            ticketAmountInput.required = true; // Make ticket amount input mandatory
+            totalKmInput.required = false; // Remove requirement from total km
+            uploadTicketInput.required = true;
+          } else {
+            document.getElementById("ticket_amount").value = 0;
+            document.getElementById("total_km").value = 0;
+            totalKmGroup.classList.add("hidden");
+            ticketAmountGroup.classList.add("hidden");
+            uploadTicketGroup.classList.add("hidden");
+            totalKmInput.required = false; // Remove requirement
+            ticketAmountInput.required = false; // Remove requirement
+            uploadTicketInput.required = false;
+          }
+          // Calculate fare amount based on mode of travel
+          calculateFareAmount(selectedValue);
+        });
+        // Add event listener to input fields for recalculation
+        totalKmInput.addEventListener("input", function () {
+          calculateFareAmount(travelMode.value);
+        });
+        ticketAmountInput.addEventListener("input", function () {
+          calculateFareAmount(travelMode.value);
+        });
+        // Function to calculate fare amount
+        function calculateFareAmount(mode) {
+          let fareAmount = 0;
+          if (mode === "Bike" || mode === "Car") {
+            const totalKm = parseFloat(totalKmInput.value);
+            if (!isNaN(totalKm)) {
+              if (mode === "Bike") {
+                fareAmount = totalKm * 4; // 4 Rs per km for bike
+              } else if (mode === "Car") {
+                fareAmount = totalKm * 10; // 10 Rs per km for car
+              }
+            }
+          } else if (mode === "Train" || mode === "Bus") {
+            const ticketAmount = parseFloat(ticketAmountInput.value);
+            if (!isNaN(ticketAmount)) {
+              fareAmount = ticketAmount; // Use ticket amount as fare
+            }
+          }
+          // Display fare amount
+          console.log(`Fare Amount: ${fareAmount} Rs`);
+          document
+            .getElementById("fare_amount_group")
+            .classList.remove("hidden");
+          document.getElementById("fare_amount").value = fareAmount;
+          document.getElementById(
+            "fare"
+          ).textContent = `Fare Amount: ${fareAmount}`;
+          document
+            .getElementById("fare_amount_summary")
+            .classList.remove("hidden");
+          document.querySelector(
+            `#fare_amount_summary .amount-value`
+          ).textContent = "₹" + fareAmount.toFixed(2);
+          calculateTotalAmount();
+        }
+        // Add event listener to allowance type dropdown
+        allowanceType.addEventListener("change", function () {
+          const selectedValue = this.value;
+
+          // Check if locations and dates are filled
+          if (!fromLocation.value || !toLocation.value) {
+            alert("Please select the locations first.");
+            allowanceType.value = ""; // Reset the dropdown selection
+            return;
+          }
+          if (
+            !fromDate.value ||
+            !fromTime.value ||
+            !toDate.value ||
+            !toTime.value
+          ) {
+            // If any of the date or time fields are empty, show an alert and reset the dropdown
+            alert(
+              "Please fill in all date and time fields before selecting an allowance type."
+            );
+            allowanceType.value = ""; // Reset the dropdown selection
+            return;
+          }
+          // Show/hide fields based on allowance type
+          if (selectedValue === "Lodging") {
+            lodgingAmountGroup.classList.remove("hidden");
+            uploadLodgingGroup.classList.remove("hidden");
+            dayStayLodgeGroup.classList.remove("hidden");
+            finalLodgingAmount.classList.remove("hidden");
+            finalHaltingAmount.classList.add("hidden");
+            finalDaAmount.classList.add("hidden");
+            lodgingAmount.required = true;
+            dayStayLodgeInput.required = true;
+            uploadLodgingInput.required = true;
+          } else if (selectedValue === "DA and Lodging") {
+            lodgingAmountGroup.classList.remove("hidden");
+            uploadLodgingGroup.classList.remove("hidden");
+            dayStayLodgeGroup.classList.remove("hidden");
+            finalLodgingAmount.classList.remove("hidden");
+            finalDaAmount.classList.remove("hidden");
+            finalHaltingAmount.classList.add("hidden");
+            lodgingAmount.required = true;
+            dayStayLodgeInput.required = true;
+            uploadLodgingInput.required = true;
+          } else if (selectedValue === "DA") {
+            finalDaAmount.classList.remove("hidden");
+            lodgingAmountGroup.classList.add("hidden");
+            uploadLodgingGroup.classList.add("hidden");
+            dayStayLodgeGroup.classList.add("hidden");
+            finalLodgingAmount.classList.add("hidden");
+            finalHaltingAmount.classList.add("hidden");
+            lodgingAmount.required = false;
+            dayStayLodgeInput.required = false;
+            uploadLodgingInput.required = false;
+          } else if (selectedValue === "Halting") {
+            lodgingAmountGroup.classList.add("hidden");
+            uploadLodgingGroup.classList.add("hidden");
+
+            dayStayLodgeGroup.classList.add("hidden");
+            finalDaAmount.classList.add("hidden");
+            finalLodgingAmount.classList.add("hidden");
+            finalHaltingAmount.classList.remove("hidden");
+            lodgingAmount.required = false;
+            dayStayLodgeInput.required = false;
+            uploadLodgingInput.required = false;
+          } else {
+            lodgingAmountGroup.classList.add("hidden");
+            uploadLodgingGroup.classList.add("hidden");
+            dayStayLodgeGroup.classList.add("hidden");
+            finalDaAmount.classList.add("hidden");
+            finalLodgingAmount.classList.add("hidden");
+            finalHaltingAmount.classList.add("hidden");
+            lodgingAmount.required = false;
+            dayStayLodgeInput.required = false;
+            uploadLodgingInput.required = false;
+          }
+          allowanceTypeSelect();
+        });
+      });
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Fields that should trigger both allowanceTypeSelect and calculateTotalDuration
+        const fields = [
+          "from_date",
+          "from_time",
+          "to_date",
+          "to_time",
+          "to_location",
+          "allowance_type",
+          "travel_mode",
+          "total_km",
+          "ticket_amount",
+          "lodging_amount", // user input amount
+          "day_stay_lodge",
+          "total_time",
+        ];
+
+        // Attach both calculateTotalDuration and allowanceTypeSelect to each field
+        fields.forEach((field) => {
+          const element = document.getElementById(field);
+          if (element) {
+            element.addEventListener("change", function () {
+              calculateTotalDuration(); // Call calculateTotalDuration first
+              allowanceTypeSelect(); // Call allowanceTypeSelect after
+            });
+          }
+        });
+      });
+
+      // Main function to handle allowance type selection
+      function allowanceTypeSelect() {
+        const toLocation = document.getElementById("to_location").value;
+        const allowanceType = document.getElementById("allowance_type").value;
+        if (allowanceType === "DA") {
+          document.getElementById("lodging_amount").value = 0;
+          document.getElementById("final_lodge_amount").value = 0;
+          document.getElementById("final_halt_amount").value = 0;
+          document.getElementById("day_stay_lodge").value = 0;
+
+          calculateDAAmount();
+        } else if (allowanceType === "Lodging") {
+          document.getElementById("final_da_amount").value = 0;
+          document.getElementById("final_halt_amount").value = 0;
+
+          calculateLodgingAmount();
+        } else if (allowanceType === "Halting") {
+          document.getElementById("final_da_amount").value = 0;
+          document.getElementById("lodging_amount").value = 0;
+          document.getElementById("final_lodge_amount").value = 0;
+          document.getElementById("day_stay_lodge").value = 0;
+          calculateHaltingAmount();
+        } else if (allowanceType === "DA and Lodging") {
+          document.getElementById("final_halt_amount").value = 0;
+
+          calculateDAAmount();
+          calculateLodgingAmount();
+        }
+      }
+
+      // calculate total amount
+      function calculateTotalAmount() {
+        // Get input values and parse them as floats
+        const fareAmount =
+          parseFloat(document.getElementById("fare_amount").value) || 0;
+        const daAmount =
+          parseFloat(document.getElementById("final_da_amount").value) || 0;
+        const haltAmount =
+          parseFloat(document.getElementById("final_halt_amount").value) || 0;
+        const lodgeAmount =
+          parseFloat(document.getElementById("final_lodge_amount").value) || 0;
+        const localAmount =
+          parseFloat(document.getElementById("final_local_amount").value) || 0;
+        console.log("fare:", fareAmount);
+        console.log("daAmount:", daAmount);
+        console.log("haltAmount:", haltAmount);
+        console.log("lodgeAmount:", lodgeAmount);
+        console.log("localAmount:", localAmount);
+        // Construct URL with parameters for the server call
+        const url = new URL(
+          "/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.calculate_total_amount",
+          window.location.origin
+        );
+        // Append query parameters
+        url.searchParams.append("fare_amount", fareAmount);
+        url.searchParams.append("da_amount", daAmount);
+        url.searchParams.append("halt_amount", haltAmount);
+        url.searchParams.append("lodge_amount", lodgeAmount);
+        url.searchParams.append("local_amount", localAmount);
+        // Make the request using fetch
+        fetch(url)
+          .then((response) => {
+            // Check if the response is OK and convert it to JSON
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            // Check if the response contains a message with the total amount
+            if (data && data.message !== undefined) {
+              console.log("Total Amount:", data.message.total_amount);
+              const totatAmount = data.message.total_amount;
+              // Update the total amount display in the DOM
+              document.getElementById(
+                "total-amount"
+              ).textContent = `Total Amount: ${totatAmount}`;
+              document
+                .getElementById("amount-summary")
+                .classList.remove("hidden");
+              document
+                .getElementById("tatal_amount_group")
+                .classList.remove("hidden");
+              document.getElementById("total_amount").value = totatAmount;
+
+              document
+                .getElementById("total_amount_summary")
+                .classList.remove("hidden");
+              document.querySelector(
+                `#total_amount_summary .amount-value`
+              ).textContent = "₹" + totatAmount.toFixed(2);
+            } else {
+              // Handle case where response does not contain the expected data
+              console.error("Error fetching total amount:", data);
+              alert("Error calculating total amount. Please try again.");
+              document.getElementById("total_amount").value = 0;
+            }
+          })
+          .catch((error) => {
+            // Handle network or other errors
+            console.error("Fetch error:", error);
+            alert(
+              "An error occurred while calculating the total amount. Please check your connection and try again."
+            );
+          });
+      }
+
+      // Calculates DA amount
+      function calculateDAAmount() {
+        const totalTime = document.getElementById("total_time").value;
+        const daAmountContent =
+          document.getElementById("da-amount").textContent;
+        console.log("DA Amount Content:", daAmountContent);
+        // Extract the numeric value from the DA amount text content
+        const daAmountMatch = daAmountContent.match(
+          /DA Amount:\s*(\d+(\.\d+)?)/
+        );
+        const daAmount = daAmountMatch ? parseFloat(daAmountMatch[1]) : 0; // Use 0 as default
+        // Construct URL with parameters
+        const url = new URL(
+          "/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.calculate_da_amount",
+          window.location.origin
+        );
+        url.searchParams.append("total_time", totalTime);
+        url.searchParams.append("da_amount", daAmount);
+        // Make the request using fetch
+        fetch(url)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data && data.message !== undefined) {
+              console.log("Final DA:", data.message);
+              const daAmount = data.message;
+              document.getElementById("final_da_amount").value = daAmount;
+
+              document
+                .getElementById("da_amount_summary")
+                .classList.remove("hidden");
+              document.querySelector(
+                `#da_amount_summary .amount-value`
+              ).textContent = "₹" + daAmount.toFixed(2);
+
+              calculateTotalAmount();
+            } else {
+              document.getElementById("final_da_amount").value = 0;
+              handleError("Error fetching final DA amount", 0);
+            }
+          })
+          .catch((error) => handleError("Fetch error", error));
+      }
+      // Calculates Lodging amount
+      function calculateLodgingAmount() {
+        const lodgingAmountContent =
+          document.getElementById("lodging_amount").value;
+        const inputLodgingAmount = parseFloat(lodgingAmountContent) || 0;
+        // Extract the numeric value from the lodging-amount text content
+        const lodgingAmountText =
+          document.getElementById("lodging-amount").textContent;
+        const lodgingAmountMatch = lodgingAmountText.match(
+          /Lodging Amount:\s*(\d+(\.\d+)?)/
+        );
+        const lodgingLimit = lodgingAmountMatch
+          ? parseFloat(lodgingAmountMatch[1])
+          : 0;
+        const inputStayDays =
+          parseFloat(document.getElementById("day_stay_lodge").value) || 0;
+        // Retrieve total time duration in hours from the input field
+        const totalTimeContent = document.getElementById("total_time").value;
+        const totalHours = parseFloat(totalTimeContent) || 0;
+        const totalDurationInDays = totalHours / 24; // Convert hours to days
+        console.log("Lodging limit:", lodgingLimit);
+        console.log("Input stay days:", inputStayDays);
+        console.log("Total duration in days:", totalDurationInDays);
+        // Check if inputStayDays exceeds totalDurationDays
+        if (inputStayDays > totalDurationInDays) {
+          console.error("Stay days cannot exceed total duration.");
+          // Optionally, show a user-friendly message on the UI
+          alert(
+            "Total days stay in lodge cannot exceed the total duration of your journey."
+          );
+          document.getElementById("day_stay_lodge").value = 0; // Reset lodging amount
+        } else {
+          // Construct URL with parameters
+          const url = new URL(
+            "/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.calculate_lodging_amount",
+            window.location.origin
+          );
+          url.searchParams.append("input_lodging_amount", inputLodgingAmount);
+          url.searchParams.append("stay_days", inputStayDays);
+          url.searchParams.append("lodging_limit", lodgingLimit); // Send the limit if needed
+          // Make the request using fetch
+          fetch(url)
+            .then((response) => response.json())
+            .then((data) => {
+              if (data && data.message !== undefined) {
+                console.log("Final Lodging Amount:", data.message);
+                const lodgeAmount = data.message;
+                document.getElementById("final_lodge_amount").value =
+                  lodgeAmount;
+                document
+                  .getElementById("final_lodge_amount_summary")
+                  .classList.remove("hidden");
+                document.querySelector(
+                  `#final_lodge_amount_summary .amount-value`
+                ).textContent = "₹" + lodgeAmount.toFixed(2);
+                calculateTotalAmount();
+              } else {
+                handleError("Error fetching final lodging amount", 0);
+              }
+            })
+            .catch((error) => handleError("Fetch error", error));
+        }
+      }
+      function calculateHaltingAmount() {
+        // Extract the numeric value from the lodging-amount text content
+        const haltingAmountText =
+          document.getElementById("halting-amount").textContent;
+        const HaltingAmountMatch = haltingAmountText.match(
+          /Halting Amount:\s*(\d+(\.\d+)?)/
+        );
+        const HaltingLimit = HaltingAmountMatch
+          ? parseFloat(HaltingAmountMatch[1])
+          : 0;
+        // const inputStayDays = parseFloat(document.getElementById("day_stay_halt").value) || 0;
+        // Retrieve total time duration in hours from the input field
+        const totalTimeContent = document.getElementById("total_time").value;
+        const totalHours = parseFloat(totalTimeContent) || 0;
+        const totalDurationInDays = totalHours / 24; // Convert hours to days
+        // Check if inputStayDays exceeds totalDurationDays
+        if (totalHours < 4) {
+          alert(
+            "You are not eligible for DA because your total travel duration is less than 4 hours."
+          );
+          document.getElementById("final_halt_amount").value = 0;
+        } else {
+          // Construct URL with parameters
+          const url = new URL(
+            "/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.calculate_halting_amount",
+            window.location.origin
+          );
+          url.searchParams.append("total_time", totalTimeContent);
+          url.searchParams.append("halting_limit", HaltingLimit); // Send the limit if needed
+          // Make the request using fetch
+          fetch(url)
+            .then((response) => response.json())
+            .then((data) => {
+              if (data && data.message !== undefined) {
+                console.log("Final Halting Amount:", data.message);
+                const haltAmount = data.message;
+                document.getElementById("final_halt_amount").value = haltAmount;
+                document
+                  .getElementById("final_halt_amount_summary")
+                  .classList.remove("hidden");
+                document.querySelector(
+                  `#final_halt_amount_summary .amount-value`
+                ).textContent = "₹" + haltAmount.toFixed(2);
+                calculateTotalAmount();
+              } else {
+                handleError("Error fetching final lodging amount", 0);
+              }
+            })
+            .catch((error) => handleError("Fetch error", error));
+        }
+      }
+      // Handles error logging and updating the final DA amount
+      function handleError(message, defaultValue) {
+        console.error(message);
+        document.getElementById("final_da_amount").value = defaultValue;
+        document.getElementById("final_lodge_amount").value = defaultValue;
+        document.getElementById("final_halt_amount").value = defaultValue;
+      }
+
+      // Initial data fetch ta-records if exists
+      fetchData();
+
+      // Fetch data from server
+      async function fetchData() {
+        try {
+          const response = await fetch(
+            "/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_list"
+          );
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const data = await response.json();
+          console.log("getlist data:", data);
+          const tableData = document.getElementById("taRecordTable");
+          const tableBody = document.querySelector("#taRecordTable tbody");
+          /*const tableData = document.getElementById("excel-canvas");*/
+          const tableHeading = document.getElementById("table-heading");
+          const submitBtn = document.getElementById("ta-submit-btn");
+          const noDataMsg = document.getElementById("no-records-message");
+
+          // Clear previous table data
+          tableBody.innerHTML = "";
+
+          // Check if there are records
+          if (data.message.length === 0) {
+            // No data, display appropriate message
+            tableData.style.display = "none";
+            tableHeading.style.display = "none";
+            submitBtn.style.display = "none";
+            noDataMsg.style.display = "block";
+          } else {
+            // Data exists, populate the table
+            data.message.forEach((record, index) => {
+              const row = document.createElement("tr");
+
+              if (record.status === "Pending") {
+                row.classList.add("pending-row");
+              } else if (record.status === "Approved") {
+                row.classList.add("approved-row");
+              }
+
+              // Create cells for each piece of data
+              row.innerHTML = `
+                      <td>${index + 1}</td> 
+                      <td>
+                        <span class="${
+                          record.status === "Reject" ? "clickable" : ""
+                        }"
+                              onclick="${
+                                record.status === "Reject"
+                                  ? `fetchRejectionReason('${record.name}')`
+                                  : ""
+                              }"
+                              style="${
+                                record.status === "Reject"
+                                  ? "cursor: pointer;"
+                                  : "cursor: default;"
+                              }">
+                          ${record.status}
+                        </span>
+                      </td>
+                      <td>
+                        ${
+                          record.status === "Draft" ||
+                          record.status === "Reject"
+                            ? `<div class="action-btns" data-id="${record.name}">
+                                  <!--<div class="edit-btn" onclick="editRecord('${record.name}')">
+                                    <img src='/files/edit_9351341.png' alt="Edit" width="20">
+                                  </div>-->
+                                  <div class="delete-btn" onclick="deleteRecord('${record.name}')">
+                                    <img src='/files/delete_11540197.png' alt="Delete" width="20">
+                                  </div>
+                               </div>`
+                            : ""
+                        }
+                      </td>
+                    
+                      <td>${record.from_location}</td>
+                      <td>${record.from_date}</td>
+                      <td>${record.from_time}</td>
+                      <td>${record.to_location}</td>
+                      <td>${record.to_date}</td>
+                      <td>${record.to_time}</td>
+                      <td>${record.total_time}</td>
+                      <td>${record.purpose}</td>
+                      <td>${record.travel_mode}</td>
+                      <td>${record.total_km}</td>
+                      <td>${record.ticket_amount}</td>
+                      <td>${record.fare_amount}</td>
+                      <td>${
+                        record.upload_ticket
+                          ? `<a href="${record.upload_ticket}" target="_blank">View</a>`
+                          : "-"
+                      }</td>
+                      <td>${record.allowance_type}</td>
+                      <td>${record.final_da_amount}</td>
+                      <td>${record.final_halt_amount}</td>
+                      <td>${record.final_lodge_amount}</td>
+                      <td>
+                        <span class="clickable-cell"
+                              onclick="${
+                                record.final_local_amount &&
+                                record.final_local_amount.trim() !== "-" &&
+                                parseFloat(record.final_local_amount) !== 0
+                                  ? `fetchLocalConveyance('${record.name}')`
+                                  : ""
+                              }"
+                              title="${
+                                record.final_local_amount &&
+                                record.final_local_amount.trim() !== "-" &&
+                                parseFloat(record.final_local_amount) !== 0
+                                  ? "Click for Local details"
+                                  : ""
+                              }"
+                              style="${
+                                record.final_local_amount &&
+                                record.final_local_amount.trim() !== "-" &&
+                                parseFloat(record.final_local_amount) !== 0
+                                  ? ""
+                                  : "pointer-events: none; color: gray;"
+                              }">
+                          ${record.final_local_amount || "-"}
+                        </span>
+                      </td>
+                    
+                      <td>₹${record.total_amount}</td>
+                      <td>${
+                        record.upload_lodging
+                          ? `<a href="${record.upload_lodging}" target="_blank">View</a>`
+                          : "-"
+                      }</td>
+                      <td class="d-none">${record.name}</td>
+                  `;
+
+              // Append the row to the table body
+              tableBody.appendChild(row);
+            });
+
+            // Show data if present
+            tableData.style.display = "block";
+            tableHeading.style.display = "block";
+            submitBtn.style.display = "block";
+            noDataMsg.style.display = "none";
+          }
+        } catch (error) {
+          console.error("Error fetching data:", error);
+
+          // Optionally display an error message
+          document.getElementById("main-content").innerHTML =
+            "<p>There was an error fetching the data. Please try again later.</p>";
+        }
+      }
+      document.addEventListener("DOMContentLoaded", function () {
+        // Get the close button and the popup container
+        const closeBtn = document.querySelector(".dynamic-popup-close-btn");
+        const popup = document.getElementById("local-conveyance-popup");
+
+        // Add click event listener to the close button
+        closeBtn.addEventListener("click", function () {
+          popup.style.display = "none";
+        });
+
+        // Optionally, close the popup when clicking outside of the popup content
+        popup.addEventListener("click", function (event) {
+          if (event.target === popup) {
+            popup.style.display = "none";
+          }
+        });
+      });
+      // fetch the local conveyance data from child table
+      async function fetchLocalConveyance(recordId) {
+        try {
+          const response = await fetch(
+            `/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_child_records?parent_id=${recordId}`
+          );
+          const result = await response.json();
+
+          // Assuming the response is in the form { message: [...] }
+          const data = result.message;
+
+          const container = document.getElementById(
+            "local-conveyance-container"
+          );
+          container.innerHTML = "";
+
+          if (!data || data.length === 0) {
+            container.textContent = "No local conveyance records found.";
+          } else {
+            const table = document.createElement("table");
+            table.className = "dynamic-table";
+
+            const thead = document.createElement("thead");
+            const trHead = document.createElement("tr");
+
+            // Define the custom headers
+            const headers = [
+              { key: "local_date", label: "Date" },
+              { key: "from_local", label: "From" },
+              { key: "to_local", label: "To" },
+              { key: "local_travel_mode", label: "Travel Mode" },
+              { key: "purpose", label: "Purpose" },
+              { key: "local_amt", label: "Amount" },
+            ];
+
+            // Create table headers
+            headers.forEach((header) => {
+              const th = document.createElement("th");
+              th.textContent = header.label;
+              th.style.textAlign = "center";
+              trHead.appendChild(th);
+            });
+            thead.appendChild(trHead);
+
+            const tbody = document.createElement("tbody");
+            let totalAmount = 0;
+
+            data.forEach((record) => {
+              const tr = document.createElement("tr");
+              headers.forEach((header) => {
+                const td = document.createElement("td");
+                if (header.key === "local_date") {
+                  td.textContent = formatDateToDDMMYYYY(record[header.key]); // Format date
+                } else if (header.key === "local_amt") {
+                  // Convert the value to a float and format it with two decimal places
+                  let amount = parseFloat(record[header.key] || 0).toFixed(2);
+                  td.textContent = amount;
+                } else {
+                  td.textContent = record[header.key] || ""; // Handle undefined values gracefully
+                }
+                td.style.textAlign = "center";
+                tr.appendChild(td);
+
+                // Accumulate the total amount
+                if (header.key === "local_amt") {
+                  td.style.textAlign = "right";
+                  totalAmount += parseFloat(record[header.key] || 0); // Convert to float and add to total
+                }
+              });
+              tbody.appendChild(tr);
+            });
+
+            // Create a footer row for the total
+            const trTotal = document.createElement("tr");
+            trTotal.className = "total-row";
+
+            headers.forEach((header) => {
+              const td = document.createElement("td");
+              if (header.key === "local_amt") {
+                td.textContent = `Total ${totalAmount.toFixed(2)}`; // Display the total amount
+                td.colSpan = headers.length; // Span across all columns if desired
+                td.style.textAlign = "right"; // Align text to the right
+                trTotal.appendChild(td);
+              } else {
+                td.textContent = "";
+                trTotal.appendChild(td);
+              }
+            });
+
+            tbody.appendChild(trTotal);
+            table.appendChild(thead);
+            table.appendChild(tbody);
+            container.appendChild(table);
+          }
+
+          document.getElementById("local-conveyance-popup").style.display =
+            "block";
+        } catch (error) {
+          console.error("Error fetching local conveyance records:", error);
+          const container = document.getElementById(
+            "local-conveyance-container"
+          );
+          container.textContent = "Error fetching records.";
+          document.getElementById("local-conveyance-popup").style.display =
+            "block";
+        }
+      }
+      function formatDateToDDMMYYYY(dateString) {
+        // Format date from YYYY-MM-DD to DD-MM-YYYY
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, "0");
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+      }
+      // Function to fetch and display the rejection reason
+      async function fetchRejectionReason(recordId) {
+        try {
+          // Fetch rejection reason from the server
+          const response = await fetch(
+            `/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_rejection_reason?record=${recordId}`
+          );
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+
+          const result = await response.json();
+          console.log("API Response:", result);
+
+          if (result && result.message) {
+            // Display the rejection reason
+            const reason = result.message.reason || "No reason provided";
+            console.log("Rejection Reason:", reason);
+
+            Swal.fire({
+              title: "Rejection Reason",
+              html: `<textarea readonly style="width: 100%; height: 100px; padding: 10px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;">${reason}</textarea>`,
+              icon: "info",
+              confirmButtonText: "OK",
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Unable to fetch rejection reason or no reason provided.",
+            });
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "An error occurred while fetching the rejection reason.",
+          });
+        }
+      }
+
+      // Delete record on click of delete button icon of particular row
+      async function deleteRecord(recordName) {
+        const selectedRecords = [recordName]; // Single record for deletion
+        console.log(selectedRecords);
+
+        // Confirm deletion with the user using SweetAlert
+        Swal.fire({
+          title: `Are you sure you want to delete this record ?`,
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes, delete it!",
+          cancelButtonText: "No, keep it",
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            try {
+              // Log the selected record to be sent to the server
+              console.log("Selected record to delete:", selectedRecords);
+
+              // Send a request to the server to delete the record
+              const response = await fetch(
+                "/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.delete_records",
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ names: selectedRecords }), // Send the array of selected record names wrapped in an object
+                }
+              );
+
+              // Log the response
+              const result = await response.json();
+              console.log("Server response:", result);
+
+              if (result.message.status === "success") {
+                // Remove the row from the table
+                const rowElement = document
+                  .querySelector(`td[data-id="${recordName}"]`)
+                  .closest("tr");
+                rowElement.remove();
+
+                // Show success message using SweetAlert
+                Swal.fire(
+                  "Deleted!",
+                  `The record with name: ${recordName} has been deleted.`,
+                  "success"
+                );
+                fetchData();
+              } else if (result.message.status === "partial") {
+                Swal.fire(
+                  "Partial Success",
+                  `Some records were deleted: ${result.message}.`,
+                  "warning"
+                );
+              } else {
+                Swal.fire(
+                  "Error!",
+                  "Failed to delete record. Please try again.",
+                  "error"
+                );
+              }
+            } catch (error) {
+              console.error("Error deleting record:", error);
+              Swal.fire(
+                "Error!",
+                "An unexpected error occurred. Please try again.",
+                "error"
+              );
+            }
+          }
+        });
+      }
+
+      // Function to handle record submission
+      async function submitRecords() {
+        const table = document.querySelector("#taRecordTable tbody"); // Target the table body
+        const rows = table.querySelectorAll("tr"); // Select all rows within the table body
+
+        const recordsToUpdate = [];
+        rows.forEach((row) => {
+          const statusCell = row.querySelector("td:nth-child(2)"); // Assuming the 'Status' column is the first one
+          const nameCell = row.querySelector("td:nth-child(24)"); // Assuming the 'Name' column is the 23rd one
+
+          console.log("statusCell:", statusCell.textContent.trim());
+          // Check if the status is not 'Pending' or 'Approved'
+          if (
+            statusCell.textContent.trim() !== "Pending" &&
+            statusCell.textContent.trim() !== "Approved"
+          ) {
+            recordsToUpdate.push(nameCell.textContent.trim()); // Collect the 'name' value
+          }
+        });
+
+        //console.log("nameCell:",nameCell);
+        console.log(recordsToUpdate);
+
+        if (recordsToUpdate.length > 0) {
+          const batchSize = 100; // Define a suitable batch size
+          const batches = [];
+          for (let i = 0; i < recordsToUpdate.length; i += batchSize) {
+            batches.push(recordsToUpdate.slice(i, i + batchSize));
+          }
+
+          Swal.fire({
+            title: `Are you sure you want to submit ${recordsToUpdate.length} record(s)?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, submit them!",
+            cancelButtonText: "No, keep them",
+          }).then(async (result) => {
+            if (result.isConfirmed) {
+              try {
+                for (const batch of batches) {
+                  const response = await fetch(
+                    "/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.update_status",
+                    {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({ names: batch }), // Only send the record names in batches
+                    }
+                  );
+                  if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                  }
+                  const result = await response.json();
+                  console.log("Server response:", result);
+                  if (result.message.status !== "success") {
+                    throw new Error("Failed to update some records.");
+                  }
+
+                  if (result.message.status === "success") {
+                    Swal.fire(
+                      "Submitted!",
+                      `${recordsToUpdate.length} record(s) have been updated to "Pending".`,
+                      "success"
+                    );
+                    fetchData(); // Fetch new data if needed
+                  }
+                }
+              } catch (error) {
+                console.error("Error updating records:", error);
+                Swal.fire(
+                  "Error!",
+                  "An unexpected error occurred. Please try again.",
+                  "error"
+                );
+              }
+            }
+          });
+        } else {
+          Swal.fire(
+            "No Records",
+            "No records available for submission.",
+            "info"
+          );
+        }
+      }
+      // Attach the submit function to the submit button
+      document
+        .querySelector(".submit-btn")
+        .addEventListener("click", submitRecords);
+    </script>
+    <!-- Bootstrap JS (including Popper.js for dropdowns) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+  </body>
+</html>

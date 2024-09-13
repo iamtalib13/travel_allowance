@@ -1,0 +1,659 @@
+{
+ "actions": [],
+ "autoname": "format:TA-{employee_id}-{month}-{year}",
+ "creation": "2023-11-30 11:53:40.709552",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "ta_tab",
+  "total_amount_summary",
+  "ta_chart_table_summary",
+  "ta_chart",
+  "local_conveyance_tab",
+  "employee_details_tab",
+  "employee_details_section",
+  "employee_id",
+  "designation",
+  "division",
+  "reporting_person_user_id",
+  "column_break_iket",
+  "first_name",
+  "department",
+  "region",
+  "date",
+  "column_break_fo0a",
+  "last_name",
+  "branch",
+  "phone",
+  "category",
+  "travel_allowance_details_section",
+  "month",
+  "year",
+  "que_is_local",
+  "check_yes",
+  "check_no",
+  "journey_type",
+  "outward",
+  "from_location",
+  "date_and_time_from",
+  "column_break_bbrl",
+  "to_location",
+  "other_to_location",
+  "local_to_location",
+  "date_and_time_to",
+  "local_date_and_time_to",
+  "total_time_text",
+  "no_of_days",
+  "section_break_rcygo",
+  "purpose",
+  "column_break_d3fyc",
+  "local_mode_of_travel",
+  "ta_mode_of_transport",
+  "column_break_6eifm",
+  "other_expenses",
+  "travel_km",
+  "ticket_amount",
+  "upload_ticket",
+  "section_break_eapp7",
+  "total_visit_time",
+  "allowances_section",
+  "do_you_want_apply_allowances",
+  "section_break_nzvqs",
+  "select_allowance",
+  "da_claim",
+  "da_claim_text_description",
+  "column_break_j5tui",
+  "input_lodging_amt",
+  "day_stay_lodge",
+  "upload_image_of_lodging",
+  "class_city",
+  "other_expenses_section",
+  "other_expenses_check",
+  "other_expense_details_section",
+  "select_type_expenses",
+  "mode_of_travel",
+  "column_break_gnjd",
+  "date_other_expense",
+  "purpose_other_expense",
+  "column_break_owmo",
+  "other_from",
+  "other_expenses_amount",
+  "column_break_lnab",
+  "other_to",
+  "btn_local_add",
+  "section_break_yfkr",
+  "fare_amount",
+  "daily_allowance",
+  "lodging_amount",
+  "halting_amount",
+  "total_amount",
+  "section_break_osomx",
+  "html_total_allowances_details",
+  "section_break_xfdd",
+  "btn_add_ta"
+ ],
+ "fields": [
+  {
+   "fieldname": "employee_id",
+   "fieldtype": "Link",
+   "label": "Employee ID",
+   "options": "Employee",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "employee_id.designation",
+   "fieldname": "designation",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Designation",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "employee_id.department",
+   "fieldname": "department",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Department",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_iket",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_fo0a",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "employee_id.branch",
+   "fieldname": "branch",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Branch"
+  },
+  {
+   "fetch_from": "employee_id.region",
+   "fieldname": "region",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Region"
+  },
+  {
+   "depends_on": "eval:frappe.user.has_role('System Manager');",
+   "fieldname": "employee_details_section",
+   "fieldtype": "Section Break",
+   "label": "Employee Details"
+  },
+  {
+   "fieldname": "travel_allowance_details_section",
+   "fieldtype": "Tab Break",
+   "label": "Create TA"
+  },
+  {
+   "fieldname": "date_and_time_from",
+   "fieldtype": "Datetime",
+   "label": "Date And Time (From)"
+  },
+  {
+   "depends_on": "eval:doc.check_no=='1' && doc.journey_type",
+   "description": "<span style=\"color: red; font-size: 14px;\"><b>Note:</b></span> <span style=\"color: green; font-size: 14px;\"><b>Enter the time you left the destination, after completing your work there.</b></span>",
+   "fieldname": "date_and_time_to",
+   "fieldtype": "Datetime",
+   "label": "Date And Time (To)"
+  },
+  {
+   "fieldname": "from_location",
+   "fieldtype": "Data",
+   "label": "From Location "
+  },
+  {
+   "depends_on": "eval:doc.check_no=='1' ",
+   "description": "<span style=\"color: green; font-size: 14px;\"><b>Destination</b></span>",
+   "fieldname": "to_location",
+   "fieldtype": "Link",
+   "label": "To Location",
+   "options": "City Category"
+  },
+  {
+   "depends_on": "eval:doc.check_yes=='1' || doc.check_no=='1' ",
+   "fieldname": "purpose",
+   "fieldtype": "Small Text",
+   "label": "PURPOSE",
+   "max_height": "100px"
+  },
+  {
+   "fetch_from": "employee_id.division",
+   "fieldname": "division",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Division",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fetch_from": "employee_id.cell_number",
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "Phone"
+  },
+  {
+   "fieldname": "column_break_gnjd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "mode_of_travel",
+   "fieldtype": "Select",
+   "label": "Mode of Travel",
+   "options": "\nAuto\nPublic Transport\nTaxi"
+  },
+  {
+   "depends_on": "eval:doc.select_allowance === \"DA\" || doc.select_allowance === \"DA with Lodging\"",
+   "fieldname": "da_claim",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Daily Allowance Claim"
+  },
+  {
+   "depends_on": "eval:doc.select_allowance === \"DA\" || doc.select_allowance === \"DA with Lodging\"",
+   "fieldname": "daily_allowance",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "Daily Allowance",
+   "precision": "2"
+  },
+  {
+   "fieldname": "employee_details_tab",
+   "fieldtype": "Tab Break",
+   "label": "Employee Details"
+  },
+  {
+   "depends_on": "eval:doc.date_and_time_from && doc.date_and_time_to",
+   "description": "(HH:MM:SS)",
+   "fieldname": "total_visit_time",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Total Visit Time"
+  },
+  {
+   "fetch_from": "employee_id.first_name",
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "label": "First Name"
+  },
+  {
+   "fetch_from": "employee_id.last_name",
+   "fieldname": "last_name",
+   "fieldtype": "Data",
+   "label": "Last Name"
+  },
+  {
+   "fieldname": "category",
+   "fieldtype": "Data",
+   "label": "Category"
+  },
+  {
+   "depends_on": "eval:doc.from_location && doc.to_location && doc.date_and_time_from && doc.date_and_time_to && frappe.user.has_role('System Manager')",
+   "fetch_from": "to_location.category",
+   "fieldname": "class_city",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Class City"
+  },
+  {
+   "fieldname": "other_to_location",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Other:",
+   "mandatory_depends_on": "eval:doc.to_location=='Other'"
+  },
+  {
+   "depends_on": "eval:doc.from_location && doc.to_location && doc.date_and_time_from && doc.date_and_time_to ",
+   "fieldname": "other_expenses_section",
+   "fieldtype": "Section Break",
+   "hidden": 1,
+   "label": "LOCAL EXPENSES "
+  },
+  {
+   "default": "0",
+   "description": "If checked , it will popup form.",
+   "fieldname": "other_expenses_check",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Do you have Local Expenses details ?"
+  },
+  {
+   "fieldname": "other_expenses_amount",
+   "fieldtype": "Currency",
+   "label": "Amount"
+  },
+  {
+   "fieldname": "date_other_expense",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "Total Allowance",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "select_type_expenses",
+   "fieldtype": "Select",
+   "label": "Select type of Expenses",
+   "mandatory_depends_on": "eval:doc.other_expenses_check==1",
+   "options": "\nLocal Expense\nOther Expense"
+  },
+  {
+   "fieldname": "column_break_owmo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_lnab",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.other_expenses_check=='1' ",
+   "fieldname": "other_expense_details_section",
+   "fieldtype": "Section Break",
+   "label": "LOCAL CONVEYANCE FORM"
+  },
+  {
+   "fieldname": "total_amount_summary",
+   "fieldtype": "HTML"
+  },
+  {
+   "fieldname": "ta_tab",
+   "fieldtype": "Tab Break",
+   "label": "TA History"
+  },
+  {
+   "fieldname": "ta_chart",
+   "fieldtype": "Table",
+   "label": "TA Details",
+   "options": "TA Chart"
+  },
+  {
+   "fieldname": "section_break_xfdd",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_bbrl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.check_yes=='1' || doc.check_no=='1'",
+   "fieldname": "btn_add_ta",
+   "fieldtype": "Button",
+   "label": "Save"
+  },
+  {
+   "fieldname": "section_break_yfkr",
+   "fieldtype": "Section Break",
+   "hidden": 1,
+   "label": "Total Allowances details"
+  },
+  {
+   "fieldname": "other_expenses",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "Local Expense Amount"
+  },
+  {
+   "fieldname": "month",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "in_standard_filter": 1,
+   "label": "Month",
+   "read_only": 1
+  },
+  {
+   "fieldname": "year",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Year",
+   "read_only": 1
+  },
+  {
+   "fieldname": "other_from",
+   "fieldtype": "Data",
+   "label": "From"
+  },
+  {
+   "fieldname": "other_to",
+   "fieldtype": "Data",
+   "label": "To"
+  },
+  {
+   "fieldname": "purpose_other_expense",
+   "fieldtype": "Data",
+   "label": "Purpose"
+  },
+  {
+   "fieldname": "ta_chart_table_summary",
+   "fieldtype": "HTML"
+  },
+  {
+   "depends_on": "eval:doc.check_no=='1' && doc.from_location  && doc.to_location",
+   "fieldname": "ta_mode_of_transport",
+   "fieldtype": "Select",
+   "label": "Mode of Transport",
+   "options": "\nBike\nTrain\nBus\nCar"
+  },
+  {
+   "depends_on": "eval:doc.ta_mode_of_transport==='Bike' || doc.ta_mode_of_transport==='Car' ",
+   "fieldname": "travel_km",
+   "fieldtype": "Float",
+   "label": "Kilometer of Travelling",
+   "precision": "2"
+  },
+  {
+   "depends_on": "eval:doc.select_allowance==='Lodging' || doc.select_allowance === \"DA with Lodging\"",
+   "fieldname": "upload_image_of_lodging",
+   "fieldtype": "Attach",
+   "label": "Upload Image of Lodging Bill",
+   "mandatory_depends_on": "eval:doc.select_allowance==='Lodging' || doc.select_allowance === \"DA with Lodging\""
+  },
+  {
+   "depends_on": "eval:doc.check_yes=='1' || doc.check_no=='1'",
+   "fieldname": "outward",
+   "fieldtype": "Section Break",
+   "label": "Place & Time"
+  },
+  {
+   "fieldname": "section_break_rcygo",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.check_yes=='1' || doc.check_no=='1'",
+   "fieldname": "column_break_d3fyc",
+   "fieldtype": "Section Break",
+   "label": "Travel Expense"
+  },
+  {
+   "depends_on": "eval:doc.ta_mode_of_transport==='Bus' || doc.ta_mode_of_transport==='Train' || doc.ta_mode_of_transport === \"Air in economy class\" ",
+   "fieldname": "upload_ticket",
+   "fieldtype": "Attach",
+   "label": "Upload Ticket"
+  },
+  {
+   "depends_on": "eval:doc.ta_mode_of_transport==='Bus' || doc.ta_mode_of_transport==='Train' || doc.ta_mode_of_transport === \"Air in economy class\" ",
+   "description": "The ticket amount should match the amount shown in the uploaded ticket image.",
+   "fieldname": "ticket_amount",
+   "fieldtype": "Currency",
+   "label": "Ticket Amount"
+  },
+  {
+   "depends_on": "eval:doc.ta_mode_of_transport==='Bike' || doc.ta_mode_of_transport==='Car' || doc.ta_mode_of_transport==='Bus' || doc.ta_mode_of_transport==='Train'",
+   "fieldname": "fare_amount",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "Fare Amount"
+  },
+  {
+   "depends_on": "eval:doc.select_allowance==='Lodging' || doc.select_allowance === \"DA with Lodging\"",
+   "fieldname": "input_lodging_amt",
+   "fieldtype": "Currency",
+   "label": "Lodging amount",
+   "mandatory_depends_on": "eval:doc.select_allowance==='Lodging' || doc.select_allowance === \"DA with Lodging\""
+  },
+  {
+   "depends_on": "eval:doc.from_location && doc.to_location && doc.date_and_time_from && doc.date_and_time_to  && doc.ta_mode_of_transport",
+   "description": "Please Select One of the Following.",
+   "fieldname": "allowances_section",
+   "fieldtype": "Section Break",
+   "label": "Allowances"
+  },
+  {
+   "depends_on": "eval:doc.select_allowance === \"Halting\"",
+   "fieldname": "halting_amount",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "Halting Amount",
+   "precision": "2"
+  },
+  {
+   "depends_on": "eval:doc.do_you_want_apply_allowances=='1'",
+   "description": "Please Select One of the Following.",
+   "fieldname": "select_allowance",
+   "fieldtype": "Select",
+   "label": "Select Allowances",
+   "mandatory_depends_on": "eval:doc.do_you_want_apply_allowances=='1'",
+   "options": "\nDA\nHalting\nDA with Lodging\nLodging"
+  },
+  {
+   "depends_on": "eval:doc.select_allowance === \"Lodging\" || doc.select_allowance === \"DA with Lodging\" ",
+   "fieldname": "lodging_amount",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "Lodging Amount"
+  },
+  {
+   "fieldname": "section_break_eapp7",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:doc.from_location && doc.to_location && doc.date_and_time_from && doc.date_and_time_to  && doc.ta_mode_of_transport",
+   "fieldname": "do_you_want_apply_allowances",
+   "fieldtype": "Check",
+   "label": "Do you want apply Allowances?"
+  },
+  {
+   "fieldname": "total_time_text",
+   "fieldtype": "HTML",
+   "options": "<div id=\"total_time_text\"></div>\n"
+  },
+  {
+   "depends_on": "eval:doc.check_yes==\"1\" || doc.check_no==\"1\"",
+   "fieldname": "html_total_allowances_details",
+   "fieldtype": "HTML",
+   "label": "Total Allowances details"
+  },
+  {
+   "fieldname": "btn_local_add",
+   "fieldtype": "Button",
+   "label": "Add +"
+  },
+  {
+   "fieldname": "local_conveyance_tab",
+   "fieldtype": "Tab Break",
+   "hidden": 1,
+   "label": "Local Conveyance & Other Expenses"
+  },
+  {
+   "fieldname": "section_break_osomx",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_6eifm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.select_allowance === \"DA\" || doc.select_allowance === \"DA with Lodging\"",
+   "fieldname": "da_claim_text_description",
+   "fieldtype": "HTML"
+  },
+  {
+   "depends_on": "eval:doc.select_allowance==='Lodging' || doc.select_allowance === \"DA with Lodging\"",
+   "description": "Input Days in Number Only",
+   "fieldname": "day_stay_lodge",
+   "fieldtype": "Data",
+   "label": "How many days did you stay in the lodge?",
+   "mandatory_depends_on": "eval:doc.select_allowance==='Lodging' || doc.select_allowance === \"DA with Lodging\""
+  },
+  {
+   "default": "0",
+   "description": " <p style=\"color: black;\">Please choose an option:</p>\n    <p style=\"color: black;\"><strong>Yes</strong> - Fill out a Local Conveyance entry.</p>\n    <p style=\"color: black;\"><strong>No</strong> - Proceed to the main Travel Allowance (TA) entry.</p>",
+   "fieldname": "que_is_local",
+   "fieldtype": "Section Break",
+   "label": "Local Conveyance Entry?"
+  },
+  {
+   "default": "0",
+   "fieldname": "check_yes",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Yes"
+  },
+  {
+   "default": "0",
+   "fieldname": "check_no",
+   "fieldtype": "Check",
+   "label": "No"
+  },
+  {
+   "depends_on": "eval:doc.check_yes=='1' ",
+   "fieldname": "local_mode_of_travel",
+   "fieldtype": "Select",
+   "label": "Mode Of Transport",
+   "options": "\nAuto\nPublic Transport\nTaxi"
+  },
+  {
+   "depends_on": "eval:doc.check_yes=='1' ",
+   "description": "<span style=\"color: green; font-size: 14px;\"><b>Local Destination </b></span>",
+   "fieldname": "local_to_location",
+   "fieldtype": "Data",
+   "label": "To location"
+  },
+  {
+   "fieldname": "no_of_days",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "No. of days"
+  },
+  {
+   "depends_on": "eval:doc.check_yes=='1' ",
+   "fieldname": "local_date_and_time_to",
+   "fieldtype": "Datetime",
+   "label": "Date And Time (To)"
+  },
+  {
+   "fieldname": "section_break_nzvqs",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_j5tui",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "employee_id.reporting_employee_user_id",
+   "fieldname": "reporting_person_user_id",
+   "fieldtype": "Data",
+   "label": "Reporting Person User ID"
+  },
+  {
+   "depends_on": "eval:doc.check_no=='1'",
+   "fieldname": "journey_type",
+   "fieldtype": "Select",
+   "label": "Please Select Your Journey Type?",
+   "mandatory_depends_on": "eval:doc.check_no=='1'",
+   "options": "\nOnward Journey\nReturn Journey"
+  }
+ ],
+ "hide_toolbar": 1,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-08-20 11:10:20.098737",
+ "modified_by": "Administrator",
+ "module": "Travel Allowance",
+ "name": "Travel Allowance",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Employee",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

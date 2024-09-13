@@ -1,0 +1,387 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:TA-{from_date}-{user}-{###}",
+ "creation": "2024-07-29 16:02:44.636410",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "employee_details_section",
+  "user",
+  "ta_category",
+  "reporting_person_user_id",
+  "first_name",
+  "last_name",
+  "column_break_pz44l",
+  "employee_id",
+  "designation",
+  "month",
+  "year",
+  "travel_allowance_details_section",
+  "from_location",
+  "column_break_way1s",
+  "from_location_other",
+  "column_break_2ubcb",
+  "from_date",
+  "column_break_e0fbb",
+  "from_time",
+  "to_section",
+  "to_location",
+  "column_break_pdbnx",
+  "to_location_other",
+  "column_break_rwqse",
+  "to_date",
+  "column_break_kette",
+  "to_time",
+  "column_break_tuzz1",
+  "total_time",
+  "section_break_p7znn",
+  "purpose",
+  "section_break_csvhp",
+  "travel_mode",
+  "column_break_a1o94",
+  "total_km",
+  "column_break_hcmry",
+  "ticket_amount",
+  "column_break_mhumb",
+  "fare_amount",
+  "upload_ticket",
+  "allowance_section",
+  "allowance_type",
+  "section_break_s5y6b",
+  "final_da_amount",
+  "column_break_w8vb4",
+  "final_halt_amount",
+  "day_stay_halt",
+  "column_break_fn4zr",
+  "final_lodge_amount",
+  "upload_lodging",
+  "day_stay_lodge",
+  "column_break_y7okx",
+  "total_amount",
+  "status",
+  "approved_by",
+  "rejected_by",
+  "section_break_a7ads",
+  "local_conveyance",
+  "final_local_amount",
+  "rejection_remark"
+ ],
+ "fields": [
+  {
+   "fieldname": "month",
+   "fieldtype": "Data",
+   "label": "Month"
+  },
+  {
+   "fieldname": "year",
+   "fieldtype": "Data",
+   "label": "Year"
+  },
+  {
+   "fieldname": "from_location",
+   "fieldtype": "Data",
+   "label": "From"
+  },
+  {
+   "fieldname": "user",
+   "fieldtype": "Data",
+   "label": "user"
+  },
+  {
+   "fieldname": "employee_id",
+   "fieldtype": "Data",
+   "label": "Employee ID"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "employee_details_section",
+   "fieldtype": "Section Break",
+   "label": "Employee Details"
+  },
+  {
+   "fieldname": "column_break_pz44l",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "travel_allowance_details_section",
+   "fieldtype": "Section Break",
+   "label": "From"
+  },
+  {
+   "fieldname": "column_break_2ubcb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_pdbnx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fieldname": "to_location",
+   "fieldtype": "Data",
+   "label": "To "
+  },
+  {
+   "fieldname": "from_time",
+   "fieldtype": "Data",
+   "label": "Time"
+  },
+  {
+   "fieldname": "to_time",
+   "fieldtype": "Data",
+   "label": "Time"
+  },
+  {
+   "fieldname": "designation",
+   "fieldtype": "Data",
+   "label": "Designation"
+  },
+  {
+   "fieldname": "ta_category",
+   "fieldtype": "Data",
+   "label": "TA Category"
+  },
+  {
+   "fieldname": "ticket_amount",
+   "fieldtype": "Currency",
+   "label": "Ticket Amount",
+   "options": "Company:company:default_currency"
+  },
+  {
+   "fieldname": "column_break_e0fbb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_way1s",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "to_section",
+   "fieldtype": "Section Break",
+   "label": "To"
+  },
+  {
+   "fieldname": "column_break_rwqse",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_kette",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "allowance_section",
+   "fieldtype": "Section Break",
+   "label": "Allowance"
+  },
+  {
+   "fieldname": "column_break_tuzz1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "allowance_type",
+   "fieldtype": "Select",
+   "label": "Allowance Type",
+   "options": "\nDA\nHalting\nLodging\nDA and Lodging"
+  },
+  {
+   "fieldname": "from_location_other",
+   "fieldtype": "Data",
+   "label": "Other From Location"
+  },
+  {
+   "fieldname": "to_location_other",
+   "fieldtype": "Data",
+   "label": "Other To Location"
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Data",
+   "label": "Total Amount"
+  },
+  {
+   "fieldname": "day_stay_lodge",
+   "fieldtype": "Data",
+   "label": "Day Stay in Lodge"
+  },
+  {
+   "fieldname": "section_break_s5y6b",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_w8vb4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_fn4zr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_y7okx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "fare_amount",
+   "fieldtype": "Currency",
+   "label": "Fare Amount"
+  },
+  {
+   "fieldname": "section_break_csvhp",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_a1o94",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_hcmry",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_mhumb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_time",
+   "fieldtype": "Data",
+   "label": "Total Duration"
+  },
+  {
+   "fieldname": "section_break_p7znn",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "purpose",
+   "fieldtype": "Data",
+   "label": "Purpose"
+  },
+  {
+   "fieldname": "travel_mode",
+   "fieldtype": "Select",
+   "label": "Mode of Travel",
+   "options": "\nBike\nTrain\nBus\nCar"
+  },
+  {
+   "fieldname": "total_km",
+   "fieldtype": "Data",
+   "label": "Total KM"
+  },
+  {
+   "fieldname": "final_da_amount",
+   "fieldtype": "Data",
+   "label": "DA Amount"
+  },
+  {
+   "fieldname": "final_halt_amount",
+   "fieldtype": "Data",
+   "label": "Halting Amount"
+  },
+  {
+   "fieldname": "day_stay_halt",
+   "fieldtype": "Data",
+   "label": "Day Stay in Halt"
+  },
+  {
+   "fieldname": "final_lodge_amount",
+   "fieldtype": "Data",
+   "label": "Lodging Amount"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nDraft\nPending\nApproved\nReject"
+  },
+  {
+   "fieldname": "approved_by",
+   "fieldtype": "Data",
+   "label": "Approved By"
+  },
+  {
+   "fieldname": "reporting_person_user_id",
+   "fieldtype": "Data",
+   "label": "Reporting Person User ID"
+  },
+  {
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "label": "First Name"
+  },
+  {
+   "fieldname": "last_name",
+   "fieldtype": "Data",
+   "label": "Last Name"
+  },
+  {
+   "fieldname": "rejected_by",
+   "fieldtype": "Data",
+   "label": "Rejected By"
+  },
+  {
+   "fieldname": "upload_lodging",
+   "fieldtype": "Attach",
+   "label": "Upload Lodging Bill"
+  },
+  {
+   "fieldname": "upload_ticket",
+   "fieldtype": "Attach",
+   "label": "Upload Ticket "
+  },
+  {
+   "fieldname": "local_conveyance",
+   "fieldtype": "Table",
+   "label": "Local Conveyance",
+   "options": "Local Conveyance"
+  },
+  {
+   "fieldname": "section_break_a7ads",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "final_local_amount",
+   "fieldtype": "Data",
+   "label": "Total Local Amount"
+  },
+  {
+   "fieldname": "rejection_remark",
+   "fieldtype": "Data",
+   "label": "Reject Reason"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-08-29 13:03:22.324326",
+ "modified_by": "Administrator",
+ "module": "Travel Allowance",
+ "name": "Travel Allowances",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
