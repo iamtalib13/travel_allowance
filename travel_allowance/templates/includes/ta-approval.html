@@ -1044,12 +1044,134 @@
                 <td class="fixed-total">${record.total_amount}</td>
               `;
 
+          // Add event listener to the final_local_amount cell if it has a clickable class
+          const localConveyanceCell = row.querySelector(".clickable");
+          if (localConveyanceCell) {
+            localConveyanceCell.addEventListener("click", () => {
+              const recordId =
+                localConveyanceCell.getAttribute("data-record-id");
+              console.log(recordId);
+              fetchLocalConveyance(recordId); // Fetch the local conveyance records
+            });
+          }
           tableBody.appendChild(row);
         });
       }
     } catch (error) {
       console.error("Error:", error);
     }
+  }
+
+  // fetch the local conveyance data from child table
+  async function fetchLocalConveyance(recordId) {
+    console.log(recordId);
+    try {
+      const response = await fetch(
+        `/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_child_records?parent_id=${recordId}`
+      );
+      const result = await response.json();
+
+      // Assuming the response is in the form { message: [...] }
+      const data = result.message;
+
+      console.log("local data:", data);
+      const container = document.getElementById("local-conveyance-container");
+      container.innerHTML = "";
+
+      if (!data || data.length === 0) {
+        container.textContent = "No local conveyance records found.";
+      } else {
+        const table = document.createElement("table");
+        table.className = "dynamic-table";
+
+        const thead = document.createElement("thead");
+        const trHead = document.createElement("tr");
+
+        // Define the custom headers
+        const headers = [
+          { key: "local_date", label: "Date" },
+          { key: "from_local", label: "From" },
+          { key: "to_local", label: "To" },
+          { key: "local_travel_mode", label: "Travel Mode" },
+          { key: "purpose", label: "Purpose" },
+          { key: "local_amt", label: "Amount" },
+        ];
+
+        // Create table headers
+        headers.forEach((header) => {
+          const th = document.createElement("th");
+          th.textContent = header.label;
+          th.style.textAlign = "center";
+          trHead.appendChild(th);
+        });
+        thead.appendChild(trHead);
+
+        const tbody = document.createElement("tbody");
+        let totalAmount = 0;
+
+        data.forEach((record) => {
+          const tr = document.createElement("tr");
+          headers.forEach((header) => {
+            const td = document.createElement("td");
+            if (header.key === "local_date") {
+              td.textContent = formatDateToDDMMYYYY(record[header.key]); // Format date
+            } else if (header.key === "local_amt") {
+              // Convert the value to a float and format it with two decimal places
+              let amount = parseFloat(record[header.key] || 0).toFixed(2);
+              td.textContent = amount;
+            } else {
+              td.textContent = record[header.key] || ""; // Handle undefined values gracefully
+            }
+            td.style.textAlign = "center";
+            tr.appendChild(td);
+
+            // Accumulate the total amount
+            if (header.key === "local_amt") {
+              td.style.textAlign = "right";
+              totalAmount += parseFloat(record[header.key] || 0); // Convert to float and add to total
+            }
+          });
+          tbody.appendChild(tr);
+        });
+
+        // Create a footer row for the total
+        const trTotal = document.createElement("tr");
+        trTotal.className = "total-row";
+
+        headers.forEach((header) => {
+          const td = document.createElement("td");
+          if (header.key === "local_amt") {
+            td.textContent = `Total ${totalAmount.toFixed(2)}`; // Display the total amount
+            td.colSpan = headers.length; // Span across all columns if desired
+            td.style.textAlign = "right"; // Align text to the right
+            trTotal.appendChild(td);
+          } else {
+            td.textContent = "";
+            trTotal.appendChild(td);
+          }
+        });
+
+        tbody.appendChild(trTotal);
+        table.appendChild(thead);
+        table.appendChild(tbody);
+        container.appendChild(table);
+      }
+
+      document.getElementById("local-conveyance-popup").style.display = "block";
+    } catch (error) {
+      console.error("Error fetching local conveyance records:", error);
+      const container = document.getElementById("local-conveyance-container");
+      container.textContent = "Error fetching records.";
+      document.getElementById("local-conveyance-popup").style.display = "block";
+    }
+  }
+  function formatDateToDDMMYYYY(dateString) {
+    // Format date from YYYY-MM-DD to DD-MM-YYYY
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
   }
 
   //fetch approved records

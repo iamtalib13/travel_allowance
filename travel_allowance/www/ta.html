@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Travel Allowance</title>
 
+    
     <!--HTMX Link-->
     <script src="https://unpkg.com/htmx.org@2.0.1"></script>
     <!--<link
@@ -966,6 +967,8 @@
     </style>
   </head>
   <body>
+   
+
     {% if frappe.session.user != "Guest" %}
     <div class="ta-container container-fluid">
       <nav class="nav ta-nav">
@@ -2411,6 +2414,8 @@
           }
 
           try {
+           
+
             // Send data to the server for further validation and calculation
             const response = await fetch(
               "/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.calculate_total_duration",
@@ -2418,6 +2423,7 @@
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
+                 
                 },
                 body: JSON.stringify({
                   from_date: fromDate,
@@ -2429,6 +2435,8 @@
             );
 
             const data = await response.json();
+
+            console.log("total time response:",data);
 
             // Check if response contains the expected structure
             if (response.ok && data.message) {

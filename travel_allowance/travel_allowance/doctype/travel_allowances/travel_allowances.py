@@ -403,7 +403,6 @@ def get_list(month=None):
             filters=filters,  # Apply the filters
             fields=[
                 "name",
-                "date",
                 "month",
                 "year",
                 "from_location",
