@@ -1142,15 +1142,15 @@
                         <th>Total km</th>
                         <th>Ticket Amt</th>
                         <th>Fare Amount</th>
-                        <th>Upload Ticket</th>
+                       
                         <th>Allowance Type</th>
                         <th>DA</th>
                         <th>Halting</th>
                         <th>Lodging</th>
                         <th>Local Conveyance</th>
                         <th>Total</th>
-
-                        <th>Upload Lodging</th>
+                        <th>View Ticket Attachment</th>
+                        <th>View Lodging Attachment</th>
                         <th class="d-none">Name</th>
                       </tr>
                     </thead>
@@ -3124,11 +3124,7 @@
                       <td>${record.total_km}</td>
                       <td>${record.ticket_amount}</td>
                       <td>${record.fare_amount}</td>
-                      <td>${
-                        record.upload_ticket
-                          ? `<a href="${record.upload_ticket}" target="_blank">View</a>`
-                          : "-"
-                      }</td>
+                      
                       <td>${record.allowance_type}</td>
                       <td>${record.final_da_amount}</td>
                       <td>${record.final_halt_amount}</td>
@@ -3161,6 +3157,11 @@
                       </td>
                     
                       <td>₹${record.total_amount}</td>
+                      <td>${
+                        record.upload_ticket
+                          ? `<a href="${record.upload_ticket}" target="_blank">View</a>`
+                          : "-"
+                      }</td>
                       <td>${
                         record.upload_lodging
                           ? `<a href="${record.upload_lodging}" target="_blank">View</a>`

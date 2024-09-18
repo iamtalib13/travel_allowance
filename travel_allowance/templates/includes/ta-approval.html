@@ -685,6 +685,9 @@
         </thead>
         <tbody></tbody>
       </table>
+      <div class="no-pending-records text-center py-3" style="display: none">
+        You have no Pending records.
+      </div>
     </div>
 
     <!-- Table for travel allowances fetch approved record -->
@@ -720,6 +723,9 @@
         </thead>
         <tbody></tbody>
       </table>
+      <div class="no-approved-records text-center py-3" style="display: none">
+        You have no Approved records.
+      </div>
     </div>
 
     <!-- Table for travel allowances fetch Rejected record -->
@@ -755,9 +761,12 @@
         </thead>
         <tbody></tbody>
       </table>
+      <div class="no-rejected-records text-center py-3" style="display: none">
+        You have no Rejected records.
+      </div>
     </div>
 
-    <!-- No records message -->
+    <!-- No records message  for particular employee tab-->
     <div class="no-records-message text-center mt-3" style="display: none">
       No Request of the selected employee.
     </div>
@@ -775,6 +784,8 @@
     <button onclick="closeRemarkModal()">Cancel</button>
   </div>-->
 </div>
+
+<!--display message for all three Tab data empty-->
 <div class="no-records text-center mt-3" style="display: none">
   You have no Request.
 </div>
@@ -957,11 +968,19 @@
       const data = await response.json();
 
       const pendingRecord = data.message.pending;
+      const approvedRecord = data.message.approved;
+      const rejectedRecord = data.message.rejected;
       console.log("Get ta records", pendingRecord);
 
       const tableContainer = document.querySelector("#travelAllowancesTable");
       const tableBody = document.querySelector("#travelAllowancesTable tbody");
       const noRecordsMessage = document.querySelector(".no-records");
+      const noRecordsPendingMessage = document.querySelector(
+        ".no-pending-records"
+      );
+      const noRecordsByEmpMessage = document.querySelector(
+        ".no-records-message"
+      );
 
       tableContainer.style.display = "block";
 
@@ -978,8 +997,22 @@
       tableBody.innerHTML = "";
 
       if (pendingRecord.length === 0) {
-        noRecordsMessage.style.display = "block";
-        mainContent.style.display = "none";
+        noRecordsPendingMessage.style.display = "block";
+        tableContainer.style.display = "none";
+        // Hide employee tabs except for the "All" tab
+        const tabs = employeeTabsContainer.querySelectorAll(".ta-nav-link");
+        tabs.forEach((tab) => {
+          if (tab.id !== "all-tab") {
+            tab.style.display = "none";
+          }
+        });
+        if (approvedRecord.length != 0 || rejectedRecord.length != 0) {
+          noRecordsMessage.style.display = "none";
+          mainContent.style.display = "block";
+        } else {
+          noRecordsMessage.style.display = "block";
+          mainContent.style.display = "none";
+        }
       } else {
         noRecordsMessage.style.display = "none";
         // const pendingCount = pendingRecord.length;
@@ -1223,7 +1256,7 @@
       const approvedTableBody = document.querySelector(
         "#travelAllowancesApprovedTable tbody"
       );
-      const noRecordsMessage = document.querySelector(".no-records");
+      const noRecordsMessage = document.querySelector(".no-approved-records");
       const mainContent = document.querySelector(".main_content");
 
       approvedTableContainer.style.display = "block";
@@ -1233,7 +1266,7 @@
 
       if (approvedRecords.length === 0) {
         noRecordsMessage.style.display = "block";
-        mainContent.style.display = "none";
+        approvedTableContainer.style.display = "none";
       } else {
         noRecordsMessage.style.display = "none";
         mainContent.style.display = "block";
@@ -1361,7 +1394,7 @@
       const rejectedTableBody = document.querySelector(
         "#travelAllowancesRejectTable tbody"
       );
-      const noRecordsMessage = document.querySelector(".no-records-message");
+      const noRecordsMessage = document.querySelector(".no-rejected-records");
       const mainContent = document.querySelector(".main_content");
 
       rejectedTableContainer.style.display = "block";
@@ -1371,7 +1404,7 @@
 
       if (rejectedRecords.length === 0) {
         noRecordsMessage.style.display = "block";
-        mainContent.style.display = "none";
+        rejectedTableContainer.style.display = "none";
       } else {
         noRecordsMessage.style.display = "none";
         mainContent.style.display = "block";

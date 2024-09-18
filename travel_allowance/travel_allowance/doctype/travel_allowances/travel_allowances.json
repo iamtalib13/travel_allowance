@@ -47,6 +47,7 @@
   "ticket_amount",
   "column_break_mhumb",
   "fare_amount",
+  "column_break_mbwzy",
   "upload_ticket",
   "allowance_section",
   "allowance_type",
@@ -54,20 +55,32 @@
   "final_da_amount",
   "column_break_w8vb4",
   "final_halt_amount",
+  "column_break_gcatt",
   "day_stay_halt",
   "column_break_fn4zr",
   "final_lodge_amount",
+  "column_break_zjmmx",
   "upload_lodging",
+  "column_break_jw2kh",
   "day_stay_lodge",
   "column_break_y7okx",
-  "total_amount",
-  "status",
-  "approved_by",
-  "rejected_by",
-  "section_break_a7ads",
   "local_conveyance",
+  "section_break_pt7lk",
   "final_local_amount",
-  "rejection_remark"
+  "column_break_7f5gm",
+  "total_amount",
+  "approval_tab",
+  "approval_section_level_1_section",
+  "status",
+  "column_break_dknv6",
+  "approved_by",
+  "column_break_d1lxv",
+  "rejected_by",
+  "column_break_pszon",
+  "rejection_remark",
+  "column_break_fdfxt",
+  "section_break_a7ads",
+  "status_by_skip"
  ],
  "fields": [
   {
@@ -183,11 +196,12 @@
   {
    "fieldname": "allowance_section",
    "fieldtype": "Section Break",
-   "label": "Allowance"
+   "label": "Allowances Details"
   },
   {
    "fieldname": "column_break_tuzz1",
-   "fieldtype": "Column Break"
+   "fieldtype": "Section Break",
+   "label": "Time And Purpose"
   },
   {
    "fieldname": "allowance_type",
@@ -229,7 +243,8 @@
   },
   {
    "fieldname": "column_break_y7okx",
-   "fieldtype": "Column Break"
+   "fieldtype": "Section Break",
+   "label": "Local Conveyance Details"
   },
   {
    "fieldname": "fare_amount",
@@ -238,7 +253,8 @@
   },
   {
    "fieldname": "section_break_csvhp",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Travel Details"
   },
   {
    "fieldname": "column_break_a1o94",
@@ -259,7 +275,7 @@
   },
   {
    "fieldname": "section_break_p7znn",
-   "fieldtype": "Section Break"
+   "fieldtype": "Column Break"
   },
   {
    "fieldname": "purpose",
@@ -346,7 +362,8 @@
   },
   {
    "fieldname": "section_break_a7ads",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Approval Section Level 2"
   },
   {
    "fieldname": "final_local_amount",
@@ -357,11 +374,66 @@
    "fieldname": "rejection_remark",
    "fieldtype": "Data",
    "label": "Reject Reason"
+  },
+  {
+   "fieldname": "approval_tab",
+   "fieldtype": "Tab Break",
+   "label": "Approval"
+  },
+  {
+   "fieldname": "approval_section_level_1_section",
+   "fieldtype": "Section Break",
+   "label": "Approval Section Level 1 "
+  },
+  {
+   "fieldname": "column_break_dknv6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_d1lxv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_pszon",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_fdfxt",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status_by_skip",
+   "fieldtype": "Data",
+   "label": "Status"
+  },
+  {
+   "fieldname": "column_break_mbwzy",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_jw2kh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_gcatt",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_zjmmx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_7f5gm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_pt7lk",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-29 13:03:22.324326",
+ "modified": "2024-09-18 10:48:41.871811",
  "modified_by": "Administrator",
  "module": "Travel Allowance",
  "name": "Travel Allowances",
