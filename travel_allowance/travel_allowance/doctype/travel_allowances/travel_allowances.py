@@ -384,7 +384,7 @@ def get_rejection_reason(record):
         frappe.log_error(frappe.get_traceback(), "get_rejection_reason_error")
         return {"status": "error", "message": str(e)}
 
-
+from datetime import datetime
 # fetch list of ta-records
 @frappe.whitelist()
 def get_list(month=None):
@@ -433,7 +433,17 @@ def get_list(month=None):
         )
 
         # Update records with "from_location_other" and "to_location_other" if "from_location" or "to_location" is "Other"
+        # Update records with "from_location_other" and "to_location_other" if "from_location" or "to_location" is "Other"
         for record in ta_records:
+            # Format date fields to 'dd-mm-yyyy'
+             
+             # Format date fields to 'dd-mm-yyyy' (directly using strftime since it's a date object)
+            if record.get("from_date"):
+                record["from_date"] = record["from_date"].strftime("%d-%m-%Y")
+            
+            if record.get("to_date"):
+                record["to_date"] = record["to_date"].strftime("%d-%m-%Y")
+
             if record.get("from_location") == "Other" and record.get("from_location_other"):
                 record["from_location"] = record["from_location_other"]
             

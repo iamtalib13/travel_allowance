@@ -78,9 +78,22 @@
   "rejected_by",
   "column_break_pszon",
   "rejection_remark",
-  "column_break_fdfxt",
   "section_break_a7ads",
-  "status_by_skip"
+  "status_stage_2",
+  "column_break_zinxw",
+  "approved_by_stage_2",
+  "column_break_wu5j4",
+  "rejected_by_stage_2",
+  "column_break_xvz8i",
+  "reject_reason_by_stage_2",
+  "approval_section_level_3_section",
+  "status_stage_3",
+  "column_break_fjey8",
+  "approved_by_stage_3",
+  "column_break_sqidi",
+  "rejected_by_stage_3",
+  "column_break_4vauz",
+  "reject_reason_by_stage_3"
  ],
  "fields": [
   {
@@ -363,7 +376,7 @@
   {
    "fieldname": "section_break_a7ads",
    "fieldtype": "Section Break",
-   "label": "Approval Section Level 2"
+   "label": "Approval Section Level 2: Skip"
   },
   {
    "fieldname": "final_local_amount",
@@ -383,7 +396,7 @@
   {
    "fieldname": "approval_section_level_1_section",
    "fieldtype": "Section Break",
-   "label": "Approval Section Level 1 "
+   "label": "Approval Section Level 1 : RP"
   },
   {
    "fieldname": "column_break_dknv6",
@@ -396,15 +409,6 @@
   {
    "fieldname": "column_break_pszon",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_fdfxt",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "status_by_skip",
-   "fieldtype": "Data",
-   "label": "Status"
   },
   {
    "fieldname": "column_break_mbwzy",
@@ -429,11 +433,81 @@
   {
    "fieldname": "section_break_pt7lk",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_zinxw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_wu5j4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_xvz8i",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "approval_section_level_3_section",
+   "fieldtype": "Section Break",
+   "label": "Approval Section Level 3: TA Team"
+  },
+  {
+   "fieldname": "column_break_fjey8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_sqidi",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_4vauz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "approved_by_stage_2",
+   "fieldtype": "Data",
+   "label": "Approved by Skip"
+  },
+  {
+   "fieldname": "rejected_by_stage_2",
+   "fieldtype": "Data",
+   "label": "Rejected by Skip"
+  },
+  {
+   "fieldname": "reject_reason_by_stage_2",
+   "fieldtype": "Data",
+   "label": "Reject Reason by Skip"
+  },
+  {
+   "fieldname": "status_stage_2",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nDraft\nPending\nApproved\nReject"
+  },
+  {
+   "fieldname": "status_stage_3",
+   "fieldtype": "Select",
+   "label": "Status by TA Team"
+  },
+  {
+   "fieldname": "approved_by_stage_3",
+   "fieldtype": "Data",
+   "label": "Approved by TA Team"
+  },
+  {
+   "fieldname": "rejected_by_stage_3",
+   "fieldtype": "Data",
+   "label": "Rejected by TA Team"
+  },
+  {
+   "fieldname": "reject_reason_by_stage_3",
+   "fieldtype": "Data",
+   "label": "Reject Reason by TA Team"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-18 10:48:41.871811",
+ "modified": "2024-09-19 17:35:29.829245",
  "modified_by": "Administrator",
  "module": "Travel Allowance",
  "name": "Travel Allowances",

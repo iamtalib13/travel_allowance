@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Travel Allowance</title>
 
-    
     <!--HTMX Link-->
     <script src="https://unpkg.com/htmx.org@2.0.1"></script>
     <!--<link
@@ -342,10 +341,10 @@
         text-align: center;
         width: 50px;
       }
-      .action-btns {
+      /*.action-btns {
         display: flex;
         justify-content: space-between;
-      }
+      }*/
       /* Highlighting total column */
       #taRecordTable td:last-child {
         font-weight: bold;
@@ -967,8 +966,6 @@
     </style>
   </head>
   <body>
-   
-
     {% if frappe.session.user != "Guest" %}
     <div class="ta-container container-fluid">
       <nav class="nav ta-nav">
@@ -1136,14 +1133,14 @@
                         <th>To</th>
                         <th>Date To</th>
                         <th>Time To</th>
-                        <th>Total Time</th>
+                        <th>Total Time (in hours)</th>
                         <th>Purpose</th>
                         <th>Travel Mode</th>
                         <th>Total km</th>
                         <th>Ticket Amt</th>
                         <th>Fare Amount</th>
-                       
-                        <th>Allowance Type</th>
+
+                        <!--<th>Allowance Type</th>-->
                         <th>DA</th>
                         <th>Halting</th>
                         <th>Lodging</th>
@@ -2035,8 +2032,17 @@
           document.getElementById("from_location").value
         );
         formData.append(
+          "from_location_other",
+          document.getElementById("from_location_other").value
+        );
+
+        formData.append(
           "to_location",
           document.getElementById("to_location").value
+        );
+        formData.append(
+          "to_location_other",
+          document.getElementById("to_location_other").value
         );
         formData.append(
           "from_date",
@@ -2414,8 +2420,6 @@
           }
 
           try {
-           
-
             // Send data to the server for further validation and calculation
             const response = await fetch(
               "/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.calculate_total_duration",
@@ -2423,7 +2427,6 @@
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
-                 
                 },
                 body: JSON.stringify({
                   from_date: fromDate,
@@ -2436,7 +2439,7 @@
 
             const data = await response.json();
 
-            console.log("total time response:",data);
+            console.log("total time response:", data);
 
             // Check if response contains the expected structure
             if (response.ok && data.message) {
@@ -3101,9 +3104,7 @@
                           record.status === "Draft" ||
                           record.status === "Reject"
                             ? `<div class="action-btns" data-id="${record.name}">
-                                  <!--<div class="edit-btn" onclick="editRecord('${record.name}')">
-                                    <img src='/files/edit_9351341.png' alt="Edit" width="20">
-                                  </div>-->
+                                 
                                   <div class="delete-btn" onclick="deleteRecord('${record.name}')">
                                     <img src='/files/delete_11540197.png' alt="Delete" width="20">
                                   </div>
@@ -3125,7 +3126,7 @@
                       <td>${record.ticket_amount}</td>
                       <td>${record.fare_amount}</td>
                       
-                      <td>${record.allowance_type}</td>
+                    <!--  <td>${record.allowance_type}</td>-->
                       <td>${record.final_da_amount}</td>
                       <td>${record.final_halt_amount}</td>
                       <td>${record.final_lodge_amount}</td>
