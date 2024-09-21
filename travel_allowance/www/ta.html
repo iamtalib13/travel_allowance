@@ -288,17 +288,26 @@
         align-items: center;
       }
       /* Table styles */
-      #taRecordTable {
+      /* #taRecordTable {
         width: 100%;
         border-collapse: collapse;
         margin: 20px 0;
         font-size: 14px;
         text-align: left;
-        height: 500px;
+        /*height: 500px;
+        padding: 15px 15px;
+      }*/
+
+      table#taRecordTableContent {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 14px;
+        text-align: left;
       }
 
-      #taRecordTable th,
-      #taRecordTable td {
+      #taRecordTableContent th,
+      #taRecordTableContent td {
         padding: 10px 15px;
         border: 1px solid #b9bdb9;
         white-space: nowrap; /* Prevent line wrapping */
@@ -306,38 +315,38 @@
       }
 
       /* Header styling */
-      #taRecordTable thead th {
-        background-color: #f2f2f2;
+      #taRecordTableContent thead th {
+        background-color: #f4f5f5;
         color: #333;
         font-weight: bold;
         text-align: center;
       }
 
       /* Hover effects */
-      #taRecordTable tbody tr:hover {
+      #taRecordTableContent tbody tr:hover {
         background-color: #f1f1f1;
       }
 
       /* Center align specific columns */
-      #taRecordTable td:nth-child(4),
-      #taRecordTable td:nth-child(5),
-      #taRecordTable td:nth-child(6),
-      #taRecordTable td:nth-child(7),
-      #taRecordTable td:nth-child(8),
-      #taRecordTable td:nth-child(9),
-      #taRecordTable td:nth-child(10),
-      #taRecordTable td:nth-child(13),
-      #taRecordTable td:nth-child(14),
-      #taRecordTable td:nth-child(15),
-      #taRecordTable td:nth-child(16),
-      #taRecordTable td:nth-child(17),
-      #taRecordTable td:nth-child(18),
-      #taRecordTable td:nth-child(19) {
+      #taRecordTableContent td:nth-child(4),
+      #taRecordTableContent td:nth-child(5),
+      #taRecordTableContent td:nth-child(6),
+      #taRecordTableContent td:nth-child(7),
+      #taRecordTableContent td:nth-child(8),
+      #taRecordTableContent td:nth-child(9),
+      #taRecordTableContent td:nth-child(10),
+      #taRecordTableContent td:nth-child(13),
+      #taRecordTableContent td:nth-child(14),
+      #taRecordTableContent td:nth-child(15),
+      #taRecordTableContent td:nth-child(16),
+      #taRecordTableContent td:nth-child(17),
+      #taRecordTableContent td:nth-child(18),
+      #taRecordTableContent td:nth-child(19) {
         text-align: center;
       }
 
       /* Checkbox column */
-      #taRecordTable td:first-child {
+      #taRecordTableContent td:first-child {
         text-align: center;
         width: 50px;
       }
@@ -346,19 +355,19 @@
         justify-content: space-between;
       }*/
       /* Highlighting total column */
-      #taRecordTable td:last-child {
+      #taRecordTableContent td:last-child {
         font-weight: bold;
         color: #000;
         background-color: #e7f3ff;
       }
 
       /* Table header alignment */
-      #taRecordTable th {
+      #taRecordTableContent th {
         text-align: center;
       }
 
       /* Styling for no records row */
-      #taRecordTable .text-center {
+      #taRecordTableContent .text-center {
         text-align: center;
         font-weight: bold;
         color: #999;
@@ -374,9 +383,9 @@
       }
 
       .pending-row td {
+        color: #114f62;
+        background-color: #b6cddb;
         border: #000;
-        background-color: rgb(194 237 251); /* Yellow for Pending */
-        color: #000;
       }
 
       .approved-row td {
@@ -384,7 +393,10 @@
         background-color: #d4edda; /* Green for Approved */
         color: #286840;
       }
-
+      .reject-row td {
+        color: #840404;
+        background-color: #fbdddd;
+      }
       .clickable-cell {
         cursor: pointer;
       }
@@ -497,7 +509,7 @@
         font-size: 16px;
         font-weight: 700;
         cursor: pointer;
-        margin-right: 10px;
+        /* margin-right: 10px;*/
         transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform transition for button press effect */
 
         background-color: #2f84c1; /* Solid background color */
@@ -844,6 +856,17 @@
         margin-right: 5px;
       }
 
+      .main-container {
+        border-radius: 8px;
+        border: 1px solid #999393;
+        margin-top: 10px;
+      }
+      .fixed-total {
+        position: sticky;
+        right: 0;
+        z-index: 2;
+      }
+
       /* Responsive CSS */
       @media (max-width: 768px) {
         /* Adjust container direction and padding */
@@ -1120,40 +1143,46 @@
                     </button>
                   </div>
                 </div>
-                <div class="table-responsive" id="taRecordTable">
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th>Serial No.</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                        <th>From</th>
-                        <th>Date From</th>
-                        <th>Time From</th>
-                        <th>To</th>
-                        <th>Date To</th>
-                        <th>Time To</th>
-                        <th>Total Time (in hours)</th>
-                        <th>Purpose</th>
-                        <th>Travel Mode</th>
-                        <th>Total km</th>
-                        <th>Ticket Amt</th>
-                        <th>Fare Amount</th>
+                <div class="container-fluid main-container">
+                  <div class="table-responsive" id="taRecordTable">
+                    <table
+                      id="taRecordTableContent"
+                      class="table table-bordered"
+                    >
+                      <thead>
+                        <tr>
+                          <th>Serial No.</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                          <th>From</th>
+                          <th>Date From</th>
+                          <th>Time From</th>
+                          <th>To</th>
+                          <th>Date To</th>
+                          <th>Time To</th>
+                          <th>Total Time (in hours)</th>
+                          <th>Purpose</th>
+                          <th>Travel Mode</th>
+                          <th>Total km</th>
+                          <th>Ticket Amt</th>
+                          <th>Fare Amount</th>
 
-                        <!--<th>Allowance Type</th>-->
-                        <th>DA</th>
-                        <th>Halting</th>
-                        <th>Lodging</th>
-                        <th>Local Conveyance</th>
-                        <th>Total</th>
-                        <th>View Ticket Attachment</th>
-                        <th>View Lodging Attachment</th>
-                        <th class="d-none">Name</th>
-                      </tr>
-                    </thead>
-                    <tbody></tbody>
-                  </table>
+                          <!--<th>Allowance Type</th>-->
+                          <th>DA</th>
+                          <th>Halting</th>
+                          <th>Lodging</th>
+                          <th>Local Conveyance</th>
+                          <th>Total</th>
+                          <th>View Ticket Attachment</th>
+                          <th>View Lodging Attachment</th>
+                          <th class="d-none">Name</th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
                 </div>
+
                 <!--Handsonable Table for TA Records-->
                 <div id="excel-canvas" class="excel-container"></div>
 
@@ -3053,6 +3082,7 @@
           console.log("getlist data:", data);
           const tableData = document.getElementById("taRecordTable");
           const tableBody = document.querySelector("#taRecordTable tbody");
+          const mainContainer = document.querySelector(".main-container");
           /*const tableData = document.getElementById("excel-canvas");*/
           const tableHeading = document.getElementById("table-heading");
           const submitBtn = document.getElementById("ta-submit-btn");
@@ -3068,6 +3098,7 @@
             tableHeading.style.display = "none";
             submitBtn.style.display = "none";
             noDataMsg.style.display = "block";
+            mainContainer.style.display = "none";
           } else {
             // Data exists, populate the table
             data.message.forEach((record, index) => {
@@ -3077,6 +3108,8 @@
                 row.classList.add("pending-row");
               } else if (record.status === "Approved") {
                 row.classList.add("approved-row");
+              } else if (record.status === "Reject") {
+                row.classList.add("reject-row");
               }
 
               // Create cells for each piece of data
@@ -3101,8 +3134,7 @@
                       </td>
                       <td>
                         ${
-                          record.status === "Draft" ||
-                          record.status === "Reject"
+                          record.status === "Draft"
                             ? `<div class="action-btns" data-id="${record.name}">
                                  
                                   <div class="delete-btn" onclick="deleteRecord('${record.name}')">
@@ -3157,7 +3189,7 @@
                         </span>
                       </td>
                     
-                      <td>₹${record.total_amount}</td>
+                      <td >₹${record.total_amount}</td>
                       <td>${
                         record.upload_ticket
                           ? `<a href="${record.upload_ticket}" target="_blank">View</a>`
@@ -3444,13 +3476,15 @@
         const recordsToUpdate = [];
         rows.forEach((row) => {
           const statusCell = row.querySelector("td:nth-child(2)"); // Assuming the 'Status' column is the first one
-          const nameCell = row.querySelector("td:nth-child(24)"); // Assuming the 'Name' column is the 23rd one
+          const nameCell = row.querySelector("td:nth-child(23)"); // Assuming the 'Name' column is the 23rd one
 
           console.log("statusCell:", statusCell.textContent.trim());
+          console.log("nameCell:", nameCell.textContent.trim());
           // Check if the status is not 'Pending' or 'Approved'
           if (
             statusCell.textContent.trim() !== "Pending" &&
-            statusCell.textContent.trim() !== "Approved"
+            statusCell.textContent.trim() !== "Approved" &&
+            statusCell.textContent.trim() !== "Reject"
           ) {
             recordsToUpdate.push(nameCell.textContent.trim()); // Collect the 'name' value
           }

@@ -674,7 +674,7 @@
             <th>Ticket Amount</th>
             <th>Uploaded Ticket</th>
             <th>Fare Amount</th>
-            <th>Allowance Type</th>
+            <!-- <th>Allowance Type</th>-->
             <th>DA</th>
             <th>Halting</th>
             <th>Lodging</th>
@@ -712,7 +712,7 @@
             <th>Ticket Amount</th>
             <th>Uploaded Ticket</th>
             <th>Fare Amount</th>
-            <th>Allowance Type</th>
+            <!-- <th>Allowance Type</th>-->
             <th>DA</th>
             <th>Halting</th>
             <th>Lodging</th>
@@ -750,7 +750,7 @@
             <th>Ticket Amount</th>
             <th>Uploaded Ticket</th>
             <th>Fare Amount</th>
-            <th>Allowance Type</th>
+            <!-- <th>Allowance Type</th>-->
             <th>DA</th>
             <th>Halting</th>
             <th>Lodging</th>
@@ -1031,11 +1031,24 @@
           }</td>
                 <td>${record.first_name} ${record.last_name}</td>
                 <td>${record.status}</td>
-                <td>${record.from_location}</td>
-                <td>${record.from_date}</td>
+                <td>
+                  ${
+                    record.from_location === "Other"
+                      ? record.from_location_other
+                      : record.from_location
+                  }
+                </td>
+
+                <td>${formatDate(record.from_date)}</td>
                 <td>${record.from_time}</td>
-                <td>${record.to_location}</td>
-                <td>${record.to_date}</td>
+                <td>
+                  ${
+                    record.to_location === "Other"
+                      ? record.to_location_other
+                      : record.to_location
+                  }
+                </td>
+                <td>${formatDate(record.to_date)}</td>
                 <td>${record.to_time}</td>
                 <td>${record.total_time}</td>
                 <td>${record.purpose}</td>
@@ -1048,7 +1061,7 @@
                     : "-"
                 }</td>
                 <td>${record.fare_amount}</td>
-                <td>${record.allowance_type}</td>
+               <!-- <td>${record.allowance_type}</td>-->
                 <td>${record.final_da_amount}</td>
                 <td>${record.final_halt_amount}</td>
                 <td>${record.final_lodge_amount}</td>
@@ -1285,11 +1298,24 @@
           }</td>
                 <td>${record.first_name} ${record.last_name}</td>
                 <td>${record.status}</td>
-                <td>${record.from_location}</td>
-                <td>${record.from_date}</td>
+                <td>
+                  ${
+                    record.from_location === "Other"
+                      ? record.from_location_other
+                      : record.from_location
+                  }
+                </td>
+
+                <td>${formatDate(record.from_date)}</td>
                 <td>${record.from_time}</td>
-                <td>${record.to_location}</td>
-                <td>${record.to_date}</td>
+                <td>
+                  ${
+                    record.to_location === "Other"
+                      ? record.to_location_other
+                      : record.to_location
+                  }
+                </td>
+                <td>${formatDate(record.to_date)}</td>
                 <td>${record.to_time}</td>
                 <td>${record.total_time}</td>
                 <td>${record.purpose}</td>
@@ -1302,7 +1328,7 @@
                     : "-"
                 }</td>
                 <td>${record.fare_amount}</td>
-                <td>${record.allowance_type}</td>
+                <!-- <td>${record.allowance_type}</td>-->
                 <td>${record.final_da_amount}</td>
                 <td>${record.final_halt_amount}</td>
                 <td>${record.final_lodge_amount}</td>
@@ -1338,6 +1364,12 @@
     } catch (error) {
       console.error("Error:", error);
     }
+  }
+
+  function formatDate(dateString) {
+    if (!dateString) return ""; // Return empty string if no date is provided
+    const [year, month, day] = dateString.split("-");
+    return `${day}-${month}-${year}`;
   }
 
   //fetch rejected records
@@ -1423,11 +1455,24 @@
           }</td>
                 <td>${record.first_name} ${record.last_name}</td>
                 <td>${record.status}</td>
-                <td>${record.from_location}</td>
-                <td>${record.from_date}</td>
+                <td>
+                  ${
+                    record.from_location === "Other"
+                      ? record.from_location_other
+                      : record.from_location
+                  }
+                </td>
+
+                <td>${formatDate(record.from_date)}</td>
                 <td>${record.from_time}</td>
-                <td>${record.to_location}</td>
-                <td>${record.to_date}</td>
+                <td>
+                  ${
+                    record.to_location === "Other"
+                      ? record.to_location_other
+                      : record.to_location
+                  }
+                </td>
+               <td>${formatDate(record.to_date)}</td>
                 <td>${record.to_time}</td>
                 <td>${record.total_time}</td>
                 <td>${record.purpose}</td>
@@ -1440,7 +1485,7 @@
                     : "-"
                 }</td>
                 <td>${record.fare_amount}</td>
-                <td>${record.allowance_type}</td>
+                <!-- <td>${record.allowance_type}</td>-->
                 <td>${record.final_da_amount}</td>
                 <td>${record.final_halt_amount}</td>
                 <td>${record.final_lodge_amount}</td>
@@ -1958,6 +2003,7 @@
   // Filter table rows based on selected employee
   function filterTableByEmployee(employeeName) {
     const rows = document.querySelectorAll("#travelAllowancesTable tbody tr");
+    const pendingTable = document.getElementById("travelPendingTable");
     let hasVisibleRows = false;
     let serialNumber = 1;
 
@@ -1978,6 +2024,13 @@
     // Show the 'No records' message if no rows are visible
     const noRecordsMessage = document.querySelector(".no-records-message");
     noRecordsMessage.style.display = hasVisibleRows ? "none" : "block";
+
+    // Hide pendingTable if no rows are visible
+    if (!hasVisibleRows) {
+      pendingTable.style.display = "none";
+    } else {
+      pendingTable.style.display = ""; // Show the table if there are visible rows
+    }
   }
 </script>
 
