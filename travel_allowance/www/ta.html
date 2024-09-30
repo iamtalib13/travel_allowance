@@ -38,6 +38,9 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
+    <!--to include the PDF.js library from a CDN-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
@@ -160,10 +163,10 @@
         padding: 6px 16px;
 
         /*background: linear-gradient(
-          to right,
-          rgba(0, 128, 222, 1),
-          rgba(97, 202, 255, 1)
-        );*/
+                to right,
+                rgba(0, 128, 222, 1),
+                rgba(97, 202, 255, 1)
+              );*/
         color: #fff;
         border: none;
         border-radius: 8px;
@@ -178,12 +181,25 @@
 
       .add-button:hover {
         /*background: linear-gradient(
-          to right,
-          rgba(0, 128, 222, 1),
-          rgba(97, 202, 255, 1)
-        );*/
+                to right,
+                rgba(0, 128, 222, 1),
+                rgba(97, 202, 255, 1)
+              );*/
         background-color: #2f7a4c;
         transform: scale(1.05);
+      }
+
+      .nav-link .count {
+        background-color: rgb(221, 51, 51);
+        color: white;
+        border-radius: 50%;
+        padding: 4px 12px;
+        font-size: 0.8em;
+        position: relative;
+        display: inline-block;
+        font-size: 16px;
+        font-weight: bold;
+        /*border: 2px solid #bf1818;*/
       }
 
       /* Responsive Design */
@@ -289,14 +305,14 @@
       }
       /* Table styles */
       /* #taRecordTable {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 20px 0;
-        font-size: 14px;
-        text-align: left;
-        /*height: 500px;
-        padding: 15px 15px;
-      }*/
+              width: 100%;
+              border-collapse: collapse;
+              margin: 20px 0;
+              font-size: 14px;
+              text-align: left;
+              /*height: 500px;
+              padding: 15px 15px;
+            }*/
 
       table#taRecordTableContent {
         width: 100%;
@@ -309,14 +325,17 @@
       #taRecordTableContent th,
       #taRecordTableContent td {
         padding: 10px 15px;
-        border: 1px solid #b9bdb9;
+        /*border: 1px solid #b9bdb9;*/
         white-space: nowrap; /* Prevent line wrapping */
         text-align: center;
+      }
+      thead tr {
+        vertical-align: middle;
       }
 
       /* Header styling */
       #taRecordTableContent thead th {
-        background-color: #f4f5f5;
+        background-color: #e6e4e4;
         color: #333;
         font-weight: bold;
         text-align: center;
@@ -351,14 +370,15 @@
         width: 50px;
       }
       /*.action-btns {
-        display: flex;
-        justify-content: space-between;
-      }*/
+              display: flex;
+              justify-content: space-between;
+            }*/
       /* Highlighting total column */
       #taRecordTableContent td:last-child {
-        font-weight: bold;
+        border: transparent;
+
         color: #000;
-        background-color: #e7f3ff;
+        background-color: #f3f5f7;
       }
 
       /* Table header alignment */
@@ -374,11 +394,12 @@
       }
 
       /* Fixed Serial Number Column */
-      th.fixed-serial,
-      td.fixed-serial {
+      th.fixed-sr,
+      td.fixed-sr {
         position: sticky;
         left: 0;
         background-color: #e6e4e4 !important;
+        color: #000 !important;
         z-index: 2;
       }
 
@@ -407,13 +428,13 @@
 
       .content {
         margin-left: 0;
-        padding: 0 2rem;
+        /*padding: 0 2rem;*/
         overflow: auto;
       }
       /*.handsontable th {
-         font-weight: bold;
-        border: 1px solid #78b9f4;
-      }*/
+               font-weight: bold;
+              border: 1px solid #78b9f4;
+            }*/
 
       /* Scrollbar styling */
       ::-webkit-scrollbar {
@@ -533,13 +554,13 @@
 
       /* Delete Button Gradient */
       /*.delete-btn {
-        background: #ff0000;
-      }
+              background: #ff0000;
+            }
 
-      .delete-btn:hover {
-        background: #fb2c2c;
-        color: #fff;
-      }*/
+            .delete-btn:hover {
+              background: #fb2c2c;
+              color: #fff;
+            }*/
 
       /* Select All Button Gradient */
       .select-all-btn {
@@ -593,9 +614,9 @@
       }
 
       /*.ta-local-container{
-      display: flex;
-      justify-content: space-between;
-    }*/
+            display: flex;
+            justify-content: space-between;
+          }*/
 
       .local-container {
         display: flex;
@@ -697,22 +718,22 @@
         margin-bottom: 20px;
       }
       /*.input-with-icon {
-  position: relative;
-}*/
+        position: relative;
+      }*/
 
       /*.input-with-icon .form-control {
-  padding-right: 2.5rem; 
-}*/
+        padding-right: 2.5rem;
+      }*/
 
       /*.input-with-icon .calendar-icon {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.2em;
-  color: #999;
-  pointer-events: none; 
-}*/
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.2em;
+        color: #999;
+        pointer-events: none;
+      }*/
 
       .form-control,
       .form-select {
@@ -725,7 +746,7 @@
 
       .sidebar {
         height: 100vh;
-        width: 250px;
+        width: 220px;
         background-color: #343a40;
         padding: 1rem;
         position: fixed;
@@ -736,7 +757,7 @@
         color: #ffffff;
         text-decoration: none;
         display: block;
-        padding: 0.75rem 1rem;
+        padding: 15px 5px;
         margin-bottom: 0.5rem;
         border-radius: 0.25rem;
         transition: background-color 0.2s;
@@ -751,13 +772,19 @@
       .logo {
         width: 90px;
       }
+      button#create-ta {
+        background: #357abd;
+        font-weight: 700;
+        font-size: 18px;
+        padding: 10px 28px;
+      }
 
       /*.ta-Container {
-  padding: 20px 0;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}*/
+        padding: 20px 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      }*/
 
       .intro {
         margin-left: 15px;
@@ -861,8 +888,11 @@
         border: 1px solid #999393;
         margin-top: 10px;
       }
-      .fixed-total {
+      th.fixed-tot,
+      td.fixed-tot {
         position: sticky;
+        background-color: #c3e6cb !important;
+        color: #155724 !important;
         right: 0;
         z-index: 2;
       }
@@ -986,6 +1016,126 @@
       .summary-heading {
         font-weight: bold;
       }
+
+      .tracker {
+        display: flex;
+        align-items: center;
+      }
+
+      /*Approval tracker style*/
+      .stage {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      /* Status colors
+      .stage-pending {
+        background-color: #3173c5;
+      }
+
+      .stage-approved {
+        background-color: #228b22;
+      }
+
+      .stage-reject {
+        background-color: #ed1616;
+      }
+
+      .stage-null {
+        background-color: gray;
+      }*/
+
+      .line {
+        flex-grow: 1;
+        height: 2px;
+        background-color: gray;
+        /*margin: 0 5px;*/
+      }
+
+      /* Line color styles
+      .line-pending {
+        background-color: #3173c5;
+      }
+
+      .line-approved {
+        background-color: #228b22;
+      }
+
+      .line-reject {
+        background-color: #ed1616;
+      }
+
+      .line-null {
+        background-color: gray; /* Default color for the line when status is null
+      }*/
+
+      /* Tooltip styling
+            .stage[title]:hover::after {
+              content: attr(title);
+              position: absolute;
+              bottom: -25px;
+              left: 50%;
+              transform: translateX(-50%);
+              padding: 5px;
+              border-radius: 5px;
+              background-color: #333;
+              color: white;
+              font-size: 10px;
+              white-space: nowrap;
+            } */
+
+      .stage img {
+        width: 24px; /* Set the width of the icons */
+        height: 24px; /* Set the height of the icons */
+        display: block; /* Make sure the icons are displayed as block elements */
+        margin: 0 auto; /* Center the icons if needed */
+      }
+
+      /* Sidebar visibility */
+      .sidebar {
+        transition: all 0.3s ease;
+      }
+
+      /* Hidden sidebar */
+      .sidebar-hidden {
+        transform: translateX(-100%);
+      }
+
+      /* Full-width content when sidebar is hidden */
+      .full-width-content {
+        width: 100% !important;
+        transition: width 0.3s ease;
+      }
+
+      /* Position the toggle button so it's always visible */
+      #toggleSidebar {
+        transition: left 0.3s ease;
+        padding: 0;
+      }
+
+      /* Move toggle button when sidebar is hidden */
+      .sidebar-hidden + #toggleSidebar {
+        left: 10px; /* Adjust this value based on how far you want it to move */
+      }
+      /* By default, the button is inside the sidebar 
+      .toggle-btn {
+        margin-bottom: 20px;
+      }*/
+
+      /* When the sidebar is hidden, fix the button in position */
+      .fixed-btn {
+        position: fixed;
+
+        left: 10px; /* Adjust as needed */
+        z-index: 1000; /* Ensure the button is always visible */
+      }
     </style>
   </head>
   <body>
@@ -1032,103 +1182,71 @@
           </ul>
         </div>
       </nav>
-
+      <!-- <button id="toggleSidebar" class="btn toggle-btn">
+            <img
+              src="/assets/travel_allowance/images/sidebar.png"
+              alt="sidebar"
+              width="30"
+            />
+          </button>-->
       <div class="content" id="main-content">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-2">
-              <div class="sidebar">
+            <div class="col-md-2" id="sidebar-column">
+              <div class="sidebar" id="sidebar">
+                <!-- Sidebar content -->
                 <!-- Button to trigger modal -->
                 <button
-                  class="btn create-ta text-white my-3 mx-3"
+                  class="btn create-ta text-white my-4"
                   id="create-ta"
-                  style="font-weight: 700; font-size: 18px"
                   data-bs-toggle="modal"
                   data-bs-target="#travelFormModal"
                   onclick="checkTACategory()"
                 >
-                  Create +
+                  New Request +
                 </button>
 
-                <!--<a class="nav-link tab active" id="my-home" hx-target="#home">
-                <img src="/files/home (1).png" width="30" alt="Home" />
-              Home
-              </a>-->
                 <a href="#" class="nav-link tab active" id="my-travel">
                   <img
                     src="/files/profile (2).png"
-                    width="30"
+                    width="25"
                     alt="My Travel"
                   />
                   My Travel
                 </a>
 
-                <a href="/app/ta-approval" class="nav-link tab" id="requests">
+                <a href="#" class="nav-link tab" id="requests">
                   <img
                     src="/files/notification.png"
-                    width="30"
+                    width="25"
                     alt="Requests"
+                    title="Reporting Person Approval"
                   />
-                  Requests
+                  RP Approval <span class="" id="requestCount"></span>
                 </a>
-                <a href="#" class="nav-link tab" id="report">
+
+                <a href="#" class="nav-link tab" id="skipRequest">
+                  <img
+                    src="/files/notification.png"
+                    width="25"
+                    alt="skipRequest"
+                  />
+                  Skip Approval <span class="" id="requestCount"></span>
+                </a>
+                <!-- <a href="#" class="nav-link tab" id="report">
                   <img src="/files/test.png" width="30" alt="Reports" />
                   Reports
+                </a>-->
+                <a href="#" class="nav-link tab" id="taPolicy">
+                  <img src="/files/test.png" width="25" alt="TA Policy" />
+                  TA Policy
                 </a>
               </div>
             </div>
 
-            <div class="col-md-10">
-              <div id="home" style="display: none">
-                <div class="ta-Container">
-                  <div class="logo-img">
-                    <img src="/files/budget.png" alt="Icon" class="logo" />
-                  </div>
+            <div class="col-md-10" id="content-column">
+              <!-- Button to toggle sidebar -->
 
-                  <div class="intro">
-                    <div class="emp-name" id="emp-name"></div>
-                    <h4 class="welcome-text">
-                      Welcome to Travel Allowance Management
-                    </h4>
-                  </div>
-                </div>
-
-                <div class="ta-request-container">
-                  <a
-                    class="NewRequest"
-                    href="#"
-                    data-bs-toggle="modal"
-                    data-bs-target="#travelFormModal"
-                  >
-                    <img
-                      src="/files/transport (2).png"
-                      alt="Icon"
-                      class="create-icon"
-                    />
-                    <span class="title">
-                      <span class="label"> TA Claim</span>
-                      <div class="sublabel">Go to Travel Claim</div>
-                    </span>
-                  </a>
-
-                  <a class="ListRecords" href="#">
-                    <img
-                      src="/files/travel (4).png"
-                      alt="Icon"
-                      class="create-icon"
-                    />
-                    <span class="title">
-                      <span class="label">My Travel</span>
-                      <div class="sublabel">Travel Claim Records</div>
-                    </span>
-                  </a>
-
-                  <a id="pending" href="/app/ta-approval">
-                    <h3 class="title">TA Request</h3>
-                    <p class="ta-pending"><span class="count"></span>Pending</p>
-                  </a>
-                </div>
-              </div>
               <div id="ta-records-tbl" class="mt-3 px-3">
                 <div class="col d-flex align-items-center">
                   <div id="table-heading">
@@ -1145,14 +1263,29 @@
                 </div>
                 <div class="container-fluid main-container">
                   <div class="table-responsive" id="taRecordTable">
-                    <table
-                      id="taRecordTableContent"
-                      class="table table-bordered"
-                    >
+                    <table id="taRecordTableContent" class="table">
                       <thead>
                         <tr>
-                          <th>Serial No.</th>
+                          <th class="d-none">Name</th>
+                          <th class="fixed-sr">#</th>
                           <th>Status</th>
+                          <!-- Main header for Approval Tracker with 3 sub-columns -->
+                          <th>
+                            Approval Tracker
+                            <div
+                              style="
+                                display: flex;
+                                justify-content: space-between;
+                                width: 100%;
+                                border-top: 1px solid;
+                              "
+                            >
+                              <span>RP</span>
+                              <span>Skip</span>
+                              <span>TA</span>
+                            </div>
+                          </th>
+
                           <th>Action</th>
                           <th>From</th>
                           <th>Date From</th>
@@ -1166,16 +1299,15 @@
                           <th>Total km</th>
                           <th>Ticket Amt</th>
                           <th>Fare Amount</th>
-
                           <!--<th>Allowance Type</th>-->
                           <th>DA</th>
                           <th>Halting</th>
                           <th>Lodging</th>
                           <th>Local Conveyance</th>
-                          <th>Total</th>
                           <th>View Ticket Attachment</th>
                           <th>View Lodging Attachment</th>
-                          <th class="d-none">Name</th>
+                          <th class="fixed-tot">Total</th>
+                          <th>Modified</th>
                         </tr>
                       </thead>
                       <tbody></tbody>
@@ -1212,6 +1344,17 @@
               <div id="ta-request" class="px-3" style="display: none">
                 <div class="container-fluid">
                   {% include 'templates/includes/ta-approval.html' %}
+                </div>
+              </div>
+              <div id="skip-request" class="px-3" style="display: none">
+                <div class="container-fluid">
+                  {% include 'templates/includes/skip-approval.html' %}
+                </div>
+              </div>
+              <div id="ta-policy" class="px-3" style="display: none">
+                <div class="container-fluid">
+                  <div id="pdf-container"></div>
+                  <!-- Container for multiple pages -->
                 </div>
               </div>
             </div>
@@ -1765,6 +1908,71 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
+      /* document
+        .getElementById("toggleSidebar")
+        .addEventListener("click", function () {
+          var sidebar = document.getElementById("sidebar");
+          var sidebarColumn = document.getElementById("sidebar-column");
+          var toggleSidebarBtn = document.getElementById("toggleSidebar");
+          var contentColumn = document.getElementById("content-column");
+
+          // Toggle sidebar visibility
+          sidebarColumn.classList.toggle("d-none");
+
+          // Adjust content column to full width when sidebar is hidden
+          contentColumn.classList.toggle("full-width-content");
+
+          // Check if the sidebar is hidden
+          if (sidebarColumn.classList.contains("d-none")) {
+            // Move the toggle button to a fixed position
+            toggleSidebarBtn.classList.add("fixed-btn");
+            toggleSidebarBtn.innerHTML = `<img src="/assets/travel_allowance/images/sidebar.png" alt="Open Sidebar" width="30" />`;
+          } else {
+            // Move the toggle button back inside the sidebar
+            toggleSidebarBtn.classList.remove("fixed-btn");
+            toggleSidebarBtn.innerHTML = `<img src="/assets/travel_allowance/images/sidebar.png" alt="Close Sidebar" width="30" />`;
+          }
+        });*/
+
+      // funtion to get the count as notification in the Request tab of sidebar tab
+      function fetchPendingCount() {
+        const requestCount = document.getElementById("requestCount");
+        fetch(
+          "/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_pending_count"
+        )
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json(); // Parse the JSON response
+          })
+          .then((data) => {
+            console.log("data", data);
+            // Extract the count from the message array
+            const count = data.message[0]; // Access the first element of the message array
+            if (count > 0) {
+              // Update the count in the HTML
+              requestCount.innerText = count;
+              requestCount.classList.add("count"); // Add a class for styling if needed
+            } else {
+              requestCount.innerText = ""; // Clear count if no pending requests
+              requestCount.classList.remove("count"); // Remove the class if count is zero
+            }
+          })
+          .catch((error) => {
+            console.error(
+              "There was a problem with the fetch operation:",
+              error
+            );
+          });
+      }
+
+      // Fetch pending count immediately on page load
+      fetchPendingCount();
+
+      // Set interval to fetch the pending count every 5 minutes (300000 milliseconds)
+      setInterval(fetchPendingCount, 120000);
+
       //Check TA category is set or not...onload event
       checkTACategory();
 
@@ -1823,6 +2031,50 @@
         }
       }
 
+      const url = "/files/SAHAYOG TRAVEL POLICY.pdf"; // Path to your PDF
+
+      // PDF.js initialization
+      const pdfjsLib = window["pdfjs-dist/build/pdf"];
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js";
+
+      // Asynchronous download of the PDF
+      pdfjsLib.getDocument(url).promise.then((pdfDoc) => {
+        const container = document.getElementById("pdf-container");
+        const scale = 1.5; // Adjust scale as needed
+
+        // Function to render a single page
+        const renderPage = (pageNum) => {
+          pdfDoc.getPage(pageNum).then((page) => {
+            const viewport = page.getViewport({ scale: scale });
+
+            // Create a canvas for each page
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d");
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+            container.appendChild(canvas);
+
+            // Disable right-click on the canvas
+            canvas.addEventListener("contextmenu", (e) => {
+              e.preventDefault();
+            });
+
+            // Render PDF page into the canvas context
+            const renderContext = {
+              canvasContext: context,
+              viewport: viewport,
+            };
+            page.render(renderContext);
+          });
+        };
+
+        // Loop through all pages and render them
+        for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
+          renderPage(pageNum);
+        }
+      });
+
       //function to logout session
       document
         .querySelector(".logout-btn")
@@ -1850,15 +2102,18 @@
             });
         });
 
-      // Function to toggle sections visibility
-      function toggleSection(showSectionId, hideSectionId, activeTabId) {
+      // Function to toggle sections visibility (shows one, hides others)
+      function toggleSections(showSectionId, hideSectionIds, activeTabId) {
         const showSection = document.getElementById(showSectionId);
-        const hideSection = document.getElementById(hideSectionId);
 
-        if (showSection.style.display === "none") {
-          showSection.style.display = "block";
-          hideSection.style.display = "none";
-        }
+        // Hide all sections in the hideSectionIds array
+        hideSectionIds.forEach((hideSectionId) => {
+          const hideSection = document.getElementById(hideSectionId);
+          if (hideSection) hideSection.style.display = "none";
+        });
+
+        // Show the requested section
+        if (showSection) showSection.style.display = "block";
 
         setActiveTab(activeTabId);
       }
@@ -1885,7 +2140,12 @@
         .getElementById("my-travel")
         .addEventListener("click", function (event) {
           event.preventDefault(); // Prevent the default anchor behavior
-          toggleSection("ta-records-tbl", "ta-request", "my-travel");
+          // Show "ta-records-tbl", hide "ta-request" and "ta-policy"
+          toggleSections(
+            "ta-records-tbl",
+            ["ta-request", "ta-policy", "skip-request"],
+            "my-travel"
+          );
         });
 
       // Event listener for "Requests" link
@@ -1893,7 +2153,38 @@
         .getElementById("requests")
         .addEventListener("click", function (event) {
           event.preventDefault(); // Prevent the default anchor behavior
-          toggleSection("ta-request", "ta-records-tbl", "requests");
+          // Show "ta-request", hide "ta-records-tbl" and "ta-policy"
+          toggleSections(
+            "ta-request",
+            ["ta-records-tbl", "ta-policy", "skip-request"],
+            "requests"
+          );
+        });
+
+      // Event listener for "TA Policy" link
+      document
+        .getElementById("taPolicy")
+        .addEventListener("click", function (event) {
+          event.preventDefault(); // Prevent the default anchor behavior
+          // Show "ta-policy", hide "ta-records-tbl" and "ta-request"
+          toggleSections(
+            "ta-policy",
+            ["ta-records-tbl", "ta-request", "skip-request"],
+            "taPolicy"
+          );
+        });
+
+      // Event listener for "TA Policy" link
+      document
+        .getElementById("skipRequest")
+        .addEventListener("click", function (event) {
+          event.preventDefault(); // Prevent the default anchor behavior
+          // Show "ta-policy", hide "ta-records-tbl" and "ta-request"
+          toggleSections(
+            "skip-request",
+            ["ta-records-tbl", "ta-request", "ta-policy"],
+            "skipRequest"
+          );
         });
 
       var tooltipTriggerList = [].slice.call(
@@ -1917,21 +2208,21 @@
         function createRow() {
           const row = document.createElement("tr");
           row.innerHTML = `
-              <td><input type="date" name="local_date[]" class="form-control form-control-sm local-date"></td>
-              <td><input type="text" name="from_local[]" class="form-control form-control-sm"></td>
-              <td><input type="text" name="to_local[]" class="form-control form-control-sm"></td>
-              <td><input type="text" name="purpose[]" class="form-control form-control-sm"></td>
-              <td>
-                  <select name="local_travel_mode[]" class="form-select form-select-sm">
-                      <option value="">Select</option>
-                      <option value="Auto">Auto</option>
-                      <option value="Cab">Cab</option>
-                      <option value="Public Transport">Public Transport</option>
-                  </select>
-              </td>
-              <td><input type="number" name="local_amt[]" class="form-control form-control-sm local-amt"></td>
-              <td><button type="button" class="btn btn-danger btn-sm remove-row-button">Remove</button></td>
-          `;
+                          <td><input type="date" name="local_date[]" class="form-control form-control-sm local-date"></td>
+                          <td><input type="text" name="from_local[]" class="form-control form-control-sm"></td>
+                          <td><input type="text" name="to_local[]" class="form-control form-control-sm"></td>
+                          <td><input type="text" name="purpose[]" class="form-control form-control-sm"></td>
+                          <td>
+                              <select name="local_travel_mode[]" class="form-select form-select-sm">
+                                  <option value="">Select</option>
+                                  <option value="Auto">Auto</option>
+                                  <option value="Cab">Cab</option>
+                                  <option value="Public Transport">Public Transport</option>
+                              </select>
+                          </td>
+                          <td><input type="number" name="local_amt[]" class="form-control form-control-sm local-amt"></td>
+                          <td><button type="button" class="btn btn-danger btn-sm remove-row-button">Remove</button></td>
+                      `;
           return row;
         }
 
@@ -2180,14 +2471,14 @@
           });
 
           /*if (hasInvalidFields) {
-            await Swal.fire({
-              title: "Error",
-              text: "Some local conveyance fields are missing or invalid. Please check and try again.",
-              icon: "error",
-            });
-            submitButton.disabled = false;
-            return;
-          }*/
+                        await Swal.fire({
+                          title: "Error",
+                          text: "Some local conveyance fields are missing or invalid. Please check and try again.",
+                          icon: "error",
+                        });
+                        submitButton.disabled = false;
+                        return;
+                      }*/
 
           formData.append(
             "local_conveyance",
@@ -3114,97 +3405,225 @@
 
               // Create cells for each piece of data
               row.innerHTML = `
-                      <td>${index + 1}</td> 
-                      <td>
-                        <span class="${
-                          record.status === "Reject" ? "clickable" : ""
-                        }"
-                              onclick="${
-                                record.status === "Reject"
-                                  ? `fetchRejectionReason('${record.name}')`
-                                  : ""
-                              }"
-                              style="${
-                                record.status === "Reject"
-                                  ? "cursor: pointer;"
-                                  : "cursor: default;"
-                              }">
-                          ${record.status}
-                        </span>
-                      </td>
-                      <td>
-                        ${
-                          record.status === "Draft"
-                            ? `<div class="action-btns" data-id="${record.name}">
-                                 
-                                  <div class="delete-btn" onclick="deleteRecord('${record.name}')">
-                                    <img src='/files/delete_11540197.png' alt="Delete" width="20">
-                                  </div>
-                               </div>`
-                            : ""
-                        }
-                      </td>
-                    
-                      <td>${record.from_location}</td>
-                      <td>${record.from_date}</td>
-                      <td>${record.from_time}</td>
-                      <td>${record.to_location}</td>
-                      <td>${record.to_date}</td>
-                      <td>${record.to_time}</td>
-                      <td>${record.total_time}</td>
-                      <td>${record.purpose}</td>
-                      <td>${record.travel_mode}</td>
-                      <td>${record.total_km}</td>
-                      <td>${record.ticket_amount}</td>
-                      <td>${record.fare_amount}</td>
-                      
-                    <!--  <td>${record.allowance_type}</td>-->
-                      <td>${record.final_da_amount}</td>
-                      <td>${record.final_halt_amount}</td>
-                      <td>${record.final_lodge_amount}</td>
-                      <td>
-                        <span class="clickable-cell"
-                              onclick="${
-                                record.final_local_amount &&
-                                record.final_local_amount.trim() !== "-" &&
-                                parseFloat(record.final_local_amount) !== 0
-                                  ? `fetchLocalConveyance('${record.name}')`
-                                  : ""
-                              }"
-                              title="${
-                                record.final_local_amount &&
-                                record.final_local_amount.trim() !== "-" &&
-                                parseFloat(record.final_local_amount) !== 0
-                                  ? "Click for Local details"
-                                  : ""
-                              }"
-                              style="${
-                                record.final_local_amount &&
-                                record.final_local_amount.trim() !== "-" &&
-                                parseFloat(record.final_local_amount) !== 0
-                                  ? ""
-                                  : "pointer-events: none; color: gray;"
-                              }">
-                          ${record.final_local_amount || "-"}
-                        </span>
-                      </td>
-                    
-                      <td >₹${record.total_amount}</td>
-                      <td>${
-                        record.upload_ticket
-                          ? `<a href="${record.upload_ticket}" target="_blank">View</a>`
-                          : "-"
-                      }</td>
-                      <td>${
-                        record.upload_lodging
-                          ? `<a href="${record.upload_lodging}" target="_blank">View</a>`
-                          : "-"
-                      }</td>
-                      <td class="d-none">${record.name}</td>
-                  `;
+                                  <td class="d-none">${record.name}</td>
+                                  <td class="fixed-sr">${index + 1}</td>
+
+                                  <td>
+                                    <span class="${
+                                      record.status === "Reject"
+                                        ? "clickable"
+                                        : ""
+                                    }"
+                                          onclick="${
+                                            record.status === "Reject"
+                                              ? `fetchRejectionReason('${record.name}')`
+                                              : ""
+                                          }"
+                                          style="${
+                                            record.status === "Reject"
+                                              ? "cursor: pointer;"
+                                              : "cursor: default;"
+                                          }">
+                                      ${record.status}
+                                    </span>
+                                  </td>
+                               <td>
+        <div class="tracker">
+          <!-- Stage 1: Reporting Person -->
+          <span class="stage ${
+            record.status_stage_1
+              ? getStatusClass(record.status_stage_1)
+              : "stage-null"
+          }" title="${
+                record.status_stage_1
+                  ? record.status_stage_1 + " from Reporting Person"
+                  : "Not sent to Reporting Person"
+              }">
+            ${
+              record.status_stage_1 === "Pending"
+                ? '<img src="/assets/travel_allowance/images/Pending_new.png" alt="Pending" />'
+                : record.status_stage_1 === "Approved"
+                ? '<img src="/assets/travel_allowance/images/Approved_new.png" alt="Approved" />'
+                : record.status_stage_1 === "Reject"
+                ? '<img src="/assets/travel_allowance/images/rejected_new.png" alt="Reject" />'
+                : record.status_stage_1 === ""
+                ? '<img src="/assets/travel_allowance/images/disable.png" alt="Not Applicable" />'
+                : ""
+            }
+          </span>
+
+          <span class="line ${
+            record.status_stage_1
+              ? getLineClass(record.status_stage_2)
+              : "line-null"
+          }"></span>
+
+          <!-- Stage 2: Skip Level -->
+          <span class="stage ${
+            record.status_stage_2
+              ? getStatusClass(record.status_stage_2)
+              : "stage-null"
+          }" title="${
+                record.status_stage_2
+                  ? record.status_stage_2 + " from Skip Level"
+                  : "Not sent to Skip Level"
+              }">
+            ${
+              record.status_stage_2 === "Pending"
+                ? '<img src="/assets/travel_allowance/images/Pending_new.png" alt="Pending" />'
+                : record.status_stage_2 === "Approved"
+                ? '<img src="/assets/travel_allowance/images/Approved_new.png" alt="Approved" />'
+                : record.status_stage_2 === "Reject"
+                ? '<img src="/assets/travel_allowance/images/rejected_new.png" alt="Reject" />'
+                : record.status_stage_2 === ""
+                ? '<img src="/assets/travel_allowance/images/disable.png" alt="Not Applicable" />'
+                : ""
+            }
+          </span>
+
+          <span class="line ${
+            record.status_stage_2
+              ? getLineClass(record.status_stage_3)
+              : "line-null"
+          }"></span>
+
+          <!-- Stage 3: TA -->
+          <span class="stage ${
+            record.status_stage_3
+              ? getStatusClass(record.status_stage_3)
+              : "stage-null"
+          }" title="${
+                record.status_stage_3
+                  ? record.status_stage_3 + " from TA Team"
+                  : "Not sent to TA Team"
+              }">
+            ${
+              record.status_stage_3 === "Pending"
+                ? '<img src="/assets/travel_allowance/images/Pending_new.png" alt="Pending" />'
+                : record.status_stage_3 === "Approved"
+                ? '<img src="/assets/travel_allowance/images/Approved_new.png" alt="Approved" />'
+                : record.status_stage_3 === "Reject"
+                ? '<img src="/assets/travel_allowance/images/rejected_new.png" alt="Reject" />'
+                : record.status_stage_3 === ""
+                ? '<img src="/assets/travel_allowance/images/disable.png" alt="Not Applicable" />'
+                : ""
+            }
+          </span>
+        </div>
+      </td>
+
+                                  <td>
+                                    ${
+                                      record.status === "Draft"
+                                        ? `<div class="action-btns" data-id="${record.name}">
+
+                                              <div class="delete-btn" onclick="deleteRecord('${record.name}')">
+                                                <img src='/files/delete_11540197.png' alt="Delete" width="20">
+                                              </div>
+                                           </div>`
+                                        : ""
+                                    }
+                                  </td>
+
+                                  <td>${record.from_location}</td>
+                                  <td>${record.from_date}</td>
+                                  <td>${record.from_time}</td>
+                                  <td>${record.to_location}</td>
+                                  <td>${record.to_date}</td>
+                                  <td>${record.to_time}</td>
+                                  <td>${record.total_time}</td>
+                                  <td>${record.purpose}</td>
+                                  <td>${record.travel_mode}</td>
+                                  <td>${record.total_km}</td>
+                                  <td>${record.ticket_amount}</td>
+                                  <td>${record.fare_amount}</td>
+
+                                <!--  <td>${record.allowance_type}</td>-->
+                                  <td>${record.final_da_amount}</td>
+                                  <td>${record.final_halt_amount}</td>
+                                  <td>${record.final_lodge_amount}</td>
+                                  <td>
+                                    <span class="clickable-cell"
+                                          onclick="${
+                                            record.final_local_amount &&
+                                            record.final_local_amount.trim() !==
+                                              "-" &&
+                                            parseFloat(
+                                              record.final_local_amount
+                                            ) !== 0
+                                              ? `fetchLocalConveyance('${record.name}')`
+                                              : ""
+                                          }"
+                                          title="${
+                                            record.final_local_amount &&
+                                            record.final_local_amount.trim() !==
+                                              "-" &&
+                                            parseFloat(
+                                              record.final_local_amount
+                                            ) !== 0
+                                              ? "Click for Local details"
+                                              : ""
+                                          }"
+                                          style="${
+                                            record.final_local_amount &&
+                                            record.final_local_amount.trim() !==
+                                              "-" &&
+                                            parseFloat(
+                                              record.final_local_amount
+                                            ) !== 0
+                                              ? ""
+                                              : "pointer-events: none; color: gray;"
+                                          }">
+                                      ${record.final_local_amount || "-"}
+                                    </span>
+                                  </td>
+
+
+                                  <td>${
+                                    record.upload_ticket
+                                      ? `<a href="${record.upload_ticket}" target="_blank">View</a>`
+                                      : "-"
+                                  }</td>
+                                  <td>${
+                                    record.upload_lodging
+                                      ? `<a href="${record.upload_lodging}" target="_blank">View</a>`
+                                      : "-"
+                                  }</td>
+                                   <td class="fixed-tot">₹${
+                                     record.total_amount
+                                   }</td>
+
+                                    <td>${timeAgo(record.modified)}</td>
+                              `;
 
               // Append the row to the table body
               tableBody.appendChild(row);
+              // Helper function to get the CSS class based on status
+              function getStatusClass(status) {
+                switch (status) {
+                  case "Pending":
+                    return "stage-pending";
+                  case "Approved":
+                    return "stage-approved";
+                  case "Reject":
+                    return "stage-reject";
+                  default:
+                    return "stage-null";
+                }
+              }
+              // Helper function to get the CSS class for lines based on status
+              function getLineClass(status) {
+                switch (status) {
+                  case "Pending":
+                    return "line-pending";
+                  case "Approved":
+                    return "line-approved";
+                  case "Reject":
+                    return "line-reject";
+                  default:
+                    return "line-null";
+                }
+              }
             });
 
             // Show data if present
@@ -3221,6 +3640,7 @@
             "<p>There was an error fetching the data. Please try again later.</p>";
         }
       }
+
       document.addEventListener("DOMContentLoaded", function () {
         // Get the close button and the popup container
         const closeBtn = document.querySelector(".dynamic-popup-close-btn");
@@ -3238,6 +3658,30 @@
           }
         });
       });
+
+      function timeAgo(dateString) {
+        const now = new Date();
+        const modifiedDate = new Date(dateString);
+        const diffInSeconds = Math.floor((now - modifiedDate) / 1000);
+
+        const units = [
+          { name: "year", seconds: 60 * 60 * 24 * 365 },
+          { name: "month", seconds: 60 * 60 * 24 * 30 },
+          { name: "day", seconds: 60 * 60 * 24 },
+          { name: "hour", seconds: 60 * 60 },
+          { name: "minute", seconds: 60 },
+          { name: "second", seconds: 1 },
+        ];
+
+        for (const unit of units) {
+          const interval = Math.floor(diffInSeconds / unit.seconds);
+          if (interval >= 1) {
+            return `${interval} ${unit.name}${interval > 1 ? "s" : ""} ago`;
+          }
+        }
+        return "just now";
+      }
+
       // fetch the local conveyance data from child table
       async function fetchLocalConveyance(recordId) {
         try {
@@ -3431,10 +3875,10 @@
 
               if (result.message.status === "success") {
                 // Remove the row from the table
-                const rowElement = document
-                  .querySelector(`td[data-id="${recordName}"]`)
-                  .closest("tr");
-                rowElement.remove();
+                /*const rowElement = document
+                        .querySelector(`td[data-id="${recordName}"]`)
+                        .closest("tr");
+                      rowElement.remove();*/
 
                 // Show success message using SweetAlert
                 Swal.fire(
@@ -3475,8 +3919,8 @@
 
         const recordsToUpdate = [];
         rows.forEach((row) => {
-          const statusCell = row.querySelector("td:nth-child(2)"); // Assuming the 'Status' column is the first one
-          const nameCell = row.querySelector("td:nth-child(23)"); // Assuming the 'Name' column is the 23rd one
+          const statusCell = row.querySelector("td:nth-child(3)"); // Assuming the 'Status' column is the first one
+          const nameCell = row.querySelector("td:nth-child(1)"); // Assuming the 'Name' column is the 23rd one
 
           console.log("statusCell:", statusCell.textContent.trim());
           console.log("nameCell:", nameCell.textContent.trim());

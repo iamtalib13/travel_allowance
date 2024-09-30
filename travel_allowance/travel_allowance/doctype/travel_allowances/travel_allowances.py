@@ -22,6 +22,9 @@ class TravelAllowances(Document):
         
         self.reporting_person_user_id= frappe.db.get_value('Employee', self.employee_id, 'reporting_employee_user_id')
         
+        self.higher_reporting_person_user_id= frappe.db.get_value('Employee', self.employee_id, 'higher_reporting_employee_id')
+
+        
         # Retrieve the ta_category from the Designation doctype based on the designation
         if self.designation:
             self.ta_category = frappe.db.get_value('Designation', self.designation, 'ta_category')
@@ -376,7 +379,7 @@ def get_rejection_reason(record):
         # Fetch the record
         if frappe.db.exists("Travel Allowances", record):
             # Get the rejection reason
-            reason = frappe.db.get_value("Travel Allowances", record, "rejection_remark")
+            reason = frappe.db.get_value("Travel Allowances", record, "rejection_remark_stage_1")
             return {"status": "success", "reason": reason}
         else:
             return {"status": "error", "message": "Record does not exist"}
@@ -402,32 +405,7 @@ def get_list(month=None):
             "Travel Allowances",
             filters=filters,  # Apply the filters
             fields=[
-                "name",
-                "month",
-                "year",
-                "from_location",
-                "from_location_other",
-                "from_date",
-                "from_time",
-                "to_location",
-                "to_location_other",
-                "to_date",
-                "to_time",
-                "total_time",
-                "purpose",
-                "travel_mode",
-                "ticket_amount",
-                "total_km",
-                "fare_amount",
-                "allowance_type",
-                "final_da_amount",
-                "final_halt_amount",
-                "final_lodge_amount",
-                "final_local_amount",
-                "total_amount",
-                "upload_ticket",
-                "upload_lodging",
-                "status"
+                "*"
             ],
             order_by="modified desc"
         )
@@ -606,10 +584,15 @@ def update_status(names):
         for i in range(0, total_records, batch_size):
             batch = names[i:i + batch_size]
             if batch:
-                frappe.db.set_value("Travel Allowances", batch, "status", "Pending")
+                # Set both the 'status' and 'status_stage_1' fields to 'Pending'
+                frappe.db.set_value("Travel Allowances", batch, {
+                    "status": "Pending",
+                    "status_stage_1": "Pending"
+                })                
                 updated_count += len(batch)
 
         return {"status": "success", "updated_count": updated_count}
+    
     
     except Exception as e:
         frappe.log_error(message=str(e), title="Error in update_status API")
@@ -1009,7 +992,7 @@ def calculate_total_amount(fare_amount, da_amount, halt_amount, lodge_amount, lo
 #         frappe.log_error(f"Bulk Approval Failed: {str(e)}", "Bulk Approval Exception")
 #         return {'message': 'An unexpected error occurred while processing the records.', 'error': True}
     
-#  Reposting person Approve ta record status
+#  Reporting person Approve ta record status level 1
 @frappe.whitelist()
 def bulk_approve(ids):
     try:
@@ -1020,8 +1003,9 @@ def bulk_approve(ids):
             for record_name in ids:
                 # Approve the record and set the approved_by field
                 frappe.db.set_value('Travel Allowances', record_name, {
-                    'status': 'Approved',
-                    'approved_by': approved_by
+                    'status_stage_1': 'Approved',
+                    'approved_by_stage_1': approved_by,
+                    'status_stage_2':'Pending'
                 })
 
             frappe.db.commit()
@@ -1031,9 +1015,30 @@ def bulk_approve(ids):
     except Exception as e:
         frappe.log_error(frappe.get_traceback(), "bulk_approve_error")
         return {"status": "error", "message": str(e)}
+    
+# for Skip level 2 approved ta records 
+@frappe.whitelist()
+def bulk_skip_approve(ids):
+    try:
+        if isinstance(ids, list) and ids:
+            # Fetch the current user from the session
+            approved_by = frappe.session.user
 
+            for record_name in ids:
+                # Approve the record and set the approved_by field
+                frappe.db.set_value('Travel Allowances', record_name, {
+                    'status_stage_2': 'Approved',
+                    'approved_by_stage_2': approved_by,
+                    'status_stage_3':'Pending'
+                })
 
-
+            frappe.db.commit()
+            return {"status": "success", "message": "Records approved successfully"}
+        else:
+            return {"status": "error", "message": "Invalid data format or empty list"}
+    except Exception as e:
+        frappe.log_error(frappe.get_traceback(), "bulk_skip_approve_error")
+        return {"status": "error", "message": str(e)}
     
 # Reposting person Reject ta record
 # @frappe.whitelist()
@@ -1076,8 +1081,9 @@ def bulk_reject(ids, remark):
                     # Reject the record, set the rejected_by field, and add the remark
                     frappe.db.set_value('Travel Allowances', record_name, {
                         'status': 'Reject',
-                        'rejected_by': rejected_by,
-                        'rejection_remark': remark  # Save the remark
+                        'status_stage_1': 'Reject',
+                        'rejected_by_stage_1': rejected_by,
+                        'rejection_remark_stage_1': remark  # Save the remark
                     })
                 else:
                     frappe.log_error(f"Record {record_name} does not exist", "bulk_reject_error")
@@ -1090,8 +1096,32 @@ def bulk_reject(ids, remark):
         frappe.log_error(frappe.get_traceback(), "bulk_reject_error")
         return {"status": "error", "message": str(e)}
 
+#for Skip level 2 reject ta records
+@frappe.whitelist()
+def bulk_skip_reject(ids,remark):
+    try:
+        if isinstance(ids, list) and ids:
+            rejected_by = frappe.session.user
 
-    
+            for record_name in ids:
+                if frappe.db.exists("Travel Allowances", record_name):
+                    # Reject the record, set the rejected_by field, and add the remark
+                    frappe.db.set_value('Travel Allowances', record_name, {
+                        'status': 'Reject',
+                        'status_stage_2': 'Reject',
+                        'rejected_by_stage_2': rejected_by,
+                        'reject_reason_by_stage_2': remark  # Save the remark
+                    })
+                else:
+                    frappe.log_error(f"Record {record_name} does not exist", "bulk_skip_reject_error")
+
+            frappe.db.commit()
+            return {"status": "success", "message": "Records rejected successfully"}
+        else:
+            return {"status": "error", "message": "Invalid data format"}
+    except Exception as e:
+        frappe.log_error(frappe.get_traceback(), "bulk_skip_reject_error")
+        return {"status": "error", "message": str(e)}
     
 # # For Reporting person fetch pending records for approval       
 # @frappe.whitelist()
@@ -1161,6 +1191,32 @@ def bulk_reject(ids, remark):
 #        frappe.log_error(f"Error in get_employee_ta_records: {str(e)}")
 #        frappe.throw("An error occurred while fetching data.")
 
+
+@frappe.whitelist(allow_guest=True)
+def get_pending_count():
+    user = frappe.session.user
+    try:
+        # Use Frappe's get_all method to count records with additional user filter
+        count = frappe.get_all(
+            "Travel Allowances",
+            filters={
+                "status": "Pending",
+                "status_stage_1": "Pending",
+                "reporting_person_user_id": user  # Add user to filter
+            },
+            fields=["name"]  # You can still specify a field
+        )
+        
+        # Return the count in an array
+        return [len(count)]  # Wrap the count in a list
+
+    except Exception as e:
+        # Log the error for debugging
+        frappe.log_error(message=str(e), title="Error in get_pending_count")
+        frappe.response.set_content_type("text/plain")
+        return ["Error"]  # Return error as an array
+
+# For Reporting person fetch pending records for approval 
 @frappe.whitelist()
 def get_ta_records(user_id):
     try:
@@ -1169,7 +1225,7 @@ def get_ta_records(user_id):
             SELECT *
             FROM `tabTravel Allowances` 
             WHERE reporting_person_user_id = %s
-            AND status = 'Pending'
+            AND status = 'Pending' AND status_stage_1 = 'Pending'
             ORDER BY modified desc
         """
         ta_pending_result = frappe.db.sql(ta_pending_query, user_id, as_dict=True)
@@ -1179,8 +1235,8 @@ def get_ta_records(user_id):
             SELECT *
             FROM `tabTravel Allowances`
             WHERE reporting_person_user_id = %s
-            AND status = 'Approved'
-            AND approved_by = %s
+            AND status_stage_1 = 'Approved' 
+            AND approved_by_stage_1 = %s
             ORDER BY modified DESC
         """
         ta_approved_result = frappe.db.sql(ta_approved_query, (user_id, user_id), as_dict=True)
@@ -1190,8 +1246,8 @@ def get_ta_records(user_id):
             SELECT *
             FROM `tabTravel Allowances`
             WHERE reporting_person_user_id = %s
-            AND status = 'Reject'
-            AND rejected_by = %s
+            AND status_stage_1 = 'Reject'
+            AND rejected_by_stage_1 = %s
             ORDER BY modified DESC
         """
         ta_rejected_result = frappe.db.sql(ta_rejected_query, (user_id, user_id), as_dict=True)
@@ -1206,6 +1262,106 @@ def get_ta_records(user_id):
     except Exception as e:
         frappe.log_error(f"Error in get_ta_records: {str(e)}")
         frappe.throw("An error occurred while fetching data.")
+        
+
+
+# For Higher Reporting person fetch pending, approved, rejected records for approval of skip
+@frappe.whitelist()
+def get_skip_records(user_id):
+    # Split the user_id string at '@' and take the first part
+    user_id_number = user_id.split('@')[0]
+    
+    try:
+        # Get employee names
+        employee_names = get_employee_names_for_skip(user_id)
+
+        # Query for pending travel allowance records
+        ta_pending_query = """
+            SELECT *
+            FROM `tabTravel Allowances` 
+            WHERE higher_reporting_person_user_id = %s
+            AND status = 'Pending' AND status_stage_2 = 'Pending'
+            ORDER BY modified DESC
+        """
+        ta_pending_result = frappe.db.sql(ta_pending_query, user_id_number, as_dict=True)
+
+        # Prepare dictionaries to hold counts for each employee
+        employee_counts = {
+            "pending": {},
+            "approved": {},
+            "rejected": {}
+        }
+
+        # Calculate counts for each employee
+        for employee in employee_names:
+            employee_id = employee['employee_id']  # Assuming 'employee_id' is in the result
+            
+            # Count pending records
+            pending_count_query = """
+                SELECT COUNT(*) AS pending_count
+                FROM `tabTravel Allowances`
+                WHERE employee_id = %s
+                AND status = 'Pending'
+                AND status_stage_2 = 'Pending'
+            """
+            pending_count_result = frappe.db.sql(pending_count_query, employee_id, as_dict=True)
+            employee_counts["pending"][employee_id] = pending_count_result[0]['pending_count'] if pending_count_result else 0
+            
+            # Count approved records
+            approved_count_query = """
+                SELECT COUNT(*) AS approved_count
+                FROM `tabTravel Allowances`
+                WHERE employee_id = %s
+                AND status_stage_2 = 'Approved'
+            """
+            approved_count_result = frappe.db.sql(approved_count_query, employee_id, as_dict=True)
+            employee_counts["approved"][employee_id] = approved_count_result[0]['approved_count'] if approved_count_result else 0
+            
+            # Count rejected records
+            rejected_count_query = """
+                SELECT COUNT(*) AS rejected_count
+                FROM `tabTravel Allowances`
+                WHERE employee_id = %s
+                AND status_stage_2 = 'Reject'
+            """
+            rejected_count_result = frappe.db.sql(rejected_count_query, employee_id, as_dict=True)
+            employee_counts["rejected"][employee_id] = rejected_count_result[0]['rejected_count'] if rejected_count_result else 0
+
+        # Query for approved travel allowance records
+        ta_approved_query = """
+            SELECT *
+            FROM `tabTravel Allowances`
+            WHERE higher_reporting_person_user_id = %s
+            AND status_stage_2 = 'Approved' 
+            AND approved_by_stage_2 = %s
+            ORDER BY modified DESC
+        """
+        ta_approved_result = frappe.db.sql(ta_approved_query, (user_id_number, user_id), as_dict=True)
+
+        # Query for rejected travel allowance records
+        ta_rejected_query = """
+            SELECT *
+            FROM `tabTravel Allowances`
+            WHERE higher_reporting_person_user_id = %s
+            AND status_stage_2 = 'Reject'
+            AND rejected_by_stage_2 = %s
+            ORDER BY modified DESC
+        """
+        ta_rejected_result = frappe.db.sql(ta_rejected_query, (user_id_number, user_id), as_dict=True)
+
+        # Return all records as a dictionary with separate keys, employee names, and counts
+        return {
+            "pending": ta_pending_result,
+            "approved": ta_approved_result,
+            "rejected": ta_rejected_result,
+            "employee_names": employee_names,  # Add employee names to the response
+            "employee_counts": employee_counts  # Add counts for each employee
+        }
+
+    except Exception as e:
+        frappe.log_error(f"Error in get_skip_records: {str(e)}")
+        frappe.throw("An error occurred while fetching data.")
+
 
 @frappe.whitelist()
 def get_employee_names(user_id):
@@ -1220,7 +1376,6 @@ def get_employee_names(user_id):
 
         # Execute the query
         employee_result = frappe.db.sql(employee_query, user_id, as_dict=True)
-
         
         
         return employee_result
@@ -1229,6 +1384,29 @@ def get_employee_names(user_id):
         frappe.log_error(f"Error in get_employee_names: {str(e)}")
         frappe.throw("An error occurred while fetching data.")
 
+#For higher Reporting person get reportee(emp) names
+@frappe.whitelist()
+def get_employee_names_for_skip(user_id):
+    user_id_number = user_id.split('@')[0]
+    
+    try:
+        # SQL query to get employee names
+        employee_query = """
+            SELECT employee_id, CONCAT(first_name, ' ', last_name) AS full_name
+            FROM `tabEmployee`
+            WHERE higher_reporting_employee_id = %s 
+            AND status = 'Active'
+            ORDER BY full_name ASC
+        """
+
+        # Execute the query
+        employee_result = frappe.db.sql(employee_query, user_id_number, as_dict=True)
+        
+        return employee_result
+        
+    except Exception as e:
+        frappe.log_error(f"Error in get_employee_names: {str(e)}")
+        frappe.throw("An error occurred while fetching data.")
 
        
 # @frappe.whitelist()

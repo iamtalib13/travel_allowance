@@ -1,0 +1,1634 @@
+<style>
+  /* Navbar styles */
+
+  ul.navbar-nav {
+    font-size: large;
+  }
+  ul.navbar-nav .nav-item .nav-link.active {
+    font-weight: bold;
+    border-bottom: 2px solid rgba(0, 128, 222, 1);
+  }
+  ul.navbar-nav .nav-item {
+    padding: 0 10px;
+    cursor: pointer;
+  }
+  ul.navbar-nav .nav-item .nav-link {
+    background: aliceblue;
+  }
+  ul.navbar-nav .nav-item .nav-link:hover {
+    font-weight: bold;
+    border-bottom: 2px solid rgba(0, 128, 222, 1);
+  }
+
+  .ta_skip_navbar {
+    display: flex;
+
+    font-size: 15px;
+    /*position: sticky;*/
+    top: 0;
+
+    /* z-index: 1000;*/
+
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0 5px;
+  }
+
+  .ta_skip_navbar div {
+    padding: 10px 0px;
+    font-size: large;
+    cursor: pointer;
+  }
+
+  .ta_skip_navbar .active {
+    font-weight: bold;
+    border-bottom: 2px solid rgba(0, 128, 222, 1);
+  }
+
+  .ta-skip-nav-item {
+    list-style: none;
+    margin: 5px 0;
+  }
+
+  .ta-skip-nav-link {
+    border: 1px solid transparent;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    padding: 5px 10px;
+    margin-right: 5px;
+    color: #495057;
+    background-color: #f0f6fb;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+      border-color 0.15s ease-in-out;
+  }
+  .ta-skip-nav-link:hover,
+  .ta-skip-nav-link:focus {
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom: 2px solid rgba(0, 128, 222, 1);
+    outline: none;
+  }
+  .btn-approve,
+  .btn-reject {
+    padding: 5px 14px;
+    border: none;
+    border-radius: 40px;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  .btn-approve {
+    padding: 6px 16px; /* Adequate padding for a comfortable click area */
+    border: none;
+    border-radius: 8px; /* Rounded corners for a modern look */
+    color: #fff; /* White text color for contrast */
+    font-size: 16px; /* Readable font size */
+    font-weight: 700; /* Bold text for emphasis */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effects */
+
+    background: #007486; /* Base background color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  }
+
+  .btn-approve:hover {
+    background: #007486; /* Slightly darker shade on hover for feedback */
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
+    color: #fff;
+  }
+
+  .btn-approve:focus {
+    outline: none; /* Remove default focus outline */
+  }
+
+  .btn-approve:active {
+    background: #007486; /* Even darker shade when pressed for feedback */
+    transform: scale(0.98); /* Slightly shrink the button when pressed */
+  }
+  .btn-reject {
+    padding: 6px 16px; /* Adequate padding for a comfortable click area */
+    border: none;
+    border-radius: 8px; /* Rounded corners for a modern look */
+    color: #fff; /* White text color for contrast */
+    font-size: 16px; /* Readable font size */
+    font-weight: 700; /* Bold text for emphasis */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effects */
+
+    background: #cb4e45; /* Base background color (red) */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  }
+
+  .btn-reject:hover {
+    background: #cb4e45; /* Slightly darker shade on hover for feedback */
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
+    color: #fff;
+  }
+
+  .btn-reject:focus {
+    outline: none; /* Remove default focus outline */
+  }
+
+  .btn-reject:active {
+    background: #c62828; /* Even darker shade when pressed for feedback */
+    transform: scale(0.98); /* Slightly shrink the button when pressed */
+  }
+  .all-pending-count {
+    color: red;
+    font-weight: bold;
+    margin-left: 5px;
+  }
+  /* Pending count styles */
+  .pending-count {
+    color: red;
+    font-weight: bold;
+    margin-left: 5px;
+  }
+  .approved-count {
+    color: green;
+    font-weight: bold;
+    margin-left: 5px;
+  }
+
+  /* Count span styles */
+  .count {
+    font-weight: bold;
+    margin-left: 5px;
+  }
+
+  .main-skip-container {
+    border-radius: 8px;
+    border: 1px solid #999393;
+  }
+  /* Make the table responsive */
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  /* Table styles */
+  table#travelSkipPendingTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+    text-align: left;
+  }
+
+  table#travelSkipPendingTable th,
+  table#travelSkipPendingTable td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    white-space: nowrap; /* Prevent line wrapping */
+    text-align: center;
+  }
+
+  /* Header styling */
+  table#travelSkipPendingTable thead th {
+    background-color: #f2f2f2;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  /* Zebra striping */
+  table#travelSkipPendingTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  table#travelSkipPendingTable tbody tr:nth-child(odd) {
+    background-color: #fff;
+  }
+
+  /* Hover effects */
+  table#travelSkipPendingTable tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+
+  /* Center align specific columns */
+  table#travelSkipPendingTable td:nth-child(4),
+  table#travelSkipPendingTable td:nth-child(5),
+  table#travelSkipPendingTable td:nth-child(6),
+  table#travelSkipPendingTable td:nth-child(7),
+  table#travelSkipPendingTable td:nth-child(8),
+  table#travelSkipPendingTable td:nth-child(9),
+  table#travelSkipPendingTable td:nth-child(10),
+  table#travelSkipPendingTable td:nth-child(13),
+  table#travelSkipPendingTable td:nth-child(14),
+  table#travelSkipPendingTable td:nth-child(15),
+  table#travelSkipPendingTable td:nth-child(16),
+  table#travelSkipPendingTable td:nth-child(17),
+  table#travelSkipPendingTable td:nth-child(18),
+  table#travelSkipPendingTable td:nth-child(19) {
+    text-align: center;
+  }
+
+  /* Checkbox column */
+  table#travelSkipPendingTable td:first-child {
+    text-align: center;
+    width: 50px;
+    font-weight: bold;
+    color: #000;
+    background-color: #e6e7e7;
+  }
+
+  /* Highlighting total column */
+  table#travelSkipPendingTable td:last-child {
+    font-weight: bold;
+    color: #000;
+    background-color: #e7f3ff;
+  }
+
+  /* Table header alignment */
+  table#travelSkipPendingTable th {
+    text-align: center;
+  }
+
+  /* Styling for no records row */
+  table#travelSkipPendingTable .text-center {
+    text-align: center;
+    font-weight: bold;
+    color: #999;
+  }
+
+  /* Table styles for approved records */
+  table#travelSkipApprovedTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+    text-align: left;
+  }
+
+  table#travelSkipApprovedTable th,
+  table#travelSkipApprovedTable td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    white-space: nowrap; /* Prevent line wrapping */
+    text-align: center;
+  }
+
+  /* Header styling for approved records */
+  table#travelSkipApprovedTable thead th {
+    background-color: #d4edda; /* Light green header to indicate approved status */
+    color: #155724; /* Dark green text color */
+    font-weight: bold;
+    text-align: center;
+  }
+
+  /* Zebra striping for approved records */
+  table#travelSkipApprovedTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  table#travelSkipApprovedTable tbody tr:nth-child(odd) {
+    background-color: #fff;
+  }
+
+  /* Hover effects for approved records */
+  table#travelSkipApprovedTable tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+
+  /* Center align specific columns for approved records */
+  table#travelSkipApprovedTable td:nth-child(4),
+  table#travelSkipApprovedTable td:nth-child(5),
+  table#travelSkipApprovedTable td:nth-child(6),
+  table#travelSkipApprovedTable td:nth-child(7),
+  table#travelSkipApprovedTable td:nth-child(8),
+  table#travelSkipApprovedTable td:nth-child(9),
+  table#travelSkipApprovedTable td:nth-child(10),
+  table#travelSkipApprovedTable td:nth-child(13),
+  table#travelSkipApprovedTable td:nth-child(14),
+  table#travelSkipApprovedTable td:nth-child(15),
+  table#travelSkipApprovedTable td:nth-child(16),
+  table#travelSkipApprovedTable td:nth-child(17),
+  table#travelSkipApprovedTable td:nth-child(18),
+  table#travelSkipApprovedTable td:nth-child(19) {
+    text-align: center;
+  }
+
+  /* Checkbox column for approved records */
+  table#travelSkipApprovedTable td:first-child {
+    text-align: center;
+    width: 50px;
+    font-weight: bold;
+    color: #000;
+    background-color: #e6e7e7;
+  }
+
+  /* Highlighting total column for approved records */
+  table#travelSkipApprovedTable td:last-child {
+    font-weight: bold;
+    color: #155724;
+    background-color: #c3e6cb; /* Light green background for totals */
+  }
+
+  /* Table header alignment */
+  table#travelSkipApprovedTable th {
+    text-align: center;
+  }
+
+  /* Styling for no records row in approved table */
+  table#travelSkipApprovedTable .text-center {
+    text-align: center;
+    font-weight: bold;
+    color: #999;
+  }
+
+  /* Table styles for rejected records */
+  table#travelAllowancesRejectTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+    text-align: left;
+  }
+
+  /* Rejected table headers and cells */
+  table#travelAllowancesRejectTable th,
+  table#travelAllowancesRejectTable td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    white-space: nowrap; /* Prevent line wrapping */
+    text-align: center;
+  }
+
+  /* Header styling for rejected records */
+  table#travelAllowancesRejectTable thead th {
+    background-color: #f8d7da; /* Light red header to indicate rejected status */
+    color: #721c24; /* Dark red text color */
+    font-weight: bold;
+    text-align: center;
+  }
+
+  /* Zebra striping for rejected records */
+  table#travelAllowancesRejectTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  table#travelAllowancesRejectTable tbody tr:nth-child(odd) {
+    background-color: #fff;
+  }
+
+  /* Hover effects for rejected records */
+  table#travelAllowancesRejectTable tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+
+  /* Center align specific columns for rejected records */
+  table#travelAllowancesRejectTable td:nth-child(4),
+  table#travelAllowancesRejectTable td:nth-child(5),
+  table#travelAllowancesRejectTable td:nth-child(6),
+  table#travelAllowancesRejectTable td:nth-child(7),
+  table#travelAllowancesRejectTable td:nth-child(8),
+  table#travelAllowancesRejectTable td:nth-child(9),
+  table#travelAllowancesRejectTable td:nth-child(10),
+  table#travelAllowancesRejectTable td:nth-child(13),
+  table#travelAllowancesRejectTable td:nth-child(14),
+  table#travelAllowancesRejectTable td:nth-child(15),
+  table#travelAllowancesRejectTable td:nth-child(16),
+  table#travelAllowancesRejectTable td:nth-child(17),
+  table#travelAllowancesRejectTable td:nth-child(18),
+  table#travelAllowancesRejectTable td:nth-child(19) {
+    text-align: center;
+  }
+
+  /* Checkbox column for rejected records */
+  table#travelAllowancesRejectTable td:first-child {
+    text-align: center;
+    width: 50px;
+    font-weight: bold;
+    color: #000;
+    background-color: #e6e7e7;
+  }
+
+  /* Highlighting total column for rejected records */
+  table#travelAllowancesRejectTable td:last-child {
+    font-weight: bold;
+    color: #721c24;
+    background-color: #f5c6cb; /* Light red background for totals */
+  }
+
+  /* Table header alignment */
+  table#travelAllowancesRejectTable th {
+    text-align: center;
+  }
+
+  /* Styling for no records row in rejected table */
+  table#travelAllowancesRejectTable .text-center {
+    text-align: center;
+    font-weight: bold;
+    color: #999;
+  }
+
+  .approve-btn {
+    display: none;
+    position: absolute;
+    top: 35px;
+    right: 10px;
+    z-index: 100;
+  }
+  .no-skip-records {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    margin: auto;
+    font-size: 18px;
+    color: #495057;
+    margin-bottom: 40px;
+  }
+
+  #no-skip-records-message {
+    height: 100%;
+    text-align: center;
+    margin: auto;
+    font-size: 18px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 10px;
+    display: none; /* Message is hidden by default */
+    font-weight: bold;
+    color: #495057;
+  }
+  .action_menu {
+    display: flex;
+    text-align: right;
+    justify-content: end;
+  }
+  .btn_bulk_approve {
+    margin-right: 10px;
+    font-size: 15px;
+  }
+  .btn_bulk_reject {
+    margin-right: 10px;
+    font-size: 15px;
+  }
+
+  .btn_select_all {
+    font-size: 15px;
+  }
+
+  button.swal2-confirm.swal2-styled:focus,
+  button.swal2-cancel.swal2-styled:focus {
+    outline: none;
+  }
+
+  /* Fixed Serial Number Column */
+  .fixed-serial {
+    position: sticky;
+    left: 0;
+    background-color: #302727; /* Adjust based on your design */
+    z-index: 2;
+  }
+
+  /* Fixed Total Column */
+  .fixed-total {
+    position: sticky;
+    right: 0;
+
+    z-index: 2;
+  }
+
+  .hidden {
+    display: none;
+  }
+  /* Popup styles */
+  .dynamic-popup {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+  }
+
+  .dynamic-popup-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 800px;
+    font-size: 14px;
+    font-family: inherit;
+  }
+
+  .dynamic-popup-close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .dynamic-popup-close-btn:hover,
+  .dynamic-popup-close-btn:focus {
+    color: black;
+    text-decoration: none;
+  }
+
+  .dynamic-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .dynamic-table th,
+  .dynamic-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  .dynamic-table th {
+    background-color: #f2f2f2;
+  }
+
+  .clickable {
+    cursor: pointer; /* Change cursor to pointer */
+    position: relative; /* Positioning for the indicator */
+    padding: 10px; /* Add some padding */
+  }
+</style>
+
+<div class="main_skip_content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 d-flex px-0">
+        <nav class="navbar navbar-expand-lg navbar-light py-2">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  aria-current="page"
+                  id="pendingSkipTab"
+                  data-tab-type="pending"
+                >
+                  Pending
+                  <span class="pending-count" id="pendingSkipCount"></span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="approvedSkipTab"
+                  data-tab-type="approved"
+                >
+                  Approved
+                  <span class="approved-count" id="approvedCount"></span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="rejectSkipTab" data-tab-type="rejected">
+                  Reject <span class="reject-count" id="rejectCount"></span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <div class="action-skip text-end py-3 ms-auto">
+          <!-- Collapsible button visible only on small screens -->
+          <button
+            class="btn btn-primary mb-2 d-lg-none"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#actionsCollapse"
+            aria-expanded="false"
+            aria-controls="actionsCollapse"
+          >
+            Actions
+          </button>
+
+          <!-- Actions buttons visible on larger screens -->
+          <div class="d-none d-lg-block">
+            <button class="btn btn-approve me-2" id="approveButtonSkip">
+              Approve
+            </button>
+            <button class="btn btn-reject" id="rejectButtonSkip">Reject</button>
+          </div>
+
+          <!-- Collapsible container for small screens -->
+          <div class="collapse d-lg-none" id="actionsCollapse">
+            <div class="card card-body">
+              <button class="btn btn-success me-2" id="approveButtonSkip">
+                Approve
+              </button>
+              <button class="btn btn-danger" id="rejectButtonSkip">
+                Reject
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Employee Tabs -->
+  <div class="container-fluid main-skip-container">
+    <div class="row">
+      <ul class="nav nav-tabs ta_skip_navbar" id="skipEmpTabs" role="tablist">
+        <li class="ta-skip-nav-item">
+          <button
+            class="ta-skip-nav-link active"
+            id="all-skip-tab"
+            data-bs-toggle="tab"
+            data-employee-name="all"
+            onclick="handleSkipTabClick('all', this)"
+          >
+            All
+            <span class="all-pending-count" id="allSkipPendingCount"></span>
+          </button>
+        </li>
+        <!-- Employee tabs will be generated dynamically -->
+      </ul>
+    </div>
+
+    <!-- Table for travel allowances fetch pending record request-->
+    <div class="table-responsive" id="travelSkipPendingTable">
+      <table class="table table-bordered" id="travelSkipPendingTable">
+        <thead>
+          <tr>
+            <th class="fixed-serial">#</th>
+            <th>
+              <input type="checkbox" id="selectAll" />
+            </th>
+            <th class="d-none">Name</th>
+            <th>Employee Name</th>
+            <th>Status</th>
+            <th>From Location</th>
+            <th>Start Date</th>
+            <th>Start Time</th>
+            <th>To Location</th>
+            <th>End Date</th>
+            <th>End Time</th>
+            <th>Total Time</th>
+            <th>Purpose</th>
+            <th>Mode of Transport</th>
+            <th>Total KM</th>
+            <th>Ticket Amount</th>
+            <th>Uploaded Ticket</th>
+            <th>Fare Amount</th>
+            <!-- <th>Allowance Type</th>-->
+            <th>DA</th>
+            <th>Halting</th>
+            <th>Lodging</th>
+            <th>Uploaded Lodging Bill</th>
+            <th>Local Conveyance</th>
+            <th class="fixed-total">Total</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div
+        class="no-skip-pending-records text-center py-3"
+        style="display: none"
+      >
+        You have no Pending records.
+      </div>
+    </div>
+
+    <!-- Table for travel allowances fetch approved record -->
+    <div class="table-responsive" id="travelSkipApproved" style="display: none">
+      <table class="table table-bordered" id="travelSkipApprovedTable">
+        <thead>
+          <tr>
+            <th class="fixed-serial">#</th>
+            <th class="d-none">Name</th>
+            <th>Employee Name</th>
+            <th>Status</th>
+            <th>From Location</th>
+            <th>Start Date</th>
+            <th>Start Time</th>
+            <th>To Location</th>
+            <th>End Date</th>
+            <th>End Time</th>
+            <th>Total Time</th>
+            <th>Purpose</th>
+            <th>Mode of Transport</th>
+            <th>Total KM</th>
+            <th>Ticket Amount</th>
+            <th>Uploaded Ticket</th>
+            <th>Fare Amount</th>
+            <!-- <th>Allowance Type</th>-->
+            <th>DA</th>
+            <th>Halting</th>
+            <th>Lodging</th>
+            <th>Uploaded Lodging Bill</th>
+            <th>Local Conveyance</th>
+            <th class="fixed-total">Total</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div
+        class="no-skip-approved-records text-center py-3"
+        style="display: none"
+      >
+        You have no Approved records.
+      </div>
+    </div>
+
+    <!-- Table for travel allowances fetch Rejected record -->
+    <div class="table-responsive" id="travelSkipReject" style="display: none">
+      <table class="table table-bordered" id="travelSkipRejectTable">
+        <thead>
+          <tr>
+            <th class="fixed-serial">#</th>
+            <th class="d-none">Name</th>
+            <th>Employee Name</th>
+            <th>Status</th>
+            <th>From Location</th>
+            <th>Start Date</th>
+            <th>Start Time</th>
+            <th>To Location</th>
+            <th>End Date</th>
+            <th>End Time</th>
+            <th>Total Time</th>
+            <th>Purpose</th>
+            <th>Mode of Transport</th>
+            <th>Total KM</th>
+            <th>Ticket Amount</th>
+            <th>Uploaded Ticket</th>
+            <th>Fare Amount</th>
+            <!-- <th>Allowance Type</th>-->
+            <th>DA</th>
+            <th>Halting</th>
+            <th>Lodging</th>
+            <th>Uploaded Lodging Bill</th>
+            <th>Local Conveyance</th>
+            <th class="fixed-total">Total</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="no-rejected-records text-center py-3" style="display: none">
+        You have no Rejected records.
+      </div>
+    </div>
+
+    <!-- No records message  for particular employee tab-->
+    <div id="no-skip-records-message" style="display: none">
+      No records available for this employee.
+    </div>
+  </div>
+  <!-- Add this to your HTML to include a modal or input for remarks -->
+  <!--<div id="remarkModal" style="display: none">
+      <h3>Enter a Remark</h3>
+      <textarea
+        id="remarkInput"
+        rows="4"
+        cols="50"
+        placeholder="Enter your remark here..."
+      ></textarea>
+      <button onclick="submitRejection()">Submit</button>
+      <button onclick="closeRemarkModal()">Cancel</button>
+    </div>-->
+</div>
+
+<!--display message for all three Tab data empty-->
+<div class="no-skip-records text-center mt-3" style="display: none">
+  You have no Request.
+</div>
+
+<script>
+  fetchPendingSkipRecords();
+  fetchSkipEmpNames();
+
+  // Fetch employee names and create tabs for higher reporting person
+  async function fetchSkipEmpNames() {
+    try {
+      const response = await fetch(
+        `/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_skip_records?user_id={{ frappe.session.user }}`
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const empNames = data.message.employee_names;
+      const countByEmp = data.message.employee_counts;
+
+      const allSkipPendingCount = data.message.pending.length || "";
+      //console.log("emp tab:", data.message.pending.length);
+
+      const skipEmpTabs = document.getElementById("skipEmpTabs");
+      skipEmpTabs.innerHTML = ""; // Clear previous tabs
+
+      // Check if "All" tab already exists
+      const allTabExists = document.getElementById("all-skip-tab");
+
+      if (!allTabExists) {
+        // Create the "All" tab
+        const allTabItem = document.createElement("li");
+        allTabItem.className = "ta-skip-nav-item";
+        allTabItem.innerHTML = `
+                <button
+                    class="ta-skip-nav-link active"
+                    id="all-skip-tab"
+                    data-bs-toggle="tab"
+                    data-employee-name="all"
+                    onclick="handleSkipTabClick('all', this)"
+                >
+                    All
+                     <span class="all-pending-count" id="allSkipPendingCount"></span>
+                </button>
+
+            `;
+        skipEmpTabs.appendChild(allTabItem);
+      }
+
+      empNames.forEach((employee) => {
+        const employeeId = employee.employee_id; // Assuming employee_id is available
+        const employeeFullName = employee.full_name; // Assuming full_name is available
+        const pendingCount = countByEmp.pending[employeeId] || ""; // Get the count for this employee
+
+        const tabItem = document.createElement("li");
+        tabItem.className = "ta-skip-nav-item";
+        tabItem.innerHTML = `
+                <button
+                    class="ta-skip-nav-link"
+                    id="emp-skip-tab-${employeeId}"
+                    data-bs-toggle="tab"
+                    data-employee-name="${employeeFullName}"
+                    onclick="handleSkipTabClick('${employeeFullName}', this)"
+                >
+                    ${capitalizeFirstLetterOfEachWord(
+                      employeeFullName
+                    )} <span class="pending-count"></span>
+                </button>
+            `;
+        skipEmpTabs.appendChild(tabItem);
+      });
+    } catch (error) {
+      console.error("Error fetching employee names:", error);
+    }
+  }
+
+  // Placeholder for the handleTabClick function
+  function handleSkipTabClick(skipEmpName, element) {
+    // Implement your tab click logic here
+    console.log(`Tab clicked: ${skipEmpName}`);
+
+    const buttons = document.querySelectorAll("#employeeTabs .nav-link");
+    buttons.forEach((button) => {
+      button.classList.remove("active");
+    });
+
+    element.classList.add("active");
+
+    filterSkipTableByEmployee(skipEmpName);
+  }
+
+  function filterSkipTableByEmployee(employeeName) {
+    const tableBody = document.querySelector("#travelSkipPendingTable tbody");
+    const noRecordsMessage = document.getElementById("no-skip-records-message");
+    const tableSkipPending = document.getElementById("travelSkipPendingTable");
+
+    if (!tableBody) {
+      console.error("Error: Table body element not found.");
+      return;
+    }
+
+    const rows = tableBody.querySelectorAll("tr");
+    let visibleRows = 0; // Counter to track the number of visible rows
+
+    // Loop through all rows and hide those that don't match the employee name
+    rows.forEach((row) => {
+      const fullName = row.querySelector("td:nth-child(4)").innerText.trim(); // Adjust the column index if necessary
+
+      // If the row's employee name matches the selected employee, display it, otherwise hide it
+      if (
+        employeeName.toLowerCase() === "all" ||
+        fullName.toLowerCase() === employeeName.toLowerCase()
+      ) {
+        row.style.display = ""; // Show the row
+        visibleRows++; // Increment counter if the row is visible
+      } else {
+        row.style.display = "none"; // Hide the row
+      }
+    });
+
+    // If no rows are visible, show the no-records message
+    if (visibleRows === 0) {
+      noRecordsMessage.style.display = "block"; // Show message if no records are found
+      tableSkipPending.style.display = "none";
+    } else {
+      noRecordsMessage.style.display = "none"; // Hide message if records are found
+      tableSkipPending.style.display = "block";
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const pendingSkipTab = document.getElementById("pendingSkipTab");
+    const approvedSkipTab = document.getElementById("approvedSkipTab");
+    const rejectSkipTab = document.getElementById("rejectSkipTab");
+
+    const pendingSkipTable = document.getElementById("travelSkipPendingTable");
+    const approvedSkipTable = document.getElementById("travelSkipApproved");
+    const rejectSkipTable = document.getElementById("travelSkipReject");
+
+    // Initially show the pending table
+    pendingSkipTable.style.display = "block";
+    approvedSkipTable.style.display = "none";
+    rejectSkipTable.style.display = "none";
+
+    // Add event listeners for tab clicks
+    pendingSkipTab.addEventListener("click", function () {
+      toggleActiveTab(pendingSkipTab);
+      showTable("pending"); // Show pending records table
+      fetchPendingSkipRecords(); // Fetch pending records
+    });
+
+    approvedSkipTab.addEventListener("click", function () {
+      toggleActiveTab(approvedSkipTab);
+      showTable("approved"); // Show approved records table
+      fetchApprovedSkipRecords(); // Fetch approved records
+    });
+
+    rejectSkipTab.addEventListener("click", function () {
+      toggleActiveTab(rejectSkipTab);
+      showTable("rejected"); // Show rejected records table
+      fetchRejectedSkipRecords(); // Fetch rejected records
+    });
+
+    // Function to toggle the active class
+    function toggleActiveTab(activeTab) {
+      pendingSkipTab.classList.remove("active");
+      approvedSkipTab.classList.remove("active");
+      rejectSkipTab.classList.remove("active");
+
+      activeTab.classList.add("active");
+    }
+
+    // Function to manage table visibility
+    function showTable(type) {
+      if (type === "pending") {
+        pendingSkipTable.style.display = "block";
+        approvedSkipTable.style.display = "none";
+        rejectSkipTable.style.display = "none";
+      } else if (type === "approved") {
+        pendingSkipTable.style.display = "none";
+        approvedSkipTable.style.display = "block";
+        rejectSkipTable.style.display = "none";
+      } else if (type === "rejected") {
+        pendingSkipTable.style.display = "none";
+        approvedSkipTable.style.display = "none";
+        rejectSkipTable.style.display = "block";
+      }
+    }
+  });
+
+  async function fetchPendingSkipRecords() {
+    try {
+      // Fetch pending records
+      const response = await fetch(
+        `/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_skip_records?user_id={{ frappe.session.user }}`
+      );
+
+      // Check if the response is ok (status code 200-299)
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      // Parse the JSON data from the response
+      const data = await response.json();
+
+      console.log("data from skip:", data);
+
+      const pendingRecord = data.message.pending;
+      const approvedRecord = data.message.approved;
+      const rejectedRecord = data.message.rejected;
+      const empNames = data.message.employee_names;
+      const countByEmp = data.message.employee_counts;
+      console.log("skip data:", pendingRecord);
+      console.log("countByEmp:", countByEmp.pending);
+
+      // Update tabs with employee names and counts
+      const skipEmpTabs = document.getElementById("skipEmpTabs");
+
+      const pendingSkipCount = document.getElementById("pendingSkipCount");
+      const allSkipPendingCount = document.getElementById(
+        "allSkipPendingCount"
+      );
+      const tableBody = document.querySelector("#travelSkipPendingTable tbody");
+      const noRecordsMessage = document.querySelector(".no-skip-records");
+
+      if (!tableBody) {
+        console.error("Error: Table body element not found.");
+        return;
+      }
+      pendingSkipCount.textContent = pendingRecord.length || 0;
+      allSkipPendingCount.textContent = pendingRecord.length || 0;
+      // Clear existing rows
+      tableBody.innerHTML = "";
+
+      if (pendingRecord.length === 0) {
+        console.log("pendingRecord length:", pendingRecord.length);
+        noRecordsMessage.style.display = "block";
+        document.querySelector(".main_skip_content").style.display = "none";
+      } else {
+        pendingRecord.forEach((record, index) => {
+          const row = document.createElement("tr");
+
+          row.innerHTML = `
+                  <td class="fixed-serial">${index + 1}</td>
+                  <td><input type="checkbox" class="skipRowCheckbox" onclick="handleSkipCheckboxClick(this, '${
+                    record.name
+                  }')" /></td>
+
+                  <td class="d-none" data-record-name="${record.name}">${
+            record.name
+          }</td>
+                  <td>${record.first_name} ${record.last_name}</td>
+                  <td>${record.status}</td>
+                  <td>
+                    ${
+                      record.from_location === "Other"
+                        ? record.from_location_other
+                        : record.from_location
+                    }
+                  </td>
+
+                  <td>${formatDate(record.from_date)}</td>
+                  <td>${record.from_time}</td>
+                  <td>
+                    ${
+                      record.to_location === "Other"
+                        ? record.to_location_other
+                        : record.to_location
+                    }
+                  </td>
+                  <td>${formatDate(record.to_date)}</td>
+                  <td>${record.to_time}</td>
+                  <td>${record.total_time}</td>
+                  <td>${record.purpose}</td>
+                  <td>${record.travel_mode}</td>
+                  <td>${record.total_km}</td>
+                  <td>${record.ticket_amount}</td>
+                  <td>${
+                    record.upload_ticket
+                      ? `<a href="${record.upload_ticket}" target="_blank">View</a>`
+                      : "-"
+                  }</td>
+                  <td>${record.fare_amount}</td>
+                 <!-- <td>${record.allowance_type}</td>-->
+                  <td>${record.final_da_amount}</td>
+                  <td>${record.final_halt_amount}</td>
+                  <td>${record.final_lodge_amount}</td>
+                  <td>${
+                    record.upload_lodging
+                      ? `<a href="${record.upload_lodging}" target="_blank">View</a>`
+                      : "-"
+                  }</td>
+                  <td class="${
+                    record.final_local_amount &&
+                    record.final_local_amount.trim() !== "-" &&
+                    parseFloat(record.final_local_amount) !== 0
+                      ? "clickable"
+                      : ""
+                  }"
+                    data-record-id="${record.name}"
+                    ${
+                      record.final_local_amount &&
+                      record.final_local_amount.trim() !== "-" &&
+                      parseFloat(record.final_local_amount) !== 0
+                        ? `title="Click for Local details"`
+                        : ""
+                    }>
+                    ${record.final_local_amount || "-"}
+                  </td>
+                  <td class="fixed-total">${record.total_amount}</td>
+                `;
+
+          tableBody.appendChild(row);
+        });
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
+  function formatDate(dateString) {
+    if (!dateString) return ""; // Return empty string if no date is provided
+    const [year, month, day] = dateString.split("-");
+    return `${day}-${month}-${year}`;
+  }
+  function capitalizeFirstLetterOfEachWord(str) {
+    return str
+      .split(" ") // Split the string into an array of words
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize the first letter
+      .join(" "); // Join the array back into a string
+  }
+  // Function to handle checkbox click
+  window.handleSkipCheckboxClick = function (checkbox, recordName) {
+    if (checkbox.checked) {
+      console.log("Selected Skip Record Name: ", recordName);
+      checkbox.dataset.recordId = recordName; // Store record ID in checkbox dataset
+    }
+  };
+
+  function getSelectedRows() {
+    const selectedRecords = [];
+    const checkboxes = document.querySelectorAll(".skipRowCheckbox:checked"); // Find all checked checkboxes
+
+    checkboxes.forEach((checkbox) => {
+      const recordName = checkbox
+        .closest("tr")
+        .querySelector("td[data-record-name]")
+        .getAttribute("data-record-name");
+      selectedRecords.push(recordName);
+    });
+
+    return selectedRecords;
+  }
+
+  // Function to handle the approval process
+  async function approveSelectedSkipRecords() {
+    const selectedRows = getSelectedRows();
+    console.log("selected rows:", selectedRows);
+    //console.log("approved button");
+
+    if (selectedRows.length === 0) {
+      Swal.fire({
+        icon: "warning",
+        title: "No records selected",
+        text: "Please select at least one record to approve.",
+      });
+      return;
+    }
+
+    // Ask for confirmation before proceeding with approval
+    const { value: confirm } = await Swal.fire({
+      title: "Are you sure?",
+      text: `You are about to approve ${selectedRows.length} record(s).`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, approve!",
+      cancelButtonText: "Cancel",
+    });
+
+    if (confirm) {
+      try {
+        // Show the "Please wait" message during the approval process
+        Swal.fire({
+          title: "Please wait...",
+          text: "Approving records...",
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          },
+        });
+
+        // Pass the record names to your server in the fetch call
+        const response = await fetch(
+          "/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.bulk_skip_approve",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ ids: selectedRows }),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        // Close the previous "Please wait" message
+        Swal.close();
+
+        // Show the success message and then a "Please wait" message while refreshing
+        Swal.fire({
+          title: "Approved!",
+          text: "All records have been processed for approval.",
+          icon: "success",
+          confirmButtonText: "OK",
+        }).then(() => {
+          Swal.fire({
+            title: "Please wait",
+            text: "Refreshing the page...",
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            didOpen: () => {
+              Swal.showLoading();
+            },
+          });
+
+          // Add a delay before refreshing the table
+          setTimeout(() => {
+            // Refresh the entire page
+            window.location.reload();
+            // Refresh the table
+            //fetchPendingSkipRecords();
+
+            //fetchTabCounts();
+            // Close the loading message after the refresh
+            Swal.close();
+          }, 1500); // Adjust the delay time as needed
+        });
+      } catch (error) {
+        console.error("Error:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "An error occurred while approving records.",
+        });
+      }
+    }
+  }
+
+  // Event listener for the approve button
+  document
+    .getElementById("approveButtonSkip")
+    .addEventListener("click", approveSelectedSkipRecords);
+
+  // Function to handle the rejection process
+  async function rejectSelectedSkipRecords() {
+    const selectedRows = getSelectedRows();
+    console.log("selected rows:", selectedRows);
+
+    if (selectedRows.length === 0) {
+      Swal.fire({
+        icon: "warning",
+        title: "No records selected",
+        text: "Please select at least one record to reject.",
+      });
+      return;
+    }
+
+    // Ask for a remark before confirming rejection
+    const { value: remark } = await Swal.fire({
+      title: "Enter Reason",
+      input: "textarea",
+      inputLabel: "",
+      inputPlaceholder: "Enter Reason of Reject...",
+      inputAttributes: {
+        "aria-label": "Type your Reason here",
+      },
+      showCancelButton: true,
+      confirmButtonText: "Reject",
+      cancelButtonText: "Cancel",
+      preConfirm: (inputValue) => {
+        if (!inputValue) {
+          Swal.showValidationMessage("Please enter a remark");
+        }
+        return inputValue;
+      },
+    });
+
+    // Proceed with rejection if remark is provided
+    if (remark) {
+      // Ask for confirmation before proceeding with rejection
+      const { value: confirm } = await Swal.fire({
+        title: "Are you sure?",
+        text: `You are about to reject ${selectedRows.length} record(s).`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, reject!",
+        cancelButtonText: "Cancel",
+      });
+
+      if (confirm) {
+        try {
+          // Pass these record names and remark to your server in the fetch call
+          const response = await fetch(
+            "/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.bulk_skip_reject",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ ids: selectedRows, remark: remark }), // Include remark
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+
+          const result = await response.json();
+
+          Swal.fire({
+            title: "Rejected!",
+            text: "Selected records have been rejected.",
+            icon: "success",
+            confirmButtonText: "OK",
+          }).then(() => {
+            Swal.fire({
+              title: "Please wait",
+              text: "Refreshing the page...",
+              allowOutsideClick: false,
+              allowEscapeKey: false,
+              didOpen: () => {
+                Swal.showLoading();
+              },
+            });
+            // Add a delay before refreshing the table
+            setTimeout(() => {
+              // Refresh the entire page
+              window.location.reload();
+              fetchPendingRecords(); // Refresh the table
+              fetchTabCounts();
+              Swal.close(); // Close the loading message
+            }, 1500); // Adjust the delay time as needed
+          });
+        } catch (error) {
+          console.error("Error:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "An error occurred while rejecting records.",
+          });
+        }
+      }
+    }
+  }
+
+  // Event listener for the reject button
+  document
+    .getElementById("rejectButtonSkip")
+    .addEventListener("click", rejectSelectedSkipRecords);
+
+  //Fetch Approved Records
+  async function fetchApprovedSkipRecords() {
+    try {
+      // Make a fetch request to get approved skip records
+      const response = await fetch(
+        `/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_skip_records?user_id={{ frappe.session.user }}`
+      );
+
+      // Check if the response status is okay
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      // Parse the JSON data from the response
+      const data = await response.json();
+      console.log("Approved skip records:", data.message.approved);
+
+      // Process the approved records (assuming the data structure contains an 'approved' field)
+      const approvedRecords = data.message.approved;
+
+      const tableSkipPending = document.getElementById(
+        "travelSkipPendingTable"
+      );
+      if (tableSkipPending) {
+        tableSkipPending.style.display = "none"; // hide pending records table
+      }
+
+      const tableSkipBody = document.querySelector(
+        "#travelSkipApprovedTable tbody"
+      );
+
+      const noSkipApprovedRecords = document.querySelector(
+        ".no-skip-approved-records"
+      );
+
+      if (!tableSkipBody) {
+        console.error("Error: Table body element not found.");
+        return;
+      }
+      tableSkipBody.innerHTML = "";
+
+      // Perform necessary actions, e.g., updating the UI with approved records
+      if (approvedRecords.length > 0) {
+        console.log("Number of approved records:", approvedRecords.length);
+
+        // Populate table rows with the approved records
+        approvedRecords.forEach((record, index) => {
+          const row = document.createElement("tr");
+
+          row.innerHTML = `
+                <td class="fixed-serial">${index + 1}</td>
+                <td class="d-none" data-record-name="${record.name}">${
+            record.name
+          }</td>
+                <td>${record.first_name} ${record.last_name}</td>
+                <td>${record.status}</td>
+                <td>
+                  ${
+                    record.from_location === "Other"
+                      ? record.from_location_other
+                      : record.from_location
+                  }
+                </td>
+
+                <td>${formatDate(record.from_date)}</td>
+                <td>${record.from_time}</td>
+                <td>
+                  ${
+                    record.to_location === "Other"
+                      ? record.to_location_other
+                      : record.to_location
+                  }
+                </td>
+                <td>${formatDate(record.to_date)}</td>
+                <td>${record.to_time}</td>
+                <td>${record.total_time}</td>
+                <td>${record.purpose}</td>
+                <td>${record.travel_mode}</td>
+                <td>${record.total_km}</td>
+                <td>${record.ticket_amount}</td>
+                <td>${
+                  record.upload_ticket
+                    ? `<a href="${record.upload_ticket}" target="_blank">View</a>`
+                    : "-"
+                }</td>
+                <td>${record.fare_amount}</td>
+                <!-- <td>${record.allowance_type}</td>-->
+                <td>${record.final_da_amount}</td>
+                <td>${record.final_halt_amount}</td>
+                <td>${record.final_lodge_amount}</td>
+                <td>${
+                  record.upload_lodging
+                    ? `<a href="${record.upload_lodging}" target="_blank">View</a>`
+                    : "-"
+                }</td>
+                <td class="${
+                  record.final_local_amount &&
+                  record.final_local_amount.trim() !== "-" &&
+                  parseFloat(record.final_local_amount) !== 0
+                    ? "clickable"
+                    : ""
+                }"
+                  data-record-id="${record.name}"
+                  ${
+                    record.final_local_amount &&
+                    record.final_local_amount.trim() !== "-" &&
+                    parseFloat(record.final_local_amount) !== 0
+                      ? `title="Click for Local details"`
+                      : ""
+                  }>
+                  ${record.final_local_amount || "-"}
+                </td>
+                <td class="fixed-total">${record.total_amount}</td>
+              `;
+
+          // Append the row to the approved table body
+          tableSkipBody.appendChild(row);
+        });
+      } else {
+        document.querySelector("#travelSkipApprovedTable thead").style.display =
+          "none";
+        //console.log("No approved records found.");
+        noSkipApprovedRecords.style.display = "block"; // show the no record message
+      }
+    } catch (error) {
+      console.error("Error fetching approved skip records:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "An error occurred while fetching approved records. Please try again later.",
+      });
+    }
+  }
+
+  //Fetch Reject Records
+  async function fetchRejectedSkipRecords() {
+    try {
+      // Make a fetch request to get approved skip records
+      const response = await fetch(
+        `/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_skip_records?user_id={{ frappe.session.user }}`
+      );
+
+      // Check if the response status is okay
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      // Parse the JSON data from the response
+      const data = await response.json();
+      console.log("Approved skip records:", data.message.rejected);
+
+      // Process the approved records (assuming the data structure contains an 'approved' field)
+      const rejetedRecords = data.message.rejected;
+
+      const tableSkipBody = document.querySelector(
+        "#travelSkipRejectTable tbody"
+      );
+
+      const noSkipApprovedRecords = document.querySelector(
+        ".no-skip-approved-records"
+      );
+
+      if (!tableSkipBody) {
+        console.error("Error: Table body element not found.");
+        return;
+      }
+      tableSkipBody.innerHTML = "";
+
+      // Perform necessary actions, e.g., updating the UI with approved records
+      if (rejetedRecords.length > 0) {
+        console.log("Number of approved records:", rejetedRecords.length);
+
+        // Populate table rows with the approved records
+        rejetedRecords.forEach((record, index) => {
+          const row = document.createElement("tr");
+
+          row.innerHTML = `
+                <td class="fixed-serial">${index + 1}</td>
+                <td class="d-none" data-record-name="${record.name}">${
+            record.name
+          }</td>
+                <td>${record.first_name} ${record.last_name}</td>
+                <td>${record.status}</td>
+                <td>
+                  ${
+                    record.from_location === "Other"
+                      ? record.from_location_other
+                      : record.from_location
+                  }
+                </td>
+
+                <td>${formatDate(record.from_date)}</td>
+                <td>${record.from_time}</td>
+                <td>
+                  ${
+                    record.to_location === "Other"
+                      ? record.to_location_other
+                      : record.to_location
+                  }
+                </td>
+                <td>${formatDate(record.to_date)}</td>
+                <td>${record.to_time}</td>
+                <td>${record.total_time}</td>
+                <td>${record.purpose}</td>
+                <td>${record.travel_mode}</td>
+                <td>${record.total_km}</td>
+                <td>${record.ticket_amount}</td>
+                <td>${
+                  record.upload_ticket
+                    ? `<a href="${record.upload_ticket}" target="_blank">View</a>`
+                    : "-"
+                }</td>
+                <td>${record.fare_amount}</td>
+                <!-- <td>${record.allowance_type}</td>-->
+                <td>${record.final_da_amount}</td>
+                <td>${record.final_halt_amount}</td>
+                <td>${record.final_lodge_amount}</td>
+                <td>${
+                  record.upload_lodging
+                    ? `<a href="${record.upload_lodging}" target="_blank">View</a>`
+                    : "-"
+                }</td>
+                <td class="${
+                  record.final_local_amount &&
+                  record.final_local_amount.trim() !== "-" &&
+                  parseFloat(record.final_local_amount) !== 0
+                    ? "clickable"
+                    : ""
+                }"
+                  data-record-id="${record.name}"
+                  ${
+                    record.final_local_amount &&
+                    record.final_local_amount.trim() !== "-" &&
+                    parseFloat(record.final_local_amount) !== 0
+                      ? `title="Click for Local details"`
+                      : ""
+                  }>
+                  ${record.final_local_amount || "-"}
+                </td>
+                <td class="fixed-total">${record.total_amount}</td>
+              `;
+
+          // Append the row to the approved table body
+          tableSkipBody.appendChild(row);
+        });
+      } else {
+        document.querySelector("#travelSkipApprovedTable thead").style.display =
+          "none";
+        //console.log("No approved records found.");
+        noSkipApprovedRecords.style.display = "block"; // show the no record message
+      }
+    } catch (error) {
+      console.error("Error fetching approved skip records:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "An error occurred while fetching approved records. Please try again later.",
+      });
+    }
+  }
+</script>

@@ -316,7 +316,7 @@
   /* Highlighting total column for approved records */
   table#travelAllowancesApprovedTable td:last-child {
     font-weight: bold;
-    color: #000;
+    color: #155724;
     background-color: #c3e6cb; /* Light green background for totals */
   }
 
@@ -402,7 +402,7 @@
   /* Highlighting total column for rejected records */
   table#travelAllowancesRejectTable td:last-child {
     font-weight: bold;
-    color: #000;
+    color: #721c24;
     background-color: #f5c6cb; /* Light red background for totals */
   }
 
@@ -791,56 +791,14 @@
 </div>
 
 <script>
-  /*document.getElementById("pendingTab").addEventListener("click", function () {
-    // Hide other tables and show the pending table
-    document.getElementById("travelAllowancesTable").style.display = "block"; // Show pending table
-    document.getElementById("travelAllowancesApprovedTable").style.display =
-      "none"; // Hide approved table
-    document.getElementById("travelAllowancesRejectTable").style.display =
-      "none"; // Hide rejected table
-
-    // Add active class to the pending tab, and remove from others
-    document.getElementById("pendingTab").classList.add("active");
-    document.getElementById("approveTab").classList.remove("active");
-    document.getElementById("rejectTab").classList.remove("active");
-
-    // Fetch pending records
-    fetchPendingRecords();
-  });
-
-  document.getElementById("approveTab").addEventListener("click", function () {
-    // Hide other tables and show the approved table
-    document.getElementById("travelAllowancesTable").style.display = "none"; // Hide pending table
-    document.getElementById("travelAllowancesApprovedTable").style.display =
-      "block"; // Show approved table
-    document.getElementById("travelAllowancesRejectTable").style.display =
-      "none"; // Hide rejected table
-
-    // Add active class to the approved tab, and remove from others
-    document.getElementById("approveTab").classList.add("active");
-    document.getElementById("pendingTab").classList.remove("active");
-    document.getElementById("rejectTab").classList.remove("active");
-
-    // Fetch approved records
-    fetchApprovedRecords();
-  });
-
-  document.getElementById("rejectTab").addEventListener("click", function () {
-    // Hide other tables and show the rejected table
-    document.getElementById("travelAllowancesTable").style.display = "none"; // Hide pending table
-    document.getElementById("travelAllowancesApprovedTable").style.display =
-      "none"; // Hide approved table
-    document.getElementById("travelAllowancesRejectTable").style.display =
-      "block"; // Show rejected table
-
-    // Add active class to the rejected tab, and remove from others
-    document.getElementById("rejectTab").classList.add("active");
-    document.getElementById("pendingTab").classList.remove("active");
-    document.getElementById("approveTab").classList.remove("active");
-
-    // Fetch rejected records
-    fetchRejectedRecords();
-  });*/
+  // Set interval to call fetchPendingRecords every 2 minutes (120000 milliseconds)
+  setInterval(fetchTabCounts, 120000); // 120000 ms = 2 minutes
+  setInterval(fetchPendingRecords, 120000); // 120000 ms = 2 minutes
+  // Function to fetch and display pending records
+  // window.addEventListener("DOMContentLoaded", (event) => {
+  fetchTabCounts();
+  fetchPendingRecords(); // Ensure tables are loaded before fetching data
+  // });
 
   document.getElementById("pendingTab").addEventListener("click", function () {
     // Hide other tables and show the pending table
@@ -853,6 +811,7 @@
     document.getElementById("approveTab").classList.remove("active");
     document.getElementById("rejectTab").classList.remove("active");
 
+    fetchTabCounts();
     // Fetch pending records
     fetchPendingRecords();
   });
@@ -867,6 +826,8 @@
     document.getElementById("approveTab").classList.add("active");
     document.getElementById("pendingTab").classList.remove("active");
     document.getElementById("rejectTab").classList.remove("active");
+
+    fetchTabCounts();
 
     // Fetch approved records
     fetchApprovedRecords();
@@ -883,14 +844,9 @@
     document.getElementById("pendingTab").classList.remove("active");
     document.getElementById("approveTab").classList.remove("active");
 
+    fetchTabCounts();
     // Fetch rejected records
     fetchRejectedRecords();
-  });
-
-  // Function to fetch and display pending records
-  window.addEventListener("DOMContentLoaded", (event) => {
-    fetchTabCounts();
-    fetchPendingRecords(); // Ensure tables are loaded before fetching data
   });
 
   async function fetchTabCounts() {
@@ -978,9 +934,7 @@
       const noRecordsPendingMessage = document.querySelector(
         ".no-pending-records"
       );
-      const noRecordsByEmpMessage = document.querySelector(
-        ".no-records-message"
-      );
+      const noRecordsByEmpMsg = document.querySelector(".no-records-message");
 
       tableContainer.style.display = "block";
 
@@ -999,6 +953,10 @@
       if (pendingRecord.length === 0) {
         noRecordsPendingMessage.style.display = "block";
         tableContainer.style.display = "none";
+        // Hide the action section when approved tab is selected
+
+        actionSection.style.display = "none";
+
         // Hide employee tabs except for the "All" tab
         const tabs = employeeTabsContainer.querySelectorAll(".ta-nav-link");
         tabs.forEach((tab) => {
@@ -1223,7 +1181,6 @@
   //fetch approved records
   async function fetchApprovedRecords() {
     const approvedTab = document.getElementById("approveTab");
-
     const pendingTab = document.getElementById("pendingTab");
     const employeeTabsContainer = document.getElementById("employeeTabs");
     approvedTab.classList.add("active");
@@ -1247,6 +1204,13 @@
         tab.style.display = "none";
       }
     });
+
+    // hide the no record message for emp tab in approved tab if it visible
+    const noRecordsByEmpMsg = document.querySelector(".no-records-message");
+
+    if (noRecordsByEmpMsg) {
+      noRecordsByEmpMsg.style.display = "none";
+    }
 
     try {
       // Fetch approved records
@@ -1387,6 +1351,13 @@
     const actionSection = document.querySelector(".action");
     if (actionSection) {
       actionSection.style.display = "none";
+    }
+
+    // hide the no record message for emp tab in reject tab if it visible
+    const noRecordsByEmpMsg = document.querySelector(".no-records-message");
+
+    if (noRecordsByEmpMsg) {
+      noRecordsByEmpMsg.style.display = "none";
     }
 
     // Hide the pending and approved tables if displayed
@@ -1626,6 +1597,8 @@
 
           // Add a delay before refreshing the table
           setTimeout(() => {
+            // Refresh the entire page
+            window.location.reload();
             // Refresh the table
             fetchPendingRecords();
             fetchTabCounts();
@@ -1814,6 +1787,8 @@
             });
             // Add a delay before refreshing the table
             setTimeout(() => {
+              // Refresh the entire page
+              window.location.reload();
               fetchPendingRecords(); // Refresh the table
               fetchTabCounts();
               Swal.close(); // Close the loading message
@@ -2026,11 +2001,11 @@
     noRecordsMessage.style.display = hasVisibleRows ? "none" : "block";
 
     // Hide pendingTable if no rows are visible
-    if (!hasVisibleRows) {
+    /*if (!hasVisibleRows) {
       pendingTable.style.display = "none";
     } else {
       pendingTable.style.display = ""; // Show the table if there are visible rows
-    }
+    }*/
   }
 </script>
 
