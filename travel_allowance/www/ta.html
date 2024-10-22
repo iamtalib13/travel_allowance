@@ -7,226 +7,43 @@
 
     <!--HTMX Link-->
     <script src="https://unpkg.com/htmx.org@2.0.1"></script>
-    <!--<link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-      crossorigin="anonymous"
-    />-->
-    <!-- Bootstrap CSS -->
+
+    <!-- Bootstrap CSS (replace with your version if necessary) -->
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
 
-    <!-- Bootstrap JS and Popper.js -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-
-    <!--Handsontable CSS-->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/handsontable@10.0.0/dist/handsontable.full.min.css"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/handsontable@10.0.0/dist/handsontable.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!--Include the Flatpickr CSS and JS:-->
+    <!--Include the Flatpickr CSS and JS:
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
     />
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-    <!--to include the PDF.js library from a CDN-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
-
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>-->
 
     <style>
       body {
         font-family: Arial, sans-serif;
+        /*font-family: 'lato', sans-serif;*/
         /*  overflow: hidden; Prevent the page from having a scrollbar */
+        margin: 0;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
       }
 
       .ta-container {
         margin: 0;
         padding: 0;
       }
-      */ .ta-form-container {
-        background-color: #fff;
-        padding: 22px 0px 0 0px;
-        border-radius: 8px;
-      }
 
-      .ta-form-container h2 {
-        text-align: center;
-        margin-bottom: 20px;
-      }
-      */ .ta-row-container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .ta-from-row {
-        display: flex;
-        align-items: center; /* Align items vertically */
-        flex-wrap: wrap; /* Ensure single row */
-        gap: 10px; /* Space between fields */
-        border: 1px solid #d0d7de;
-        border-radius: 4px;
-        font-size: 14px;
-        padding: 5px;
-      }
-      .ta-to-row {
-        display: flex;
-        align-items: center; /* Align items vertically */
-        flex-wrap: wrap; /* Ensure single row */
-        gap: 10px; /* Space between fields */
-        border: 1px solid #d0d7de;
-        border-radius: 4px;
-        font-size: 14px;
-        padding: 5px;
-      }
-      .ta-local-row {
-        display: flex;
-        align-items: center; /* Align items vertically */
-        flex-wrap: wrap; /* Ensure single row */
-        gap: 10px; /* Space between fields */
-        border: 1px solid #d0d7de;
-        border-radius: 4px;
-        font-size: 14px;
-        padding: 8px;
-      }
-
-      .ta-time-and-purpose {
-        display: flex;
-        justify-content: center;
-        align-items: center; /* Align items vertically */
-        flex-wrap: wrap; /* Ensure single row */
-        gap: 10px; /* Space between fields */
-        border: 1px solid #d0d7de;
-        border-radius: 4px;
-        font-size: 14px;
-        padding: 14px 5px;
-      }
-      .ta-allowances-row {
-        display: flex;
-        align-items: center; /* Align items vertically */
-        flex-wrap: wrap; /* Ensure single row */
-        gap: 10px; /* Space between fields */
-        border: 1px solid #d0d7de;
-        border-radius: 4px;
-        font-size: 14px;
-        padding: 10px;
-        margin-top: 20px;
-      }
-
-      .ta-form-group {
-        display: flex;
-        flex-direction: column;
-        padding: 0 5px;
-      }
-
-      .ta-form-group label {
-        font-size: 14px;
-      }
-
-      .ta-form-group input,
-      .ta-form-group select,
-      .ta-form-group textarea {
-        padding: 8px 5px;
-        font-size: 11px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-      }
-      .field-error {
-        border: 1px solid red;
-        color: red;
-        background-color: #fff5f5;
-      }
-
-      .field-error::placeholder {
-        color: red; /* Ensure the placeholder text also turns red */
-      }
-
-      .ta-form-btn {
-        display: flex;
-        justify-content: center;
-        padding: 0 5px;
-      }
-
-      .add-button {
-        padding: 6px 16px;
-
-        /*background: linear-gradient(
-                to right,
-                rgba(0, 128, 222, 1),
-                rgba(97, 202, 255, 1)
-              );*/
-        color: #fff;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: large;
-        font-weight: 700;
-        margin-top: 12px;
-        background-color: #286840;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        transition: background-color 0.3s ease, transform 0.2s ease;
-      }
-
-      .add-button:hover {
-        /*background: linear-gradient(
-                to right,
-                rgba(0, 128, 222, 1),
-                rgba(97, 202, 255, 1)
-              );*/
-        background-color: #2f7a4c;
-        transform: scale(1.05);
-      }
-
-      .nav-link .count {
-        background-color: rgb(221, 51, 51);
-        color: white;
-        border-radius: 50%;
-        padding: 4px 12px;
-        font-size: 0.8em;
-        position: relative;
-        display: inline-block;
-        font-size: 16px;
-        font-weight: bold;
-        /*border: 2px solid #bf1818;*/
-      }
-
-      /* Responsive Design */
-      @media (max-width: 1024px) {
-        .ta-form-group {
-          min-width: 160px; /* Reduce width for smaller screens */
-        }
-      }
-
-      @media (max-width: 768px) {
-        .ta-form-container {
-          padding: 15px;
-        }
-        .ta-form-row {
-          gap: 5px; /* Reduce space between fields */
-        }
-      }
-
-      /* Hide fields by default */
-      .hidden {
-        display: none;
-      }
-      #return-response {
-        margin: 20px;
-        width: 100%;
-      }
-
+      /****** Navbar style css  ********/
       .ta-nav {
         position: sticky;
         top: 0; /* Ensures it sticks to the top of the viewport */
@@ -241,6 +58,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        flex-wrap: nowrap;
         z-index: 1000; /* Ensures it stays above other content */
       }
       a.ta-home {
@@ -263,6 +81,7 @@
         cursor: pointer;
       }
       .user-info {
+        display: block;
         text-align: end;
       }
       .user-icon {
@@ -292,32 +111,101 @@
         background-color: #e9ecef;
       }
 
+      .nav-link .count {
+        background-color: rgb(221, 51, 51);
+        color: white;
+        border-radius: 50%;
+        padding: 4px 12px;
+        font-size: 0.8em;
+        position: relative;
+        display: inline-block;
+        font-size: 16px;
+        font-weight: bold;
+        /*border: 2px solid #bf1818;*/
+      }
+
+      /****** TA form CSS  *******/
+      .field-error {
+        border: 1px solid red;
+        color: red;
+        background-color: #fff5f5;
+      }
+
+      .field-error::placeholder {
+        color: red; /* Ensure the placeholder text also turns red */
+      }
+
       .description {
         font-size: 12px;
       }
 
-      .page-content {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+      /********TA form Save Button********/
+      .add-button {
+        padding: 6px 16px;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: large;
+        font-weight: 700;
+        margin-top: 12px;
+        background-color: #286840;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s ease, transform 0.2s ease;
       }
+
+      .add-button:hover {
+        background-color: #2f7a4c;
+        transform: scale(1.05);
+      }
+
+      .form-select:focus,
+      .form-control:focus {
+        border-color: #86b7fe;
+        outline: 0;
+        box-shadow: none;
+      }
+      .form-check-input {
+        border-color: rgb(58, 58, 58);
+      }
+      .form-check-input:focus {
+        border-color: #86b7fe;
+        outline: 0;
+        box-shadow: none;
+      }
+
+      .custom-row-border-bottom {
+        border-bottom: 1px solid #dee2e6;
+        padding-bottom: 30px;
+      }
+      .custom-border {
+        border: 1px solid green;
+        padding: 10px 5px;
+        border-radius: 10px;
+      }
+      .row-padding {
+        margin-bottom: 20px;
+      }
+
+      /* Hide fields by default */
+      .hidden {
+        display: none;
+      }
+      #return-response {
+        margin: 20px;
+        width: 100%;
+      }
+
       /* Table styles */
-      /* #taRecordTable {
-              width: 100%;
-              border-collapse: collapse;
-              margin: 20px 0;
-              font-size: 14px;
-              text-align: left;
-              /*height: 500px;
-              padding: 15px 15px;
-            }*/
+      .table-container {
+        overflow-y: auto;
+        overflow-x: auto;
+        position: relative;
+      }
 
       table#taRecordTableContent {
         width: 100%;
         border-collapse: collapse;
-        margin: 20px 0;
         font-size: 14px;
         text-align: left;
       }
@@ -369,11 +257,7 @@
         text-align: center;
         width: 50px;
       }
-      /*.action-btns {
-              display: flex;
-              justify-content: space-between;
-            }*/
-      /* Highlighting total column */
+
       #taRecordTableContent td:last-child {
         border: transparent;
 
@@ -392,10 +276,15 @@
         font-weight: bold;
         color: #999;
       }
+      thead {
+        background-color: #f2f2f2; /* Background color for the header */
+        position: sticky; /* Make header sticky */
+        top: 0; /* Position it at the top */
+        z-index: 10; /* Ensure header is above other content */
+      }
 
       /* Fixed Serial Number Column */
-      th.fixed-sr,
-      td.fixed-sr {
+      .fixed-sr {
         position: sticky;
         left: 0;
         background-color: #e6e4e4 !important;
@@ -405,18 +294,18 @@
 
       .pending-row td {
         color: #114f62;
-        background-color: #b6cddb;
-        border: #000;
+        /*background-color: #b6cddb;*/
+        /*border: #000;*/
       }
 
       .approved-row td {
-        border: #000;
-        background-color: #d4edda; /* Green for Approved */
+        /*border: #000;*/
+        /*background-color: #d4edda;  Green for Approved */
         color: #286840;
       }
       .reject-row td {
         color: #840404;
-        background-color: #fbdddd;
+        /*background-color: #fbdddd;*/
       }
       .clickable-cell {
         cursor: pointer;
@@ -431,12 +320,7 @@
         /*padding: 0 2rem;*/
         overflow: auto;
       }
-      /*.handsontable th {
-               font-weight: bold;
-              border: 1px solid #78b9f4;
-            }*/
 
-      /* Scrollbar styling */
       ::-webkit-scrollbar {
         width: 8px;
         height: 8px;
@@ -455,43 +339,9 @@
         background: #f1f1f1;
       }
 
-      #excel-canvas {
-        margin-top: 8px;
-        overflow-y: auto;
-      }
-
-      .ht_master .wtHolder {
-        height: auto;
-      }
-
-      .handsontable td,
-      .handsontable th {
-        border-top-width: 0;
-        border-left-width: 0;
-        height: 22px;
-        empty-cells: show;
-        line-height: 21px;
-        padding: 0 4px;
-        background-color: #fff;
-        vertical-align: middle;
-        overflow: hidden;
-        outline-width: 0;
-        white-space: nowrap;
-        text-align: center;
-      }
-      .handsontable .htRight {
-        text-align: center;
-      }
-      .htAutocompleteArrow {
-        display: none;
-      }
-
+      /********Footer Style ********/
       .footer {
-        background-color: #f8f9fa;
-        position: fixed;
-        width: 100%;
-        z-index: 1000;
-        bottom: 0;
+        display: none;
       }
 
       a.tab {
@@ -502,8 +352,10 @@
       }
 
       a.tab img {
-        vertical-align: middle;
-        margin-right: 5px;
+        margin: 0 10px;
+      }
+      a.tab-name {
+        padding: 0 12px;
       }
 
       a.tab p {
@@ -513,12 +365,6 @@
         margin-bottom: 0;
       }
 
-      @media (max-width: 600px) {
-        .tab {
-          font-size: 14px;
-          padding: 8px 12px;
-        }
-      }
       p.user-designation {
         font-size: 14px;
       }
@@ -554,13 +400,13 @@
 
       /* Delete Button Gradient */
       /*.delete-btn {
-              background: #ff0000;
-            }
+                background: #ff0000;
+              }
 
-            .delete-btn:hover {
-              background: #fb2c2c;
-              color: #fff;
-            }*/
+              .delete-btn:hover {
+                background: #fb2c2c;
+                color: #fff;
+              }*/
 
       /* Select All Button Gradient */
       .select-all-btn {
@@ -570,10 +416,6 @@
       .select-all-btn:hover {
         background: #35aaac;
         color: #fff;
-      }
-
-      .htColumn0 {
-        display: none;
       }
 
       /* CSS for the overlay */
@@ -597,57 +439,13 @@
         font-weight: bold;
       }
 
-      .add-local-btn {
-        padding: 5px 18px;
-        background: linear-gradient(
-          to right,
-          rgba(0, 128, 222, 1),
-          rgba(97, 202, 255, 1)
-        );
-        color: #fff;
-        border: none;
-        border-radius: 40px;
-        cursor: pointer;
-        font-size: 16px;
-        font-weight: 700;
-        margin-top: 12px;
-      }
-
-      /*.ta-local-container{
-            display: flex;
-            justify-content: space-between;
-          }*/
-
       .local-container {
         display: flex;
       }
-      .ta-local-container {
-        padding-bottom: 12px;
-      }
-      .ta-local-btn {
-        padding: 10px 20px;
-      }
-      #month-filter {
-        font-size: 14px;
-        margin-right: 10px;
-      }
+
       button.btn.reset-btn:active {
         outline: none;
         border: none;
-      }
-      .form-select:focus,
-      .form-control:focus {
-        border-color: #86b7fe;
-        outline: 0;
-        box-shadow: none;
-      }
-      .form-check-input {
-        border-color: rgb(58, 58, 58);
-      }
-      .form-check-input:focus {
-        border-color: #86b7fe;
-        outline: 0;
-        box-shadow: none;
       }
 
       /* Popup styles */
@@ -675,6 +473,7 @@
         border: 1px solid #888;
         width: 80%;
         max-width: 800px;
+        border-radius: 10px;
       }
 
       .dynamic-popup-close-btn {
@@ -705,35 +504,24 @@
       .dynamic-table th {
         background-color: #f2f2f2;
       }
-      .custom-row-border-bottom {
-        border-bottom: 1px solid #dee2e6;
-        padding-bottom: 30px;
-      }
-      .custom-border {
-        border: 1px solid green;
-        padding: 10px 5px;
-        border-radius: 10px;
-      }
-      .row-padding {
-        margin-bottom: 20px;
-      }
+
       /*.input-with-icon {
-        position: relative;
-      }*/
+          position: relative;
+        }*/
 
       /*.input-with-icon .form-control {
-        padding-right: 2.5rem;
-      }*/
+          padding-right: 2.5rem;
+        }*/
 
       /*.input-with-icon .calendar-icon {
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 1.2em;
-        color: #999;
-        pointer-events: none;
-      }*/
+          position: absolute;
+          right: 10px;
+          top: 50%;
+          transform: translateY(-50%);
+          font-size: 1.2em;
+          color: #999;
+          pointer-events: none;
+        }*/
 
       .form-control,
       .form-select {
@@ -746,32 +534,28 @@
 
       .sidebar {
         height: 100vh;
-        width: 220px;
         background-color: #343a40;
         padding: 1rem;
         position: fixed;
-
         left: 0;
       }
       .sidebar a {
         color: #ffffff;
         text-decoration: none;
         display: block;
-        padding: 15px 5px;
+        padding: 12px;
         margin-bottom: 0.5rem;
         border-radius: 0.25rem;
         transition: background-color 0.2s;
       }
-      .sidebar a:hover,
-      .sidebar .active {
+      a.tab:hover,
+      a.tab.active {
         background-color: #495057;
         color: #ffffff;
       }
 
       /* home page CSS */
-      .logo {
-        width: 90px;
-      }
+
       button#create-ta {
         background: #357abd;
         font-weight: 700;
@@ -779,25 +563,15 @@
         padding: 10px 28px;
       }
 
-      /*.ta-Container {
-        padding: 20px 0;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-      }*/
-
-      .intro {
-        margin-left: 15px;
+      button#create-ta {
+        background: #357abd;
+        font-weight: 700;
+        font-size: 18px;
+        padding: 10px 28px;
       }
 
-      .emp-name {
-        margin-top: 18px;
-        font-size: large;
-      }
-
-      .welcome-text {
-        font-weight: bold;
-        font-size: xx-large;
+      a#create-ta:active {
+        border: none;
       }
 
       .ta-request-container {
@@ -821,51 +595,6 @@
         margin-right: 10px;
       }
 
-      .NewRequest {
-        display: inline-flex;
-        justify-content: space-between;
-        align-items: center;
-        cursor: pointer;
-        margin: 10px 0px;
-        transition: transform 0.3s ease, cursor 0.3s ease,
-          text-decoration 0.3s ease;
-      }
-
-      .ListRecords {
-        display: inline-flex;
-        justify-content: space-between;
-        align-items: center;
-        cursor: pointer;
-        padding: 0 60px;
-        transition: transform 0.3s ease, cursor 0.3s ease,
-          text-decoration 0.3s ease;
-      }
-
-      .ListRecords:hover {
-        transform: translateY(-2px);
-        cursor: pointer;
-        text-decoration: none;
-        color: #468cbf;
-      }
-
-      .NewRequest:hover {
-        transform: translateY(-2px);
-        cursor: pointer;
-        text-decoration: none;
-        color: #468cbf;
-      }
-      .NewRequest,
-      .ListRecords {
-        color: #468cbf;
-        text-decoration: none;
-      }
-
-      .create-icon {
-        width: 60px;
-        height: 60px;
-        margin-right: 8px;
-      }
-
       .label {
         font-weight: 700;
         margin-right: 8px;
@@ -885,7 +614,7 @@
 
       .main-container {
         border-radius: 8px;
-        border: 1px solid #999393;
+        padding: 0;
         margin-top: 10px;
       }
       th.fixed-tot,
@@ -895,104 +624,6 @@
         color: #155724 !important;
         right: 0;
         z-index: 2;
-      }
-
-      /* Responsive CSS */
-      @media (max-width: 768px) {
-        /* Adjust container direction and padding */
-        .ta-Container {
-          padding: 10px;
-        }
-
-        /* Adjust intro text */
-        .intro {
-          margin-left: 5px;
-          width: 100%;
-        }
-
-        .emp-name {
-          font-size: medium;
-          margin-top: 10px;
-        }
-
-        .welcome-text {
-          font-size: large;
-        }
-
-        /* Request container adjustments */
-        .ta-request-container {
-          display: flex;
-          padding: 5px;
-          margin-bottom: 10px;
-        }
-
-        /* Adjust the TA details links */
-        .ta-Details {
-          padding: 0px 0px;
-          width: 100%;
-          margin-left: 15px;
-        }
-        .ta-Details a {
-          display: flex;
-        }
-
-        .NewRequest,
-        .ListRecords {
-          align-items: center;
-          padding: 5px 0px;
-        }
-
-        .create-icon {
-          width: 50px; /* Reduced icon size */
-          height: 50px; /* Reduced icon size */
-          margin-bottom: 8px;
-        }
-
-        .label {
-          font-size: large;
-        }
-
-        /* Approval container adjustments */
-        .ta-Approval-Container {
-          flex-direction: column;
-          gap: 5px;
-        }
-
-        .ta-Approval-Container a.ta-Details {
-          margin-right: 0;
-          width: 100%;
-        }
-
-        /* Adjustments for smaller screen font sizes */
-        .emp-name {
-          font-size: 16px;
-        }
-
-        .welcome-text {
-          font-size: 16px;
-        }
-
-        .label {
-          font-size: 18px;
-        }
-
-        .ta-pending {
-          font-size: 14px;
-        }
-
-        .count {
-          font-size: 14px;
-        }
-      }
-
-      /* Maintain hover effect on mobile devices */
-      @media (hover: hover) {
-        .ListRecords:hover,
-        .NewRequest:hover {
-          transform: translateY(-6px);
-          cursor: pointer;
-          text-decoration: none;
-        }
       }
 
       .amount-summary {
@@ -1023,34 +654,6 @@
       }
 
       /*Approval tracker style*/
-      .stage {
-        width: 25px;
-        height: 25px;
-        border-radius: 50%;
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        font-size: 12px;
-        font-weight: bold;
-      }
-
-      /* Status colors
-      .stage-pending {
-        background-color: #3173c5;
-      }
-
-      .stage-approved {
-        background-color: #228b22;
-      }
-
-      .stage-reject {
-        background-color: #ed1616;
-      }
-
-      .stage-null {
-        background-color: gray;
-      }*/
 
       .line {
         flex-grow: 1;
@@ -1059,48 +662,16 @@
         /*margin: 0 5px;*/
       }
 
-      /* Line color styles
-      .line-pending {
-        background-color: #3173c5;
-      }
-
-      .line-approved {
-        background-color: #228b22;
-      }
-
-      .line-reject {
-        background-color: #ed1616;
-      }
-
-      .line-null {
-        background-color: gray; /* Default color for the line when status is null
-      }*/
-
-      /* Tooltip styling
-            .stage[title]:hover::after {
-              content: attr(title);
-              position: absolute;
-              bottom: -25px;
-              left: 50%;
-              transform: translateX(-50%);
-              padding: 5px;
-              border-radius: 5px;
-              background-color: #333;
-              color: white;
-              font-size: 10px;
-              white-space: nowrap;
-            } */
-
       .stage img {
-        width: 24px; /* Set the width of the icons */
-        height: 24px; /* Set the height of the icons */
-        display: block; /* Make sure the icons are displayed as block elements */
-        margin: 0 auto; /* Center the icons if needed */
+        width: 24px;
+        height: 24px;
+        display: block;
       }
 
       /* Sidebar visibility */
       .sidebar {
-        transition: all 0.3s ease;
+        transition: transform 0.3s ease; /* Smooth transition when showing/hiding */
+        transform: translateX(0); /* Default position */
       }
 
       /* Hidden sidebar */
@@ -1110,8 +681,8 @@
 
       /* Full-width content when sidebar is hidden */
       .full-width-content {
-        width: 100% !important;
         transition: width 0.3s ease;
+        width: 100% !important;
       }
 
       /* Position the toggle button so it's always visible */
@@ -1124,26 +695,151 @@
       .sidebar-hidden + #toggleSidebar {
         left: 10px; /* Adjust this value based on how far you want it to move */
       }
-      /* By default, the button is inside the sidebar 
-      .toggle-btn {
-        margin-bottom: 20px;
-      }*/
+      #content-column {
+        transition: margin-left 0.3s ease; /* Smooth transition when sidebar shows/hides */
+      }
 
       /* When the sidebar is hidden, fix the button in position */
       .fixed-btn {
         position: fixed;
-
         left: 10px; /* Adjust as needed */
         z-index: 1000; /* Ensure the button is always visible */
+      }
+      /*button#navbarToggler {
+          vertical-align: text-top;
+        }*/
+      .ta-home-img {
+        display: none;
+      }
+      #table-heading h5 {
+        margin-bottom: 0;
+      }
+      .pagination-wrapper {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+      }
+
+      /* Extra small devices (portrait phones, less than 576px) */
+      @media (max-width: 768px) {
+        .ta-home {
+          display: none;
+        }
+        .ta-home-img {
+          display: block;
+        }
+        .ta-nav {
+          align-items: center;
+          padding: 15px 18px;
+        }
+
+        a.ta-heading {
+          font-size: 16px;
+          text-align: center;
+        }
+        .user-details {
+          text-align: left;
+        }
+
+        .user-icon img {
+          width: 25px;
+          height: 25px;
+        }
+        .user-icon {
+          margin: 0;
+        }
+        .current-user {
+          font-size: 10px;
+        }
+        p.user-designation {
+          font-size: 8px;
+        }
+        #sidebar-column {
+          display: none;
+        }
+        #table-heading h5 {
+          margin-bottom: 0;
+          font-size: 1rem;
+        }
+
+        table#taRecordTableContent {
+          font-size: 12px;
+        }
+        /****save button *****/
+        .add-button {
+          padding: 6px 12px;
+          font-size: medium;
+        }
+        .submit-btn {
+          font-size: 14px;
+        }
+        /*****table style****/
+        #taRecordTableContent th,
+        #taRecordTableContent td {
+          padding: 5px 10px;
+        }
+
+        /*****Footer style******/
+        .footer {
+          display: flex;
+          background-color: #f8f9fa;
+          position: fixed;
+          width: 100%;
+          z-index: 1000;
+          bottom: 0;
+        }
+        .footer-menu {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .footer-menu a {
+          text-align: center;
+        }
+        a.tab img {
+          vertical-align: middle;
+          margin-right: 0;
+        }
+        a.tab:hover,
+        a.tab.active {
+          color: rgb(0 128 222);
+          font-weight: bold;
+          border-bottom: 3px solid rgb(0 128 222);
+          background: transparent;
+        }
+
+        h6.m-0 {
+          font-size: 12px;
+        }
       }
     </style>
   </head>
   <body>
     {% if frappe.session.user != "Guest" %}
-    <div class="ta-container container-fluid">
-      <nav class="nav ta-nav">
+    <div class="container-fluid ta-container">
+      <header class="navbar navbar-expand-lg ta-nav sticky-top">
+        <!--<div>
+          <button
+            class="navbar-toggler hidden"
+            type="button"
+            id="navbarToggler"
+          >
+            <span class="navbar-toggler-icon">&#9776;</span>
+          </button>
+       
+        </div>-->
+        <a href="/app" class="ta-home-img">
+          <span
+            ><img
+              src="/assets/travel_allowance/images/ta_home.png"
+              alt="home"
+              width="23" /></span
+        ></a>
         <a href="/app" class="ta-home">&lt; Home</a>
+
         <a class="ta-heading">Travel Allowance</a>
+        <a class="ta-heading" style="display: none">TA</a>
         <!-- Dropdown for user details and logout -->
         <div class="dropdown">
           <a
@@ -1152,7 +848,7 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <div class="user-info me-2">
+            <div class="user-info me-1">
               <h4
                 class="current-user m-0"
                 hx-get="/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_employee_name"
@@ -1160,13 +856,7 @@
                 hx-target="this"
                 hx-vals='js:{"email": "{{ frappe.session.user }}"}'
               ></h4>
-              <p
-                class="user-designation m-0"
-                hx-get="/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_employee_designation"
-                hx-trigger="load"
-                hx-target="this"
-                hx-vals='js:{"email":  "{{ frappe.session.user }}"}'
-              ></p>
+              <p class="user-designation m-0" id="user-designation"></p>
             </div>
             <span class="user-icon">
               <img src="/files/user (5).png" alt="" width="40" />
@@ -1181,758 +871,971 @@
             <li><a class="dropdown-item logout-btn">Logout</a></li>
           </ul>
         </div>
-      </nav>
-      <!-- <button id="toggleSidebar" class="btn toggle-btn">
-            <img
-              src="/assets/travel_allowance/images/sidebar.png"
-              alt="sidebar"
-              width="30"
-            />
-          </button>-->
-      <div class="content" id="main-content">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-2" id="sidebar-column">
-              <div class="sidebar" id="sidebar">
-                <!-- Sidebar content -->
-                <!-- Button to trigger modal -->
-                <button
-                  class="btn create-ta text-white my-4"
+      </header>
+
+      <div class="container-fluid" id="main-content">
+        <div class="row">
+          <div class="col-md-2" id="sidebar-column">
+            <div class="sidebar" id="sidebar">
+              <!-- Sidebar content -->
+              <!-- Button to trigger modal -->
+              <button
+                class="btn create-ta text-white my-4"
+                id="create-ta"
+                data-bs-toggle="modal"
+                data-bs-target="#travelFormModal"
+                onclick="checkTACategory()"
+              >
+                New Request +
+              </button>
+
+              <!-- Tabs -->
+              <a
+                href="#my-travel"
+                class="nav-link tab active"
+                id="my-travel-tab"
+                onclick="navigateTo('my-travel')"
+              >
+                <img src="/files/profile (2).png" width="25" alt="My Travel" />
+                <span class="tab-name">My Travel</span>
+              </a>
+
+              <a
+                href="#rp-approval"
+                class="nav-link tab"
+                id="rp-approval-tab"
+                onclick="navigateTo('rp-approval')"
+              >
+                <img
+                  src="/files/notification.png"
+                  width="25"
+                  alt="Requests"
+                  title="Reporting Person Approval"
+                />
+                RP Approval <span class="" id="requestCount"></span>
+              </a>
+
+              <a
+                href="#skip-approval"
+                class="nav-link tab"
+                id="skip-approval-tab"
+                onclick="navigateTo('skip-approval')"
+              >
+                <img
+                  src="/files/notification.png"
+                  width="25"
+                  alt="skipRequest"
+                />
+                Skip Approval <span class="" id="requestCount"></span>
+              </a>
+
+              <a
+                href="#finance-approval"
+                class="nav-link tab"
+                id="finance-approval-tab"
+                onclick="navigateTo('finance-approval')"
+              >
+                <img
+                  src="/files/notification.png"
+                  width="25"
+                  alt="Finance Approval"
+                />
+                Finance Approval
+              </a>
+
+              <a
+                href="#TAPolicy"
+                class="nav-link tab"
+                id="ta-policy-tab"
+                onclick="navigateTo('TAPolicy')"
+              >
+                <img src="/files/test.png" width="25" alt="TA Policy" />
+                TA Policy
+              </a>
+            </div>
+          </div>
+
+          <div class="col-md-10" id="content-column">
+            <!-- Button to toggle sidebar -->
+
+            <div id="my-travel-section" class="my-3 px-3">
+              <div class="col-12 d-flex align-items-center">
+                <div id="table-heading">
+                  <h5>Travel Claim History</h5>
+                  <!-- <span id="current-month"></span>-->
+                </div>
+                <a
+                  class="create-btn ms-2"
                   id="create-ta"
                   data-bs-toggle="modal"
                   data-bs-target="#travelFormModal"
                   onclick="checkTACategory()"
+                  style="cursor: pointer; display: none"
                 >
-                  New Request +
-                </button>
-
-                <a href="#" class="nav-link tab active" id="my-travel">
                   <img
-                    src="/files/profile (2).png"
+                    src="/assets/travel_allowance/images/create.png"
+                    alt="New Request"
                     width="25"
-                    alt="My Travel"
                   />
-                  My Travel
                 </a>
+                <div class="ms-auto">
+                  <!--TA Record submit button-->
+                  <button class="btn submit-btn" id="ta-submit-btn">
+                    Submit
+                  </button>
+                </div>
+              </div>
 
-                <a href="#" class="nav-link tab" id="requests">
-                  <img
-                    src="/files/notification.png"
-                    width="25"
-                    alt="Requests"
-                    title="Reporting Person Approval"
-                  />
-                  RP Approval <span class="" id="requestCount"></span>
-                </a>
+              <!--For My travel table container-->
+              <div class="container-fluid main-container">
+                <div class="table-container" id="taRecordTable">
+                  <table id="taRecordTableContent" class="table">
+                    <thead>
+                      <tr>
+                        <th class="d-none">Name</th>
+                        <th class="fixed-sr">#</th>
+                        <th>Status</th>
+                        <!-- Main header for Approval Tracker with 3 sub-columns -->
+                        <th>
+                          Approval Tracker
+                          <div
+                            style="
+                              display: flex;
+                              justify-content: space-between;
+                              width: 100%;
+                              border-top: 1px solid;
+                            "
+                          >
+                            <span>RP</span>
+                            <span>Skip</span>
+                            <span>TA</span>
+                          </div>
+                        </th>
 
-                <a href="#" class="nav-link tab" id="skipRequest">
-                  <img
-                    src="/files/notification.png"
-                    width="25"
-                    alt="skipRequest"
-                  />
-                  Skip Approval <span class="" id="requestCount"></span>
+                        <th>Action</th>
+                        <th>From</th>
+                        <th>Date From</th>
+                        <th>Time From</th>
+                        <th>To</th>
+                        <th>Date To</th>
+                        <th>Time To</th>
+                        <th>Total Time (in hours)</th>
+                        <th>Purpose</th>
+                        <th>Travel Mode</th>
+                        <th>Total km</th>
+                        <th>Ticket Amt</th>
+                        <th>Fare Amount</th>
+                        <!--<th>Allowance Type</th>-->
+                        <th>DA</th>
+                        <th>Halting</th>
+                        <th>Lodging</th>
+                        <th>Local Conveyance</th>
+                        <th>View Ticket Attachment</th>
+                        <th>View Lodging Attachment</th>
+                        <th class="fixed-tot">Total</th>
+                        <th>Modified</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- Pagination Controls with Page Numbers -->
+              <div class="container-fluid hidden">
+                <div class="row pt-1">
+                  <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                      <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                        </a>
+                      </li>
+                      <li class="page-item">
+                        <a class="page-link" href="#">1</a>
+                      </li>
+                      <li class="page-item">
+                        <a class="page-link" href="#">2</a>
+                      </li>
+                      <li class="page-item">
+                        <a class="page-link" href="#">3</a>
+                      </li>
+                      <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+
+              <!--Handsonable Table for TA Records-->
+              <!--<div id="excel-canvas" class="excel-container"></div>-->
+
+              <!--Show Message For No records created yet-->
+              <div id="no-records-message" style="display: none">
+                You don't have any records yet. Click
+                <!-- Button to trigger modal -->
+                <a
+                  class="btn create-ta"
+                  id="create-ta"
+                  onclick="checkTACategory()"
+                  style="
+                    font-weight: 700;
+                    font-size: 18px;
+                    border: none;
+                    cursor: pointer;
+                    text-decoration: underline;
+                  "
+                  data-bs-toggle="modal"
+                  data-bs-target="#travelFormModal"
+                >
+                  here
                 </a>
-                <!-- <a href="#" class="nav-link tab" id="report">
-                  <img src="/files/test.png" width="30" alt="Reports" />
-                  Reports
-                </a>-->
-                <a href="#" class="nav-link tab" id="taPolicy">
-                  <img src="/files/test.png" width="25" alt="TA Policy" />
-                  TA Policy
-                </a>
+                to add your first record or you can click on Create+ button.
+              </div>
+            </div>
+            <div id="rp-approval-section" class="px-3" style="display: none">
+              <div class="container-fluid">
+                {% include 'templates/includes/ta-rp-approval.html' %}
               </div>
             </div>
 
-            <div class="col-md-10" id="content-column">
-              <!-- Button to toggle sidebar -->
-
-              <div id="ta-records-tbl" class="mt-3 px-3">
-                <div class="col d-flex align-items-center">
-                  <div id="table-heading">
-                    <h5>Travel Claim Report</h5>
-                    <!-- <span id="current-month"></span>-->
-                  </div>
-
-                  <div class="ms-auto">
-                    <!--TA Record submit button-->
-                    <button class="btn submit-btn" id="ta-submit-btn">
-                      Submit
-                    </button>
-                  </div>
-                </div>
-                <div class="container-fluid main-container">
-                  <div class="table-responsive" id="taRecordTable">
-                    <table id="taRecordTableContent" class="table">
-                      <thead>
-                        <tr>
-                          <th class="d-none">Name</th>
-                          <th class="fixed-sr">#</th>
-                          <th>Status</th>
-                          <!-- Main header for Approval Tracker with 3 sub-columns -->
-                          <th>
-                            Approval Tracker
-                            <div
-                              style="
-                                display: flex;
-                                justify-content: space-between;
-                                width: 100%;
-                                border-top: 1px solid;
-                              "
-                            >
-                              <span>RP</span>
-                              <span>Skip</span>
-                              <span>TA</span>
-                            </div>
-                          </th>
-
-                          <th>Action</th>
-                          <th>From</th>
-                          <th>Date From</th>
-                          <th>Time From</th>
-                          <th>To</th>
-                          <th>Date To</th>
-                          <th>Time To</th>
-                          <th>Total Time (in hours)</th>
-                          <th>Purpose</th>
-                          <th>Travel Mode</th>
-                          <th>Total km</th>
-                          <th>Ticket Amt</th>
-                          <th>Fare Amount</th>
-                          <!--<th>Allowance Type</th>-->
-                          <th>DA</th>
-                          <th>Halting</th>
-                          <th>Lodging</th>
-                          <th>Local Conveyance</th>
-                          <th>View Ticket Attachment</th>
-                          <th>View Lodging Attachment</th>
-                          <th class="fixed-tot">Total</th>
-                          <th>Modified</th>
-                        </tr>
-                      </thead>
-                      <tbody></tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <!--Handsonable Table for TA Records-->
-                <div id="excel-canvas" class="excel-container"></div>
-
-                <!--Show Message For No records created yet-->
-                <div id="no-records-message" style="display: none">
-                  You don't have any records yet. Click
-                  <!-- Button to trigger modal -->
-                  <a
-                    class="btn create-ta"
-                    id="create-ta"
-                    onclick="checkTACategory()"
-                    style="
-                      font-weight: 700;
-                      font-size: 18px;
-                      border: none;
-                      cursor: pointer;
-                      text-decoration: underline;
-                    "
-                    data-bs-toggle="modal"
-                    data-bs-target="#travelFormModal"
-                  >
-                    here
-                  </a>
-                  to add your first record or you can click on Create+ button.
-                </div>
+            <div id="skip-approval-section" class="px-3" style="display: none">
+              <div class="container-fluid">
+                {% include 'templates/includes/skip-approval.html' %}
               </div>
-              <div id="ta-request" class="px-3" style="display: none">
-                <div class="container-fluid">
-                  {% include 'templates/includes/ta-approval.html' %}
-                </div>
+            </div>
+
+            <div
+              id="finance-approval-section"
+              class="px-3"
+              style="display: none"
+            >
+              <div class="container-fluid">
+                {% include 'templates/includes/ta-finance-approval.html' %}
               </div>
-              <div id="skip-request" class="px-3" style="display: none">
-                <div class="container-fluid">
-                  {% include 'templates/includes/skip-approval.html' %}
-                </div>
-              </div>
-              <div id="ta-policy" class="px-3" style="display: none">
-                <div class="container-fluid">
-                  <div id="pdf-container"></div>
-                  <!-- Container for multiple pages -->
-                </div>
+            </div>
+
+            <div id="ta-policy-section" class="px-3" style="display: none">
+              <div class="container-fluid">
+                <div id="pdf-container"></div>
+                <!-- Container for multiple pages -->
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <!--Travel Allowance Form as Modal/Popup-->
-        <div class="container-fluid">
-          <!--<h2>Travel Allowance Form</h2>-->
-          <div
-            class="modal fade"
-            id="travelFormModal"
-            tabindex="-1"
-            aria-labelledby="travelFormModalLabel"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5
-                    id="modalTitle"
-                    class="modal-title"
-                    id="travelFormModalLabel"
-                  >
-                    Travel Allowance Form
-                  </h5>
-                  <!--<button type="button" class="btn reset-btn" aria-label="Reset" data-bs-toggle="tooltip"  title="Reset" onclick="resetForm()">
+      <!--Travel Allowance Form as Modal/Popup-->
+      <!--<h2>Travel Allowance Form</h2>-->
+      <div
+        class="modal fade"
+        id="travelFormModal"
+        tabindex="-1"
+        aria-labelledby="travelFormModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 id="modalTitle" class="modal-title" id="travelFormModalLabel">
+                Travel Allowance Form
+              </h5>
+              <!--<button type="button" class="btn reset-btn" aria-label="Reset" data-bs-toggle="tooltip"  title="Reset" onclick="resetForm()">
                   <img src="/files/icons8-reset-48.png" alt="" width="20">
                 </button>-->
 
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="modal-body">
-                  <form id="travel-form" onsubmit="handleFormSubmit(event)">
-                    <div class="container-fluid">
-                      <div class="row row-padding">
-                        <h6>Source Details</h6>
-                        <div class="col-md-3 d-flex">
-                          <span class="location-icon">
-                            <img
-                              src="/files/icons8-location-40.png"
-                              alt="Icon"
-                              width="20"
-                              class="icon-img"
-                            />
-                          </span>
-                          <select
-                            class="form-select"
-                            id="from_location"
-                            name="from_location"
-                            required
-                          >
-                            <option value="">Select a city...</option>
-                          </select>
-                        </div>
-                        <div
-                          class="col-md-3 hidden"
-                          id="from_location_other_group"
-                        >
-                          <input
-                            class="form-control"
-                            type="text"
-                            id="from_location_other"
-                            name="from_location_other"
-                            placeholder="Other Location"
-                          />
-                          <!--<span class="description">Enter location for 'Other'.</span>-->
-                        </div>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form id="travel-form" onsubmit="handleFormSubmit(event)">
+                <div class="container-fluid">
+                  <div class="row row-padding">
+                    <h6>Source Details</h6>
+                    <div class="col-md-3 d-flex">
+                      <span class="location-icon">
+                        <img
+                          src="/files/icons8-location-40.png"
+                          alt="Icon"
+                          width="20"
+                          class="icon-img"
+                        />
+                      </span>
+                      <select
+                        class="form-select"
+                        id="from_location"
+                        name="from_location"
+                        required
+                        onchange="calculateDistance()"
+                      >
+                        <option value="">Select a city...</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3 hidden" id="from_location_other_group">
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="from_location_other"
+                        name="from_location_other"
+                        placeholder="Other Location"
+                        oninput="calculateDistance()"
+                      />
+                      <!--<span class="description">Enter location for 'Other'.</span>-->
+                    </div>
 
-                        <div class="col-md-3">
-                          <div class="input-with-icon">
-                            <input
-                              class="form-control"
-                              type="date"
-                              id="from_date"
-                              name="from_date"
-                              placeholder="Start Date"
-                              required
-                            />
-                            <!-- <i class="fa-regular fa-calendar-days calendar-icon"></i>-->
-                          </div>
-                        </div>
-
-                        <div class="col-md-3">
-                          <input
-                            class="form-control"
-                            type="time"
-                            id="from_time"
-                            name="from_time"
-                            placeholder="Start Time"
-                            required
-                          />
-                        </div>
-                      </div>
-                      <div class="row row-padding custom-row-border-bottom">
-                        <h6>Destination Details</h6>
-                        <div class="col-md-3 d-flex">
-                          <span class="location-icon">
-                            <img
-                              src="/files/icons8-location-40 (1).png"
-                              alt="Icon"
-                              width="23"
-                              height="25"
-                              class="icon-img"
-                            />
-                          </span>
-                          <select
-                            class="form-select"
-                            id="to_location"
-                            name="to_location"
-                            required
-                            hx-get="/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.check_submit"
-                            hx-trigger="change"
-                            hx-target="#return-response"
-                            hx-include="[name='allowance_type']"
-                          >
-                            <option value="">Select a city...</option>
-                          </select>
-                        </div>
-                        <div
-                          class="col-md-3 hidden"
-                          id="to_location_other_group"
-                        >
-                          <input
-                            class="form-control"
-                            type="text"
-                            id="to_location_other"
-                            name="to_location_other"
-                            placeholder="Other Location"
-                          />
-
-                          <!--<span class="description">Enter location for 'Other'.</span>-->
-                        </div>
-                        <div class="col-md-3">
-                          <div class="input-with-icon">
-                            <input
-                              class="form-control"
-                              type="date"
-                              id="to_date"
-                              name="to_date"
-                              placeholder="End Date"
-                              required
-                            />
-                            <!-- <i class="fa-regular fa-calendar-days calendar-icon"></i>-->
-                          </div>
-                        </div>
-                        <div class="col-md-3">
-                          <input
-                            class="form-control"
-                            type="time"
-                            id="to_time"
-                            name="to_time"
-                            placeholder="End Time"
-                            required
-                          />
-                        </div>
-                      </div>
-
-                      <div class="row row-padding custom-row-border-bottom">
-                        <div class="col-md-6">
-                          <label for="total_time">Total Time (in hours)</label>
-                          <input
-                            class="form-control"
-                            class="total_time"
-                            id="total_time"
-                            readonly
-                          />
-                        </div>
-
-                        <div class="col-md-6">
-                          <label for="purpose">Purpose of Travel</label>
-                          <input
-                            class="form-control"
-                            id="purpose"
-                            name="purpose"
-                            required
-                          />
-                        </div>
-                      </div>
-                      <div class="row row-padding custom-row-border-bottom">
-                        <h6 class="pb-3">Travel Mode Details</h6>
-                        <div class="col-md-3">
-                          <select
-                            class="form-select form-control"
-                            id="travel_mode"
-                            name="travel_mode"
-                            required
-                          >
-                            <option value="">Select Travel mode</option>
-                            <option value="Bike">Bike</option>
-                            <option value="Train">Train</option>
-                            <option value="Bus">Bus</option>
-                            <option value="Car">Car</option>
-                            <option value="Auto">Auto</option>
-                            <option value="Cab">Cab</option>
-                          </select>
-                        </div>
-                        <!-- Total km field (hidden by default) -->
-                        <div class="col-md-3 hidden" id="total_km_group">
-                          <input
-                            class="form-control"
-                            type="number"
-                            id="total_km"
-                            name="total_km"
-                          />
-                          <small
-                            class="form-text text-muted"
-                            style="margin-left: 5px"
-                          >
-                            Enter Total Kilometer
-                          </small>
-                        </div>
-                        <!-- Ticket Amount field (hidden by default) -->
-                        <div class="col-md-3 hidden" id="ticket_amount_group">
-                          <input
-                            class="form-control"
-                            type="number"
-                            id="ticket_amount"
-                            name="ticket_amount"
-                          />
-                          <small
-                            class="form-text text-muted"
-                            style="margin-left: 5px"
-                          >
-                            Enter Ticket Amount
-                          </small>
-                        </div>
-                        <div class="col-md-3 hidden" id="upload_ticket_group">
-                          <!--<label for="attachment">Upload Ticket </label>-->
-                          <input
-                            class="form-control"
-                            type="file"
-                            id="upload_ticket"
-                            name="upload_ticket"
-                            accept=".pdf,.jpg,.jpeg,.png"
-                          />
-                          <small
-                            class="form-text text-muted"
-                            style="margin-left: 5px"
-                          >
-                            Upload Ticket
-                          </small>
-                        </div>
-                      </div>
-
-                      <div class="row row-padding custom-row-border-bottom">
-                        <h6 class="pb-3">Allowances Details:</h6>
-                        <div class="col-md-3">
-                          <select
-                            class="form-select"
-                            id="allowance_type"
-                            name="allowance_type"
-                            required
-                          >
-                            <option value="">Select Allowances</option>
-                            <option value="DA">DA</option>
-                            <option value="Halting">Halting</option>
-                            <option value="Lodging">Lodging</option>
-                            <option value="DA and Lodging">
-                              DA and Lodging
-                            </option>
-                          </select>
-                        </div>
-
-                        <!-- Lodging Amount field (hidden by default) -->
-                        <div class="col-md-3 hidden" id="lodging_amount_group">
-                          <input
-                            class="form-control"
-                            type="number"
-                            id="lodging_amount"
-                            name="lodging_amount"
-                          />
-                          <small
-                            class="form-text text-muted"
-                            style="margin-left: 5px"
-                          >
-                            Enter Lodging Amount
-                          </small>
-                        </div>
-                        <!-- Total Days Stay in Lodge field (hidden by default) -->
-                        <div class="col-md-3 hidden" id="day_stay_lodge_group">
-                          <input
-                            class="form-control"
-                            type="number"
-                            id="day_stay_lodge"
-                            name="day_stay_lodge"
-                          />
-                          <small
-                            class="form-text text-muted"
-                            style="margin-left: 5px"
-                          >
-                            Enter Total Days Stay in Lodge (e.g., 1, 2, 3...).
-                          </small>
-                        </div>
-                        <div class="col-md-3 hidden" id="upload_lodging_group">
-                          <input
-                            class="form-control"
-                            type="file"
-                            id="upload_lodging"
-                            name="upload_lodging"
-                            accept=".pdf,.jpg,.jpeg,.png"
-                          />
-                          <small
-                            class="form-text text-muted"
-                            style="margin-left: 5px"
-                          >
-                            Upload Lodging Bill
-                          </small>
-                        </div>
-                      </div>
-
-                      <div class="row row-padding">
-                        <div class="col">
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              id="local_conveyance"
-                              name="local_conveyance"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="right"
-                            />
-                            <label
-                              class="form-check-label"
-                              for="local_conveyance"
-                            >
-                              Local Conveyance
-                            </label>
-                            <br />
-                            <small class="form-text text-muted">
-                              Check this box if you have local travel expenses
-                              during your trip (e.g., taxi, auto).
-                            </small>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="row row-padding">
-                        <!-- Local Conveyance Form Container (initially hidden) -->
-                        <div id="local-container" class="hidden" inert>
-                          <div class="table-responsive">
-                            <table class="table table-bordered table-hover">
-                              <thead class="table-light">
-                                <tr>
-                                  <th style="width: 10%">Date</th>
-                                  <th style="width: 15%">From</th>
-                                  <th style="width: 15%">To</th>
-                                  <th style="width: 20%">Purpose</th>
-                                  <th style="width: 20%">Travel Mode</th>
-                                  <th style="width: 10%">Amount</th>
-                                  <th style="width: 10%">Action</th>
-                                </tr>
-                              </thead>
-                              <tbody id="local-conveyance-body">
-                                <!-- Rows will be added here dynamically -->
-                              </tbody>
-                            </table>
-                          </div>
-                          <button
-                            type="button"
-                            id="add_row_btn"
-                            class="btn btn-primary"
-                            aria-label="Add a new row to the table"
-                          >
-                            Add Row
-                          </button>
-                        </div>
-                      </div>
-
-                      <div class="row row-padding custom-border hidden">
-                        <div class="col-md-3 hidden" id="fare_amount_group">
-                          <label for="fare_amount">Fare Amount</label>
-                          <input
-                            class="form-control"
-                            type="number"
-                            id="fare_amount"
-                            name="fare_amount"
-                            readonly
-                          />
-                        </div>
-                        <!-- Add a placeholder to show the final DA amount -->
-                        <div class="col-md-3 hidden" id="da_amount_group">
-                          <label for="final_da_amount">DA Amount</label>
-                          <input
-                            class="form-control"
-                            id="final_da_amount"
-                            name="final_da_amount"
-                            readonly
-                          />
-                        </div>
-                        <!-- Final Lodging Amount field (hidden by default) -->
-                        <div
-                          class="col-md-3 hidden"
-                          id="final_lodge_amount_group"
-                        >
-                          <label for="final_lodge_amount"
-                            >Total Lodging Amount</label
-                          >
-                          <input
-                            class="form-control"
-                            type="number"
-                            id="final_lodge_amount"
-                            name="final_lodge_amount"
-                            readonly
-                          />
-                        </div>
-                        <!-- Final Halting Amount field (hidden by default) -->
-                        <div
-                          class="col-md-3 hidden"
-                          id="final_halt_amount_group"
-                        >
-                          <label for="final_halt_amount">Halting Amount</label>
-                          <input
-                            class="form-control"
-                            type="number"
-                            id="final_halt_amount"
-                            name="final_halt_amount"
-                            readonly
-                          />
-                        </div>
-                        <div
-                          class="col-md-3 hidden"
-                          id="final_local_amount_group"
-                        >
-                          <label for="local_amount"
-                            >Local Conveyance Amount</label
-                          >
-                          <input
-                            class="form-control"
-                            type="number"
-                            id="final_local_amount"
-                            name="final_local_amount"
-                            readonly
-                          />
-                        </div>
-
-                        <div class="col-md-3 hidden" id="tatal_amount_group">
-                          <label for="total_amount">Total Amount</label>
-                          <input
-                            class="form-control"
-                            type=""
-                            id="total_amount"
-                            name="total_amount"
-                            readonly
-                          />
-                        </div>
-                      </div>
-                      <!--For client side to show amount summary to user-->
-                      <div class="amount-summary hidden" id="amount-summary">
-                        <h6 class="summary-heading">Allowances Summary:</h6>
-                        <p id="fare_amount_summary" class="summary-item hidden">
-                          Fare Amount: <span class="amount-value"></span>
-                        </p>
-                        <p id="da_amount_summary" class="summary-item hidden">
-                          DA Amount: <span class="amount-value"></span>
-                        </p>
-                        <p
-                          id="final_lodge_amount_summary"
-                          class="summary-item hidden"
-                        >
-                          Lodging Amount: <span class="amount-value"></span>
-                        </p>
-                        <p
-                          id="final_halt_amount_summary"
-                          class="summary-item hidden"
-                        >
-                          Halting Amount: <span class="amount-value"></span>
-                        </p>
-                        <p
-                          id="final_local_amount_summary"
-                          class="summary-item hidden"
-                        >
-                          Local Conveyance Amount:
-                          <span class="amount-value"></span>
-                        </p>
-                        <hr />
-                        <p
-                          id="total_amount_summary"
-                          class="summary-item hidden"
-                        >
-                          Total Amount: <span class="amount-value"></span>
-                        </p>
+                    <div class="col-md-3">
+                      <div class="input-with-icon">
+                        <input
+                          class="form-control"
+                          type="date"
+                          id="from_date"
+                          name="from_date"
+                          placeholder="Start Date"
+                          required
+                        />
+                        <!-- <i class="fa-regular fa-calendar-days calendar-icon"></i>-->
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="col text-center">
-                        <button
-                          type="submit"
-                          class="add-button"
-                          id="add-button"
-                        >
-                          Save
-                        </button>
+
+                    <div class="col-md-3">
+                      <input
+                        class="form-control"
+                        type="time"
+                        id="from_time"
+                        name="from_time"
+                        placeholder="Start Time"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="row row-padding custom-row-border-bottom">
+                    <h6>Destination Details</h6>
+                    <div class="col-md-3 d-flex">
+                      <span class="location-icon">
+                        <img
+                          src="/files/icons8-location-40 (1).png"
+                          alt="Icon"
+                          width="23"
+                          height="25"
+                          class="icon-img"
+                        />
+                      </span>
+                      <select
+                        class="form-select"
+                        id="to_location"
+                        name="to_location"
+                        required
+                        hx-get="/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_allowances"
+                        hx-trigger="change"
+                        hx-target="#return-response"
+                        hx-include="[name='allowance_type']"
+                        onchange="calculateDistance()"
+                      >
+                        <option value="">Select a city...</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3 hidden" id="to_location_other_group">
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="to_location_other"
+                        name="to_location_other"
+                        placeholder="Other Location"
+                        oninput="calculateDistance()"
+                      />
+
+                      <!--<span class="description">Enter location for 'Other'.</span>-->
+                    </div>
+                    <div class="col-md-3">
+                      <div class="input-with-icon">
+                        <input
+                          class="form-control"
+                          type="date"
+                          id="to_date"
+                          name="to_date"
+                          placeholder="End Date"
+                          required
+                        />
+                        <!-- <i class="fa-regular fa-calendar-days calendar-icon"></i>-->
                       </div>
                     </div>
-                  </form>
+                    <div class="col-md-3">
+                      <input
+                        class="form-control"
+                        type="time"
+                        id="to_time"
+                        name="to_time"
+                        placeholder="End Time"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="row row-padding custom-row-border-bottom">
+                    <div class="col-md-6">
+                      <label for="total_time">Total Time (in hours)</label>
+                      <input
+                        class="form-control"
+                        class="total_time"
+                        id="total_time"
+                        readonly
+                      />
+                    </div>
+
+                    <div class="col-md-6">
+                      <label for="purpose">Purpose of Travel</label>
+                      <input
+                        class="form-control"
+                        id="purpose"
+                        name="purpose"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <!--Travel Mode details-->
+                  <div class="row row-padding custom-row-border-bottom">
+                    <h6 class="pb-3">Travel Mode Details</h6>
+
+                    <div class="col-md-3">
+                      <p id="distanceResult"></p>
+                      <select
+                        class="form-select form-control"
+                        id="travel_mode"
+                        name="travel_mode"
+                        required
+                      >
+                        <option value="">Select Travel mode</option>
+                        <option value="Bike">Bike</option>
+                        <option value="Train">Train</option>
+                        <option value="Bus">Bus</option>
+                        <option value="Car">Car</option>
+                        <option value="Cab">Cab</option>
+                      </select>
+                    </div>
+
+                    <!-- Total km field (hidden by default) -->
+                    <div class="col-md-3 hidden" id="total_km_group">
+                      <input
+                        class="form-control"
+                        type="number"
+                        id="total_km"
+                        name="total_km"
+                      />
+                      <small
+                        class="form-text text-muted"
+                        style="margin-left: 5px"
+                      >
+                        Enter Total Kilometer
+                      </small>
+                    </div>
+                    <!-- Ticket Amount field (hidden by default) -->
+                    <div class="col-md-3 hidden" id="ticket_amount_group">
+                      <input
+                        class="form-control"
+                        type="number"
+                        id="ticket_amount"
+                        name="ticket_amount"
+                      />
+                      <small
+                        class="form-text text-muted"
+                        style="margin-left: 5px"
+                      >
+                        Enter Ticket Amount
+                      </small>
+                    </div>
+                    <div class="col-md-3 hidden" id="upload_ticket_group">
+                      <!--<label for="attachment">Upload Ticket </label>-->
+                      <input
+                        class="form-control"
+                        type="file"
+                        id="upload_ticket"
+                        name="upload_ticket"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                      />
+                      <small
+                        class="form-text text-muted"
+                        style="margin-left: 5px"
+                      >
+                        Upload Ticket
+                      </small>
+                    </div>
+                  </div>
+
+                  <div class="row row-padding custom-row-border-bottom">
+                    <h6 class="pb-3">Allowances Details:</h6>
+                    <div class="col-md-3">
+                      <select
+                        class="form-select"
+                        id="allowance_type"
+                        name="allowance_type"
+                        required
+                      >
+                        <option value="">Select Allowances</option>
+                        <option value="DA">DA</option>
+                        <option value="Halting">Halting</option>
+                        <option value="Lodging">Lodging</option>
+                        <option value="DA and Lodging">DA and Lodging</option>
+                      </select>
+                    </div>
+
+                    <!-- Lodging Amount field (hidden by default) -->
+                    <div class="col-md-3 hidden" id="lodging_amount_group">
+                      <input
+                        class="form-control"
+                        type="number"
+                        id="lodging_amount"
+                        name="lodging_amount"
+                      />
+                      <small
+                        class="form-text text-muted"
+                        style="margin-left: 5px"
+                      >
+                        Enter Lodging Amount
+                      </small>
+                    </div>
+                    <!-- Total Days Stay in Lodge field (hidden by default) -->
+                    <div class="col-md-3 hidden" id="day_stay_lodge_group">
+                      <input
+                        class="form-control"
+                        type="number"
+                        id="day_stay_lodge"
+                        name="day_stay_lodge"
+                      />
+                      <small
+                        class="form-text text-muted"
+                        style="margin-left: 5px"
+                      >
+                        Enter Total Days Stay in Lodge (e.g., 1, 2, 3...).
+                      </small>
+                    </div>
+                    <div class="col-md-3 hidden" id="upload_lodging_group">
+                      <input
+                        class="form-control"
+                        type="file"
+                        id="upload_lodging"
+                        name="upload_lodging"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                      />
+                      <small
+                        class="form-text text-muted"
+                        style="margin-left: 5px"
+                      >
+                        Upload Lodging Bill
+                      </small>
+                    </div>
+                  </div>
+
+                  <div class="row row-padding">
+                    <div class="col">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="local_conveyance"
+                          name="local_conveyance"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="right"
+                        />
+                        <label class="form-check-label" for="local_conveyance">
+                          Local Conveyance
+                        </label>
+                        <br />
+                        <small class="form-text text-muted">
+                          Check this box if you have local travel expenses
+                          during your trip (e.g., taxi, auto).
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row row-padding">
+                    <!-- Local Conveyance Form Container (initially hidden) -->
+                    <div id="local-container" class="hidden" inert>
+                      <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                          <thead class="table-light">
+                            <tr>
+                              <th style="width: 10%">Date</th>
+                              <th style="width: 15%">From</th>
+                              <th style="width: 15%">To</th>
+                              <th style="width: 20%">Purpose</th>
+                              <th style="width: 20%">Travel Mode</th>
+                              <th style="width: 10%">Amount</th>
+                              <th style="width: 10%">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody id="local-conveyance-body">
+                            <!-- Rows will be added here dynamically -->
+                          </tbody>
+                        </table>
+                      </div>
+                      <button
+                        type="button"
+                        id="add_row_btn"
+                        class="btn btn-primary"
+                        aria-label="Add a new row to the table"
+                      >
+                        Add Row
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="row row-padding custom-border hidden">
+                    <div class="col-md-3 hidden" id="fare_amount_group">
+                      <label for="fare_amount">Fare Amount</label>
+                      <input
+                        class="form-control"
+                        type="number"
+                        id="fare_amount"
+                        name="fare_amount"
+                        readonly
+                      />
+                    </div>
+                    <!-- Add a placeholder to show the final DA amount -->
+                    <div class="col-md-3 hidden" id="da_amount_group">
+                      <label for="final_da_amount">DA Amount</label>
+                      <input
+                        class="form-control"
+                        id="final_da_amount"
+                        name="final_da_amount"
+                        readonly
+                      />
+                    </div>
+                    <!-- Final Lodging Amount field (hidden by default) -->
+                    <div class="col-md-3 hidden" id="final_lodge_amount_group">
+                      <label for="final_lodge_amount"
+                        >Total Lodging Amount</label
+                      >
+                      <input
+                        class="form-control"
+                        type="number"
+                        id="final_lodge_amount"
+                        name="final_lodge_amount"
+                        readonly
+                      />
+                    </div>
+                    <!-- Final Halting Amount field (hidden by default) -->
+                    <div class="col-md-3 hidden" id="final_halt_amount_group">
+                      <label for="final_halt_amount">Halting Amount</label>
+                      <input
+                        class="form-control"
+                        type="number"
+                        id="final_halt_amount"
+                        name="final_halt_amount"
+                        readonly
+                      />
+                    </div>
+                    <div class="col-md-3 hidden" id="final_local_amount_group">
+                      <label for="local_amount">Local Conveyance Amount</label>
+                      <input
+                        class="form-control"
+                        type="number"
+                        id="final_local_amount"
+                        name="final_local_amount"
+                        readonly
+                      />
+                    </div>
+
+                    <div class="col-md-3 hidden" id="tatal_amount_group">
+                      <label for="total_amount">Total Amount</label>
+                      <input
+                        class="form-control"
+                        type=""
+                        id="total_amount"
+                        name="total_amount"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                  <!--For client side to show amount summary to user-->
+                  <div class="amount-summary hidden" id="amount-summary">
+                    <h6 class="summary-heading">Allowances Summary:</h6>
+                    <p id="fare_amount_summary" class="summary-item hidden">
+                      Fare Amount: <span class="amount-value"></span>
+                    </p>
+                    <p id="da_amount_summary" class="summary-item hidden">
+                      DA Amount: <span class="amount-value"></span>
+                    </p>
+                    <p
+                      id="final_lodge_amount_summary"
+                      class="summary-item hidden"
+                    >
+                      Lodging Amount: <span class="amount-value"></span>
+                    </p>
+                    <p
+                      id="final_halt_amount_summary"
+                      class="summary-item hidden"
+                    >
+                      Halting Amount: <span class="amount-value"></span>
+                    </p>
+                    <p
+                      id="final_local_amount_summary"
+                      class="summary-item hidden"
+                    >
+                      Local Conveyance Amount:
+                      <span class="amount-value"></span>
+                    </p>
+                    <hr />
+                    <p id="total_amount_summary" class="summary-item hidden">
+                      Total Amount: <span class="amount-value"></span>
+                    </p>
+                  </div>
                 </div>
-              </div>
+                <div class="row">
+                  <div class="col text-center">
+                    <button type="submit" class="add-button" id="add-button">
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
+      </div>
 
-        <!--For user info only-->
-        <p id="total_duration" class="hidden"></p>
-        <p id="fare" class="hidden"></p>
-        <p id="da"></p>
-        <p id="halt"></p>
-        <p id="lodge"></p>
+      <!--For user info only-->
+      <p id="total_duration" class="hidden"></p>
+      <p id="fare" class="hidden"></p>
+      <p id="da"></p>
+      <p id="halt"></p>
+      <p id="lodge"></p>
 
-        <!-- Display Total Amount -->
-        <div id="total-amount" class="hidden">Total Amount: 0</div>
+      <!-- Display Total Amount -->
+      <div id="total-amount" class="hidden">Total Amount: 0</div>
 
-        <!--for calculations hidden for end user (Important for backend calculation)-->
-        <p id="da-amount" class="hidden"></p>
-        <p id="lodging-amount" class="hidden"></p>
-        <p id="halting-amount" class="hidden"></p>
-        <div id="return-response" class="hidden"></div>
+      <!--for calculations hidden for end user (Important for backend calculation)-->
+      <p id="da-amount" class="hidden"></p>
+      <p id="lodging-amount" class="hidden"></p>
+      <p id="halting-amount" class="hidden"></p>
+      <div id="return-response" class="hidden"></div>
 
-        <!-- Response Container for Feedback -->
-        <div id="response-container"></div>
+      <!-- Response Container for Feedback -->
+      <div id="response-container"></div>
 
-        <!-- Overlay HTML -->
-        <div id="please-wait-overlay" style="display: none">
-          <div class="overlay-content">
-            <p>Please wait...</p>
+      <!-- Overlay HTML -->
+      <div id="please-wait-overlay" style="display: none">
+        <div class="overlay-content">
+          <p>Please wait...</p>
+        </div>
+      </div>
+
+      <!-- Popup HTML to show local conveyance child table -->
+      <div id="local-conveyance-popup" class="dynamic-popup">
+        <div class="dynamic-popup-content">
+          <span class="dynamic-popup-close-btn">&times;</span>
+          <h4>Local Conveyance Details</h4>
+          <div id="local-conveyance-container"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer container -->
+    <footer class="footer mt-auto py-3 bg-light">
+      <div class="container">
+        <div class="row">
+          <!-- Footer content -->
+
+          <div class="footer-menu">
+            <!-- Button to trigger modal 
+            <a
+              class="btn"
+              id="create-ta"
+              data-bs-toggle="modal"
+              data-bs-target="#travelFormModal"
+              onclick="checkTACategory()"
+            >
+              <img
+                src="/assets/travel_allowance/images/create.png"
+                alt="New Request"
+                width="25"
+              />
+              <h6 class="m-0">Create</h6>
+            </a>-->
+
+            <a href="#" class="nav-link tab active" id="my-travel">
+              <img src="/files/profile (2).png" width="25" alt="My Travel" />
+              <h6 class="m-0">My Travel</h6>
+            </a>
+
+            <a href="#" class="nav-link tab" id="requests">
+              <img
+                src="/files/notification.png"
+                width="25"
+                alt="Requests"
+                title="Reporting Person Approval"
+              />
+              <h6 class="m-0">RP Approval</h6>
+              <span class="" id="requestCount"></span>
+            </a>
+
+            <a href="#" class="nav-link tab" id="skipRequest">
+              <img
+                src="/files/notification.png"
+                width="25"
+                alt="Skip Approval"
+              />
+              <h6 class="m-0">Skip Approval</h6>
+              <span class="" id="requestCount"></span>
+            </a>
+
+            <a href="#" class="nav-link tab" id="taPolicy">
+              <img src="/files/test.png" width="25" alt="TA Policy" />
+              <h6 class="m-0">TA Policy</h6>
+            </a>
           </div>
         </div>
+      </div>
+    </footer>
 
-        <!-- Popup HTML to show local conveyance child table -->
-        <div id="local-conveyance-popup" class="dynamic-popup">
-          <div class="dynamic-popup-content">
-            <span class="dynamic-popup-close-btn">&times;</span>
-            <h4>Local Conveyance Details</h4>
-            <div id="local-conveyance-container"></div>
+    <!-- Bootstrap Modal for dialog to show ta record-->
+    <!-- Bootstrap Modal -->
+    <div
+      class="modal fade"
+      id="dataDialog"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="modalTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalTitle">Record Details</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+              onclick="closeDialog()"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="dialogContent">
+            <!-- Dynamic content will be inserted here -->
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+              onclick="closeDialog()"
+            >
+              Close
+            </button>
           </div>
         </div>
       </div>
     </div>
 
-    <div id="no-reports" style="display: none">
-      <h2>You don't have any reports.</h2>
-    </div>
-
     {% else %} {% include "/templates/includes/not-found.html" %} {% endif %}
 
+    <!--to include the PDF.js library from a CDN-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS and Popper.js (necessary for dropdowns) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 
     <script>
-      /* document
-        .getElementById("toggleSidebar")
-        .addEventListener("click", function () {
-          var sidebar = document.getElementById("sidebar");
-          var sidebarColumn = document.getElementById("sidebar-column");
-          var toggleSidebarBtn = document.getElementById("toggleSidebar");
-          var contentColumn = document.getElementById("content-column");
+      //Hide or unhide side bar functionality
+      /*document
+            .getElementById("navbarToggler")
+            .addEventListener("click", function () {
+              var sidebar = document.getElementById("sidebar");
+              var sidebarColumn = document.getElementById("sidebar-column");
+              var toggleSidebarBtn = document.getElementById("toggleSidebar");
+              var contentColumn = document.getElementById("content-column");
 
-          // Toggle sidebar visibility
-          sidebarColumn.classList.toggle("d-none");
+              // Toggle sidebar visibility
+              sidebarColumn.classList.toggle("sidebar-hidden");
 
-          // Adjust content column to full width when sidebar is hidden
-          contentColumn.classList.toggle("full-width-content");
+              // Adjust content column to full width when sidebar is hidden
+              contentColumn.classList.toggle("full-width-content");
 
-          // Check if the sidebar is hidden
-          if (sidebarColumn.classList.contains("d-none")) {
-            // Move the toggle button to a fixed position
-            toggleSidebarBtn.classList.add("fixed-btn");
-            toggleSidebarBtn.innerHTML = `<img src="/assets/travel_allowance/images/sidebar.png" alt="Open Sidebar" width="30" />`;
-          } else {
-            // Move the toggle button back inside the sidebar
-            toggleSidebarBtn.classList.remove("fixed-btn");
-            toggleSidebarBtn.innerHTML = `<img src="/assets/travel_allowance/images/sidebar.png" alt="Close Sidebar" width="30" />`;
+              // Check if the sidebar is hidden
+              if (sidebarColumn.classList.contains("d-none")) {
+                // Move the toggle button to a fixed position
+                toggleSidebarBtn.classList.add("fixed-btn");
+                toggleSidebarBtn.innerHTML = `<img src="/assets/travel_allowance/images/sidebar.png" alt="Open Sidebar" width="30" />`;
+              } else {
+                // Move the toggle button back inside the sidebar
+                toggleSidebarBtn.classList.remove("fixed-btn");
+                toggleSidebarBtn.innerHTML = `<img src="/assets/travel_allowance/images/sidebar.png" alt="Close Sidebar" width="30" />`;
+              }
+            });*/
+
+      async function fetchEmployeeDesignation() {
+        try {
+          const response = await fetch(
+            `/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_employee_designation`
+          );
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
           }
-        });*/
+          const data = await response.json(); // Parse the JSON response
+          const empDesignation = data.message.designation;
+          if (empDesignation != "Not available") {
+            document.getElementById("user-designation").textContent =
+              empDesignation;
+          } else {
+            document.getElementById("user-designation").textContent = "";
+          }
+
+          manageTravelModeOptions(empDesignation);
+          console.log("Employee Designation:", empDesignation); // Log the response to the console
+        } catch (error) {
+          console.error("Error fetching employee designation:", error);
+          document.getElementById("user-designation").textContent = "";
+        }
+      }
+
+      // Call the async function
+      fetchEmployeeDesignation();
+
+      function manageTravelModeOptions(empDesignation) {
+        // List of designations that should have the "Air" option
+        const airTravelDesignations = [
+          "CEO",
+          "CHRO",
+          "Chief Technology Officer",
+          "CFO",
+          "Chief Operating Officer",
+          "General Manager",
+          "Chief Loan Officer",
+        ];
+
+        // Get the travel mode dropdown element
+        const travelModeSelect = document.getElementById("travel_mode");
+
+        // Check if the employee's designation matches any of the allowed ones
+        if (airTravelDesignations.includes(empDesignation)) {
+          // Check if "Air" is already present to avoid duplicates
+          let airOptionExists = false;
+          for (let i = 0; i < travelModeSelect.options.length; i++) {
+            if (travelModeSelect.options[i].value === "Air") {
+              airOptionExists = true;
+              break;
+            }
+          }
+
+          // If "Air" is not already in the dropdown, add it
+          if (!airOptionExists) {
+            const airOption = document.createElement("option");
+            airOption.value = "Air";
+            airOption.text = "Air";
+            travelModeSelect.add(airOption);
+          }
+        }
+      }
 
       // funtion to get the count as notification in the Request tab of sidebar tab
       function fetchPendingCount() {
@@ -1990,7 +1893,7 @@
           );
 
           const data = await response.json();
-          console.log(data);
+          console.log("TA category response:", data.message);
 
           if (data) {
             if (data.message.error) {
@@ -2009,7 +1912,8 @@
               });
             } else {
               // Optionally handle successful response here
-              console.log("TA Category check:", data.success);
+              console.log("TA Category check:", data.message.success);
+              console.log("TA Category:", data.message.ta_category);
               // Show the modal only if TA Category check is successful
             }
           } else {
@@ -2029,6 +1933,78 @@
             confirmButtonText: "OK",
           });
         }
+      }
+
+      fetchUserRoles();
+      // Function to fetch user roles from the server
+      async function fetchUserRoles() {
+        try {
+          const response = await fetch(
+            `/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_user_roles`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+
+          const data = await response.json();
+          console.log("user data", data);
+          const userRole = data.message.user_type;
+          // Handle the data as needed
+          console.log("User role", userRole); // You can use this data to control visibility of tabs
+          manageTabVisibility(userRole);
+        } catch (error) {
+          console.error("Error fetching user roles:", error);
+        }
+      }
+
+      // Function to manage role-based tab visibility
+      function manageTabVisibility(userRoles) {
+        // Define tab IDs and their corresponding roles
+        const tabsConfig = {
+          "Reporting Person": ["rp-approval"], // Show specific tabs for Reporting Person
+          "Higher Reporting Person": ["skip-approval"], // Show specific tabs for Higher Reporting Person
+          "Finance User": ["rp-approval", "finance-approval"], // Show specific tabs for Finance User
+          employee: ["my-travel"], // Show specific tabs for Employees
+        };
+
+        // Hide all specific tabs initially
+        const allTabs = ["rp-approval", "skip-approval", "finance-approval"];
+        allTabs.forEach((tabId) => {
+          const tabElement = document.getElementById(`${tabId}-tab`);
+          if (tabElement) {
+            tabElement.style.display = "none"; // Hide the tab element
+          }
+        });
+
+        // Always show the My Travel tab
+        const myTravelTab = document.getElementById("my-travel-tab");
+        if (myTravelTab) {
+          myTravelTab.style.display = "block"; // Show the My Travel tab
+        }
+
+        // Always show the TA Policy tab
+        const taPolicyTab = document.getElementById("ta-policy-tab");
+        if (taPolicyTab) {
+          taPolicyTab.style.display = "block"; // Show the TA Policy tab
+        }
+
+        // Show tabs based on the user roles
+        userRoles.forEach((role) => {
+          const tabsToShow = tabsConfig[role] || [];
+          tabsToShow.forEach((tabId) => {
+            const tabElement = document.getElementById(`${tabId}-tab`);
+            if (tabElement) {
+              tabElement.style.display = "block"; // Show the tab element
+            }
+          });
+        });
       }
 
       const url = "/files/SAHAYOG TRAVEL POLICY.pdf"; // Path to your PDF
@@ -2135,57 +2111,85 @@
         }
       }
 
-      // Event listener for "Home" link
-      document
-        .getElementById("my-travel")
-        .addEventListener("click", function (event) {
-          event.preventDefault(); // Prevent the default anchor behavior
-          // Show "ta-records-tbl", hide "ta-request" and "ta-policy"
-          toggleSections(
-            "ta-records-tbl",
-            ["ta-request", "ta-policy", "skip-request"],
-            "my-travel"
-          );
-        });
+      function navigateTo(section) {
+        // Change the URL hash
+        window.location.hash = section;
 
-      // Event listener for "Requests" link
-      document
-        .getElementById("requests")
-        .addEventListener("click", function (event) {
-          event.preventDefault(); // Prevent the default anchor behavior
-          // Show "ta-request", hide "ta-records-tbl" and "ta-policy"
-          toggleSections(
-            "ta-request",
-            ["ta-records-tbl", "ta-policy", "skip-request"],
-            "requests"
-          );
-        });
-
-      // Event listener for "TA Policy" link
-      document
-        .getElementById("taPolicy")
-        .addEventListener("click", function (event) {
-          event.preventDefault(); // Prevent the default anchor behavior
-          // Show "ta-policy", hide "ta-records-tbl" and "ta-request"
-          toggleSections(
-            "ta-policy",
-            ["ta-records-tbl", "ta-request", "skip-request"],
-            "taPolicy"
-          );
-        });
-
-      // Event listener for "TA Policy" link
-      document
-        .getElementById("skipRequest")
-        .addEventListener("click", function (event) {
-          event.preventDefault(); // Prevent the default anchor behavior
-          // Show "ta-policy", hide "ta-records-tbl" and "ta-request"
-          toggleSections(
-            "skip-request",
-            ["ta-records-tbl", "ta-request", "ta-policy"],
-            "skipRequest"
-          );
-        });
+        // Toggle sections based on the active tab
+        switch (section) {
+          case "my-travel":
+            toggleSections(
+              "my-travel-section",
+              [
+                "rp-approval-section",
+                "skip-approval-section",
+                "finance-approval-section",
+                "ta-policy-section",
+              ],
+              "my-travel-tab"
+            );
+            break;
+          case "rp-approval":
+            toggleSections(
+              "rp-approval-section",
+              [
+                "my-travel-section",
+                "skip-approval-section",
+                "finance-approval-section",
+                "ta-policy-section",
+              ],
+              "rp-approval-tab"
+            );
+            break;
+          case "skip-approval":
+            toggleSections(
+              "skip-approval-section",
+              [
+                "my-travel-section",
+                "rp-approval-section",
+                "finance-approval-section",
+                "ta-policy-section",
+              ],
+              "skip-approval-tab"
+            );
+            break;
+          case "finance-approval":
+            toggleSections(
+              "finance-approval-section",
+              [
+                "my-travel-section",
+                "rp-approval-section",
+                "skip-approval-section",
+                "ta-policy-section",
+              ],
+              "finance-approval-tab"
+            );
+            break;
+          case "TAPolicy":
+            toggleSections(
+              "ta-policy-section",
+              [
+                "my-travel-section",
+                "rp-approval-section",
+                "skip-approval-section",
+                "finance-approval-section",
+              ],
+              "ta-policy-tab"
+            );
+            break;
+          default:
+            break;
+        }
+      }
+      // Call navigateTo based on the URL hash on page load
+      window.onload = function () {
+        const hash = window.location.hash.substring(1); // Get the hash without the #
+        if (hash) {
+          navigateTo(hash);
+        } else {
+          navigateTo("my-travel"); // Default section if no hash
+        }
+      };
 
       var tooltipTriggerList = [].slice.call(
         document.querySelectorAll('[data-bs-toggle="tooltip"]')
@@ -2208,21 +2212,21 @@
         function createRow() {
           const row = document.createElement("tr");
           row.innerHTML = `
-                          <td><input type="date" name="local_date[]" class="form-control form-control-sm local-date"></td>
-                          <td><input type="text" name="from_local[]" class="form-control form-control-sm"></td>
-                          <td><input type="text" name="to_local[]" class="form-control form-control-sm"></td>
-                          <td><input type="text" name="purpose[]" class="form-control form-control-sm"></td>
-                          <td>
-                              <select name="local_travel_mode[]" class="form-select form-select-sm">
-                                  <option value="">Select</option>
-                                  <option value="Auto">Auto</option>
-                                  <option value="Cab">Cab</option>
-                                  <option value="Public Transport">Public Transport</option>
-                              </select>
-                          </td>
-                          <td><input type="number" name="local_amt[]" class="form-control form-control-sm local-amt"></td>
-                          <td><button type="button" class="btn btn-danger btn-sm remove-row-button">Remove</button></td>
-                      `;
+                              <td><input type="date" name="local_date[]" class="form-control form-control-sm local-date" required></td>
+                              <td><input type="text" name="from_local[]" class="form-control form-control-sm" required></td>
+                              <td><input type="text" name="to_local[]" class="form-control form-control-sm" required></td>
+                              <td><input type="text" name="purpose[]" class="form-control form-control-sm" required></td>
+                              <td>
+                                  <select name="local_travel_mode[]" class="form-select form-select-sm" required>
+                                      <option value="">Select</option>
+                                      <option value="Auto">Auto</option>
+                                      <option value="Cab">Cab</option>
+                                      <option value="Public Transport">Public Transport</option>
+                                  </select>
+                              </td>
+                              <td><input type="number" name="local_amt[]" class="form-control form-control-sm local-amt" required></td>
+                              <td><button type="button" class="btn btn-danger btn-sm remove-row-button">Remove</button></td>
+                          `;
           return row;
         }
 
@@ -2337,7 +2341,7 @@
         addLocalConveyanceEventListeners();
       });
 
-      // form submit to create ta record
+      // form save to create ta record
       async function handleFormSubmit(event) {
         event.preventDefault(); // Prevent default form submission behavior
 
@@ -2471,14 +2475,14 @@
           });
 
           /*if (hasInvalidFields) {
-                        await Swal.fire({
-                          title: "Error",
-                          text: "Some local conveyance fields are missing or invalid. Please check and try again.",
-                          icon: "error",
-                        });
-                        submitButton.disabled = false;
-                        return;
-                      }*/
+                            await Swal.fire({
+                              title: "Error",
+                              text: "Some local conveyance fields are missing or invalid. Please check and try again.",
+                              icon: "error",
+                            });
+                            submitButton.disabled = false;
+                            return;
+                          }*/
 
           formData.append(
             "local_conveyance",
@@ -2712,6 +2716,96 @@
         }
       }
 
+      async function calculateDistance() {
+        const fromSelect = document.getElementById("from_location");
+        const toSelect = document.getElementById("to_location");
+        const totalKmInput = document.getElementById("total_km");
+
+        const fromOtherInput = document.getElementById("from_location_other");
+        const toOtherInput = document.getElementById("to_location_other");
+
+        const locationFrom =
+          fromSelect.value === "Other"
+            ? fromOtherInput.value
+            : fromSelect.value;
+        const locationTo =
+          toSelect.value === "Other" ? toOtherInput.value : toSelect.value;
+
+        if (locationFrom && locationTo) {
+          try {
+            const fromCoords = await getCoordinates(locationFrom);
+            const toCoords = await getCoordinates(locationTo);
+
+            if (fromCoords && toCoords) {
+              const url = `http://router.project-osrm.org/route/v1/driving/${fromCoords.lon},${fromCoords.lat};${toCoords.lon},${toCoords.lat}?overview=false`;
+
+              const response = await fetch(url);
+              const data = await response.json();
+              if (data.routes.length > 0) {
+                const distance = data.routes[0].legs[0].distance; // Distance in meters
+                const distanceKM = (distance / 1000).toFixed(2); // Convert to kilometers
+                const distanceText = distanceKM + " km";
+                document.getElementById(
+                  "distanceResult"
+                ).innerText = `Distance: ${distanceText}`;
+                totalKmInput.value = distanceKM * 2; // Multiply by 2 for round trip
+                console.log("Total Distance in KM:", distanceKM);
+              } else {
+                document.getElementById("distanceResult").innerText =
+                  "Unable to calculate distance.";
+              }
+            } else {
+              document.getElementById("distanceResult").innerText =
+                "Invalid coordinates for one or both locations.";
+            }
+          } catch (error) {
+            console.error("Error fetching distance:", error);
+            document.getElementById("distanceResult").innerText =
+              "Error fetching distance.";
+          }
+        } else {
+          document.getElementById("distanceResult").innerText = "";
+        }
+      }
+
+      async function getCoordinates(location) {
+        // If location is 'Other', we need to handle it differently
+        const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+          location
+        )}`;
+
+        const response = await fetch(geocodeUrl);
+        const data = await response.json();
+
+        if (data.length > 0) {
+          // Here you can check for ambiguity based on the number of results returned
+          if (data.length === 1) {
+            return { lon: data[0].lon, lat: data[0].lat }; // Return coordinates if unique
+          } else {
+            // If multiple results, handle ambiguity (e.g., prompt user)
+            handleAmbiguousResults(data, location);
+            return null; // Return null to indicate failure
+          }
+        } else {
+          throw new Error(`Coordinates not found for location: ${location}`);
+        }
+      }
+
+      function handleAmbiguousResults(results, location) {
+        // Present a list to the user for selection or alert them to provide more details
+        const options = results
+          .map(
+            (result) =>
+              `${result.display_name} (${result.address.city || ""}, ${
+                result.address.state || ""
+              })`
+          )
+          .join("\n");
+        alert(
+          `Multiple locations found for "${location}":\n${options}\nPlease be more specific.`
+        );
+      }
+
       // Function for calculating total duration time of travel
       async function calculateTotalDuration() {
         const fromDate = document.getElementById("from_date").value;
@@ -2798,7 +2892,7 @@
         const toLocation = document.getElementById("to_location").value;
         if (allowanceType || toLocation) {
           fetch(
-            `/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.check_submit?to_location=${encodeURIComponent(
+            `/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_allowances?to_location=${encodeURIComponent(
               toLocation
             )}`
           )
@@ -2914,6 +3008,7 @@
             totalKmInput.required = true; // Make total km input mandatory
             ticketAmountInput.required = false; // Remove requirement from ticket amount
             uploadTicketInput.required = false;
+            calculateDistance();
           } else if (selectedValue === "Train" || selectedValue === "Bus") {
             document.getElementById("total_km").value = 0;
             ticketAmountGroup.classList.remove("hidden");
@@ -3378,6 +3473,7 @@
           const tableHeading = document.getElementById("table-heading");
           const submitBtn = document.getElementById("ta-submit-btn");
           const noDataMsg = document.getElementById("no-records-message");
+          const createbtn = document.querySelector(".create-btn");
 
           // Clear previous table data
           tableBody.innerHTML = "";
@@ -3391,6 +3487,7 @@
             noDataMsg.style.display = "block";
             mainContainer.style.display = "none";
           } else {
+            createbtn.style.display = "block";
             // Data exists, populate the table
             data.message.forEach((record, index) => {
               const row = document.createElement("tr");
@@ -3405,199 +3502,216 @@
 
               // Create cells for each piece of data
               row.innerHTML = `
-                                  <td class="d-none">${record.name}</td>
-                                  <td class="fixed-sr">${index + 1}</td>
+                                      <td class="d-none">${record.name}</td>
+                                      <td class="fixed-sr">${index + 1}</td>
 
-                                  <td>
-                                    <span class="${
-                                      record.status === "Reject"
-                                        ? "clickable"
-                                        : ""
-                                    }"
-                                          onclick="${
-                                            record.status === "Reject"
-                                              ? `fetchRejectionReason('${record.name}')`
-                                              : ""
-                                          }"
-                                          style="${
-                                            record.status === "Reject"
-                                              ? "cursor: pointer;"
-                                              : "cursor: default;"
-                                          }">
-                                      ${record.status}
-                                    </span>
-                                  </td>
-                               <td>
-        <div class="tracker">
-          <!-- Stage 1: Reporting Person -->
-          <span class="stage ${
-            record.status_stage_1
-              ? getStatusClass(record.status_stage_1)
-              : "stage-null"
-          }" title="${
+                                      <td>
+                                        <span class="${
+                                          record.status === "Reject"
+                                            ? "clickable"
+                                            : ""
+                                        }"
+                                              onclick="${
+                                                record.status === "Reject"
+                                                  ? `fetchRejectionReason('${record.name}')`
+                                                  : ""
+                                              }"
+                                              style="${
+                                                record.status === "Reject"
+                                                  ? "cursor: pointer;"
+                                                  : "cursor: default;"
+                                              }">
+                                          ${record.status}
+                                        </span>
+                                      </td>
+                                   <td>
+            <div class="tracker">
+              <!-- Stage 1: Reporting Person -->
+              <span class="stage ${
+                record.status_stage_1
+                  ? getStatusClass(record.status_stage_1)
+                  : "stage-null"
+              }" title="${
                 record.status_stage_1
                   ? record.status_stage_1 + " from Reporting Person"
                   : "Not sent to Reporting Person"
               }">
-            ${
-              record.status_stage_1 === "Pending"
-                ? '<img src="/assets/travel_allowance/images/Pending_new.png" alt="Pending" />'
-                : record.status_stage_1 === "Approved"
-                ? '<img src="/assets/travel_allowance/images/Approved_new.png" alt="Approved" />'
-                : record.status_stage_1 === "Reject"
-                ? '<img src="/assets/travel_allowance/images/rejected_new.png" alt="Reject" />'
-                : record.status_stage_1 === ""
-                ? '<img src="/assets/travel_allowance/images/disable.png" alt="Not Applicable" />'
-                : ""
-            }
-          </span>
+                ${
+                  record.status_stage_1 === "Pending"
+                    ? '<img src="/assets/travel_allowance/images/Pending_new.png" alt="Pending" />'
+                    : record.status_stage_1 === "Approved"
+                    ? '<img src="/assets/travel_allowance/images/Approved_new.png" alt="Approved" />'
+                    : record.status_stage_1 === "Reject"
+                    ? '<img src="/assets/travel_allowance/images/rejected_new.png" alt="Reject" />'
+                    : record.status_stage_1 === ""
+                    ? '<img src="/assets/travel_allowance/images/disable.png" alt="Not Applicable" />'
+                    : ""
+                }
+              </span>
 
-          <span class="line ${
-            record.status_stage_1
-              ? getLineClass(record.status_stage_2)
-              : "line-null"
-          }"></span>
+              <span class="line ${
+                record.status_stage_1
+                  ? getLineClass(record.status_stage_2)
+                  : "line-null"
+              }"></span>
 
-          <!-- Stage 2: Skip Level -->
-          <span class="stage ${
-            record.status_stage_2
-              ? getStatusClass(record.status_stage_2)
-              : "stage-null"
-          }" title="${
+              <!-- Stage 2: Skip Level -->
+              <span class="stage ${
+                record.status_stage_2
+                  ? getStatusClass(record.status_stage_2)
+                  : "stage-null"
+              }" title="${
                 record.status_stage_2
                   ? record.status_stage_2 + " from Skip Level"
                   : "Not sent to Skip Level"
               }">
-            ${
-              record.status_stage_2 === "Pending"
-                ? '<img src="/assets/travel_allowance/images/Pending_new.png" alt="Pending" />'
-                : record.status_stage_2 === "Approved"
-                ? '<img src="/assets/travel_allowance/images/Approved_new.png" alt="Approved" />'
-                : record.status_stage_2 === "Reject"
-                ? '<img src="/assets/travel_allowance/images/rejected_new.png" alt="Reject" />'
-                : record.status_stage_2 === ""
-                ? '<img src="/assets/travel_allowance/images/disable.png" alt="Not Applicable" />'
-                : ""
-            }
-          </span>
+                ${
+                  record.status_stage_2 === "Pending"
+                    ? '<img src="/assets/travel_allowance/images/Pending_new.png" alt="Pending" />'
+                    : record.status_stage_2 === "Approved"
+                    ? '<img src="/assets/travel_allowance/images/Approved_new.png" alt="Approved" />'
+                    : record.status_stage_2 === "Reject"
+                    ? '<img src="/assets/travel_allowance/images/rejected_new.png" alt="Reject" />'
+                    : record.status_stage_2 === ""
+                    ? '<img src="/assets/travel_allowance/images/disable.png" alt="Not Applicable" />'
+                    : ""
+                }
+              </span>
 
-          <span class="line ${
-            record.status_stage_2
-              ? getLineClass(record.status_stage_3)
-              : "line-null"
-          }"></span>
+              <span class="line ${
+                record.status_stage_2
+                  ? getLineClass(record.status_stage_3)
+                  : "line-null"
+              }"></span>
 
-          <!-- Stage 3: TA -->
-          <span class="stage ${
-            record.status_stage_3
-              ? getStatusClass(record.status_stage_3)
-              : "stage-null"
-          }" title="${
+              <!-- Stage 3: TA -->
+              <span class="stage ${
+                record.status_stage_3
+                  ? getStatusClass(record.status_stage_3)
+                  : "stage-null"
+              }" title="${
                 record.status_stage_3
                   ? record.status_stage_3 + " from TA Team"
                   : "Not sent to TA Team"
               }">
-            ${
-              record.status_stage_3 === "Pending"
-                ? '<img src="/assets/travel_allowance/images/Pending_new.png" alt="Pending" />'
-                : record.status_stage_3 === "Approved"
-                ? '<img src="/assets/travel_allowance/images/Approved_new.png" alt="Approved" />'
-                : record.status_stage_3 === "Reject"
-                ? '<img src="/assets/travel_allowance/images/rejected_new.png" alt="Reject" />'
-                : record.status_stage_3 === ""
-                ? '<img src="/assets/travel_allowance/images/disable.png" alt="Not Applicable" />'
-                : ""
-            }
-          </span>
-        </div>
-      </td>
+                ${
+                  record.status_stage_3 === "Pending"
+                    ? '<img src="/assets/travel_allowance/images/Pending_new.png" alt="Pending" />'
+                    : record.status_stage_3 === "Approved"
+                    ? '<img src="/assets/travel_allowance/images/Approved_new.png" alt="Approved" />'
+                    : record.status_stage_3 === "Reject"
+                    ? '<img src="/assets/travel_allowance/images/rejected_new.png" alt="Reject" />'
+                    : record.status_stage_3 === ""
+                    ? '<img src="/assets/travel_allowance/images/disable.png" alt="Not Applicable" />'
+                    : ""
+                }
+              </span>
+            </div>
+          </td>
 
-                                  <td>
-                                    ${
-                                      record.status === "Draft"
-                                        ? `<div class="action-btns" data-id="${record.name}">
+                                      <td>
+                                        ${
+                                          record.status === "Draft"
+                                            ? `<div class="action-btns" data-id="${record.name}">
 
-                                              <div class="delete-btn" onclick="deleteRecord('${record.name}')">
-                                                <img src='/files/delete_11540197.png' alt="Delete" width="20">
-                                              </div>
-                                           </div>`
-                                        : ""
-                                    }
-                                  </td>
+                                                  <div class="delete-btn" onclick="deleteRecord('${record.name}')">
+                                                    <img src='/files/delete_11540197.png' alt="Delete" width="20">
+                                                  </div>
+                                               </div>`
+                                            : ""
+                                        }
+                                      </td>
 
-                                  <td>${record.from_location}</td>
-                                  <td>${record.from_date}</td>
-                                  <td>${record.from_time}</td>
-                                  <td>${record.to_location}</td>
-                                  <td>${record.to_date}</td>
-                                  <td>${record.to_time}</td>
-                                  <td>${record.total_time}</td>
-                                  <td>${record.purpose}</td>
-                                  <td>${record.travel_mode}</td>
-                                  <td>${record.total_km}</td>
-                                  <td>${record.ticket_amount}</td>
-                                  <td>${record.fare_amount}</td>
+                                      <td>${record.from_location}</td>
+                                      <td>${record.from_date}</td>
+                                      <td>${record.from_time}</td>
+                                      <td>${record.to_location}</td>
+                                      <td>${record.to_date}</td>
+                                      <td>${record.to_time}</td>
+                                      <td>${record.total_time}</td>
+                                      <td>${record.purpose}</td>
+                                      <td>${record.travel_mode}</td>
+                                      <td>${record.total_km}</td>
+                                      <td>${record.ticket_amount}</td>
+                                      <td>${record.fare_amount}</td>
 
-                                <!--  <td>${record.allowance_type}</td>-->
-                                  <td>${record.final_da_amount}</td>
-                                  <td>${record.final_halt_amount}</td>
-                                  <td>${record.final_lodge_amount}</td>
-                                  <td>
-                                    <span class="clickable-cell"
-                                          onclick="${
-                                            record.final_local_amount &&
-                                            record.final_local_amount.trim() !==
-                                              "-" &&
-                                            parseFloat(
-                                              record.final_local_amount
-                                            ) !== 0
-                                              ? `fetchLocalConveyance('${record.name}')`
-                                              : ""
-                                          }"
-                                          title="${
-                                            record.final_local_amount &&
-                                            record.final_local_amount.trim() !==
-                                              "-" &&
-                                            parseFloat(
-                                              record.final_local_amount
-                                            ) !== 0
-                                              ? "Click for Local details"
-                                              : ""
-                                          }"
-                                          style="${
-                                            record.final_local_amount &&
-                                            record.final_local_amount.trim() !==
-                                              "-" &&
-                                            parseFloat(
-                                              record.final_local_amount
-                                            ) !== 0
-                                              ? ""
-                                              : "pointer-events: none; color: gray;"
-                                          }">
-                                      ${record.final_local_amount || "-"}
-                                    </span>
-                                  </td>
+                                    <!--  <td>${record.allowance_type}</td>-->
+                                      <td>${record.final_da_amount}</td>
+                                      <td>${record.final_halt_amount}</td>
+                                      <td>${record.final_lodge_amount}</td>
+                                      <td>
+                                        <span class="clickable-cell"
+                                              onclick="${
+                                                record.final_local_amount &&
+                                                record.final_local_amount.trim() !==
+                                                  "-" &&
+                                                parseFloat(
+                                                  record.final_local_amount
+                                                ) !== 0
+                                                  ? `fetchLocalConveyance('${record.name}')`
+                                                  : ""
+                                              }"
+                                              title="${
+                                                record.final_local_amount &&
+                                                record.final_local_amount.trim() !==
+                                                  "-" &&
+                                                parseFloat(
+                                                  record.final_local_amount
+                                                ) !== 0
+                                                  ? "Click for Local details"
+                                                  : ""
+                                              }"
+                                              style="${
+                                                record.final_local_amount &&
+                                                record.final_local_amount.trim() !==
+                                                  "-" &&
+                                                parseFloat(
+                                                  record.final_local_amount
+                                                ) !== 0
+                                                  ? ""
+                                                  : "pointer-events: none; color: gray;"
+                                              }">
+                                          ${record.final_local_amount || "-"}
+                                        </span>
+                                      </td>
 
 
-                                  <td>${
-                                    record.upload_ticket
-                                      ? `<a href="${record.upload_ticket}" target="_blank">View</a>`
-                                      : "-"
-                                  }</td>
-                                  <td>${
-                                    record.upload_lodging
-                                      ? `<a href="${record.upload_lodging}" target="_blank">View</a>`
-                                      : "-"
-                                  }</td>
-                                   <td class="fixed-tot">₹${
-                                     record.total_amount
-                                   }</td>
+                                      <td>${
+                                        record.upload_ticket
+                                          ? `<a href="${record.upload_ticket}" target="_blank">View</a>`
+                                          : "-"
+                                      }</td>
+                                      <td>${
+                                        record.upload_lodging
+                                          ? `<a href="${record.upload_lodging}" target="_blank">View</a>`
+                                          : "-"
+                                      }</td>
+                                       <td class="fixed-tot">₹${
+                                         record.total_amount
+                                       }</td>
 
-                                    <td>${timeAgo(record.modified)}</td>
-                              `;
+                                        <td>${timeAgo(record.modified)}</td>
+                                  `;
 
               // Append the row to the table body
               tableBody.appendChild(row);
+
+              // Add click event listener to each row (except for 'final_local_amount' click)
+              // Assign a click event to the entire row
+              row.onclick = (event) => {
+                // Check if the clicked target is not one of the specific cells
+                const target = event.target;
+                const isClickableCell =
+                  target.classList.contains("clickable") ||
+                  target.classList.contains("clickable-cell") || // local amount cell
+                  target.closest("a") || // upload ticket and upload lodging
+                  target.closest(".delete-btn"); // delete button
+
+                if (!isClickableCell) {
+                  openDialogWithRowData(record);
+                }
+              };
+
               // Helper function to get the CSS class based on status
               function getStatusClass(status) {
                 switch (status) {
@@ -3639,6 +3753,39 @@
           document.getElementById("main-content").innerHTML =
             "<p>There was an error fetching the data. Please try again later.</p>";
         }
+      }
+
+      /***********pagination script starts here**********************/
+
+      // Function to open the Bootstrap modal and display the record details
+      function openDialogWithRowData(record) {
+        const dialogContent = document.getElementById("dialogContent");
+
+        // Populate the modal body with labels and input fields for the record details
+        dialogContent.innerHTML = `
+        <div class="form-group">
+          <label for="fromLocation">From Location:</label>
+          <input type="text" class="form-control" id="fromLocation" value="${record.from_location}" readonly>
+        </div>
+        <div class="form-group">
+          <label for="toLocation">To Location:</label>
+          <input type="text" class="form-control" id="toLocation" value="${record.to_location}" readonly>
+        </div>
+        <div class="form-group">
+          <label for="totalKM">Total KM:</label>
+          <input type="text" class="form-control" id="totalKM" value="${record.total_km}" readonly>
+        </div>
+        <!-- Add other fields as needed -->
+      `;
+
+        // Show the modal using Bootstrap's modal method
+        $("#dataDialog").modal("show");
+      }
+
+      // Function to close the Bootstrap modal
+      function closeDialog() {
+        // Hide the modal using Bootstrap's modal method
+        $("#dataDialog").modal("hide");
       }
 
       document.addEventListener("DOMContentLoaded", function () {
@@ -3876,9 +4023,9 @@
               if (result.message.status === "success") {
                 // Remove the row from the table
                 /*const rowElement = document
-                        .querySelector(`td[data-id="${recordName}"]`)
-                        .closest("tr");
-                      rowElement.remove();*/
+                            .querySelector(`td[data-id="${recordName}"]`)
+                            .closest("tr");
+                          rowElement.remove();*/
 
                 // Show success message using SweetAlert
                 Swal.fire(
@@ -4005,8 +4152,5 @@
         .querySelector(".submit-btn")
         .addEventListener("click", submitRecords);
     </script>
-    <!-- Bootstrap JS (including Popper.js for dropdowns) -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
   </body>
 </html>

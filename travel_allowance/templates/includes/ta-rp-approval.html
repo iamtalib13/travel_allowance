@@ -1,6 +1,25 @@
 <style>
   /* Navbar styles */
 
+  ul.navbar-nav {
+    font-size: large;
+  }
+  ul.navbar-nav .nav-item .nav-link.active {
+    font-weight: bold;
+    border-bottom: 2px solid rgba(0, 128, 222, 1);
+  }
+  ul.navbar-nav .nav-item {
+    padding: 0 10px;
+    cursor: pointer;
+  }
+  ul.navbar-nav .nav-item .nav-link {
+    background: aliceblue;
+  }
+  ul.navbar-nav .nav-item .nav-link:hover {
+    font-weight: bold;
+    border-bottom: 2px solid rgba(0, 128, 222, 1);
+  }
+
   .ta_skip_navbar {
     display: flex;
     font-size: 15px;
@@ -12,52 +31,118 @@
     overflow-y: auto; /* Enables vertical scrolling */
   }
 
-  .ta_skip_navbar div {
+  .ta_rp_navbar div {
     padding: 10px 0px;
     font-size: large;
     cursor: pointer;
   }
 
-  .ta_skip_navbar .active {
+  .ta_rp_navbar .active {
     font-weight: bold;
     border-bottom: 2px solid rgba(0, 128, 222, 1);
   }
 
-  .ta-skip-nav-item {
+  .ta-rp-nav-item {
     list-style: none;
     margin: 5px 0;
   }
-
-  .ta-skip-nav-link {
+  .ta-rp-nav-link {
     border: 1px solid transparent;
     border-top-left-radius: 0.25rem;
     border-top-right-radius: 0.25rem;
     padding: 5px 10px;
-    margin-right: 5px;
+    margin-right: 0.2rem;
     color: #495057;
-    background-color: #f0f6fb;
+    background-color: #f8f9fa;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
       border-color 0.15s ease-in-out;
   }
-  .ta-skip-nav-link:hover,
-  .ta-skip-nav-link:focus {
+  .ta-rp-nav-link:hover,
+  .ta-rp-nav-link:focus {
     text-decoration: none;
     font-weight: bold;
     border-bottom: 2px solid rgba(0, 128, 222, 1);
     outline: none;
   }
+  .btn-approve,
+  .btn-reject {
+    padding: 5px 14px;
+    border: none;
+    border-radius: 40px;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  .btn-approve {
+    padding: 6px 16px; /* Adequate padding for a comfortable click area */
+    border: none;
+    border-radius: 8px; /* Rounded corners for a modern look */
+    color: #fff; /* White text color for contrast */
+    font-size: 16px; /* Readable font size */
+    font-weight: 700; /* Bold text for emphasis */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effects */
 
-  .all-pending-count {
-    /*color: red;*/
-    font-weight: bold;
-    margin-left: 5px;
+    background: #007486; /* Base background color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
   }
-  /* Pending count styles */
-  .pending-count {
-    color: red;
-    font-weight: bold;
-    margin-left: 5px;
+
+  .btn-approve:hover {
+    background: #007486; /* Slightly darker shade on hover for feedback */
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
+    color: #fff;
   }
+
+  .btn-approve:focus {
+    outline: none; /* Remove default focus outline */
+  }
+
+  .btn-approve:active {
+    background: #007486; /* Even darker shade when pressed for feedback */
+    transform: scale(0.98); /* Slightly shrink the button when pressed */
+  }
+  .btn-reject {
+    padding: 6px 16px; /* Adequate padding for a comfortable click area */
+    border: none;
+    border-radius: 8px; /* Rounded corners for a modern look */
+    color: #fff; /* White text color for contrast */
+    font-size: 16px; /* Readable font size */
+    font-weight: 700; /* Bold text for emphasis */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effects */
+
+    background: #cb4e45; /* Base background color (red) */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  }
+
+  .btn-reject:hover {
+    background: #cb4e45; /* Slightly darker shade on hover for feedback */
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
+    color: #fff;
+  }
+
+  .btn-reject:focus {
+    outline: none; /* Remove default focus outline */
+  }
+
+  .btn-reject:active {
+    background: #c62828; /* Even darker shade when pressed for feedback */
+    transform: scale(0.98); /* Slightly shrink the button when pressed */
+  }
+  .no-rp-records {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    margin: auto;
+    font-size: 18px;
+    color: #495057;
+    margin-bottom: 40px;
+  }
+
   .approved-count {
     color: green;
     font-weight: bold;
@@ -70,20 +155,13 @@
     margin-left: 5px;
   }
 
-  .main-skip-container {
+  .main-rp-container {
     border-radius: 8px;
     border: 1px solid #999393;
   }
 
-  table {
-    width: 100%; /* Full width */
-    border-collapse: collapse; /* Collapse borders */
-  }
-
-  /* Make the table responsive */
-
   /* Table styles */
-  table#travelSkipPendingTable {
+  table#travelRPPendingTable {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
@@ -91,8 +169,8 @@
     text-align: left;
   }
 
-  table#travelSkipPendingTable th,
-  table#travelSkipPendingTable td {
+  table#travelRPPendingTable th,
+  table#travelRPPendingTable td {
     padding: 12px 15px;
     border: 1px solid #ddd;
     white-space: nowrap; /* Prevent line wrapping */
@@ -100,7 +178,7 @@
   }
 
   /* Header styling */
-  table#travelSkipPendingTable thead th {
+  table#travelRPPendingTable thead th {
     background-color: #f2f2f2;
     color: #333;
     font-weight: bold;
@@ -108,30 +186,30 @@
   }
 
   /* Hover effects */
-  table#travelSkipPendingTable tbody tr:hover {
+  table#travelRPPendingTable tbody tr:hover {
     background-color: #f1f1f1;
   }
 
   /* Center align specific columns */
-  table#travelSkipPendingTable td:nth-child(4),
-  table#travelSkipPendingTable td:nth-child(5),
-  table#travelSkipPendingTable td:nth-child(6),
-  table#travelSkipPendingTable td:nth-child(7),
-  table#travelSkipPendingTable td:nth-child(8),
-  table#travelSkipPendingTable td:nth-child(9),
-  table#travelSkipPendingTable td:nth-child(10),
-  table#travelSkipPendingTable td:nth-child(13),
-  table#travelSkipPendingTable td:nth-child(14),
-  table#travelSkipPendingTable td:nth-child(15),
-  table#travelSkipPendingTable td:nth-child(16),
-  table#travelSkipPendingTable td:nth-child(17),
-  table#travelSkipPendingTable td:nth-child(18),
-  table#travelSkipPendingTable td:nth-child(19) {
+  table#travelRPPendingTable td:nth-child(4),
+  table#travelRPPendingTable td:nth-child(5),
+  table#travelRPPendingTable td:nth-child(6),
+  table#travelRPPendingTable td:nth-child(7),
+  table#travelRPPendingTable td:nth-child(8),
+  table#travelRPPendingTable td:nth-child(9),
+  table#travelRPPendingTable td:nth-child(10),
+  table#travelRPPendingTable td:nth-child(13),
+  table#travelRPPendingTable td:nth-child(14),
+  table#travelRPPendingTable td:nth-child(15),
+  table#travelRPPendingTable td:nth-child(16),
+  table#travelRPPendingTable td:nth-child(17),
+  table#travelRPPendingTable td:nth-child(18),
+  table#travelRPPendingTable td:nth-child(19) {
     text-align: center;
   }
 
   /* Checkbox column */
-  table#travelSkipPendingTable td:first-child {
+  table#travelRPPendingTable td:first-child {
     text-align: center;
     width: 50px;
     font-weight: bold;
@@ -140,26 +218,26 @@
   }
 
   /* Highlighting total column */
-  table#travelSkipPendingTable td:last-child {
+  table#travelRPPendingTable td:last-child {
     font-weight: bold;
     color: #000;
     background-color: #e7f3ff;
   }
 
   /* Table header alignment */
-  table#travelSkipPendingTable th {
+  table#travelRPPendingTable th {
     text-align: center;
   }
 
   /* Styling for no records row */
-  table#travelSkipPendingTable .text-center {
+  table#travelRPPendingTable .text-center {
     text-align: center;
     font-weight: bold;
     color: #999;
   }
 
   /* Table styles for approved records */
-  table#travelSkipApprovedTable {
+  table#travelRPApprovedTable {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
@@ -167,8 +245,8 @@
     text-align: left;
   }
 
-  table#travelSkipApprovedTable th,
-  table#travelSkipApprovedTable td {
+  table#travelRPApprovedTable th,
+  table#travelRPApprovedTable td {
     padding: 12px 15px;
     border: 1px solid #ddd;
     white-space: nowrap; /* Prevent line wrapping */
@@ -176,7 +254,7 @@
   }
 
   /* Header styling for approved records */
-  table#travelSkipApprovedTable thead th {
+  table#travelRPApprovedTable thead th {
     background-color: #d4edda; /* Light green header to indicate approved status */
     color: #155724; /* Dark green text color */
     font-weight: bold;
@@ -184,30 +262,30 @@
   }
 
   /* Hover effects for approved records */
-  table#travelSkipApprovedTable tbody tr:hover {
+  table#travelRPApprovedTable tbody tr:hover {
     background-color: #f1f1f1;
   }
 
   /* Center align specific columns for approved records */
-  table#travelSkipApprovedTable td:nth-child(4),
-  table#travelSkipApprovedTable td:nth-child(5),
-  table#travelSkipApprovedTable td:nth-child(6),
-  table#travelSkipApprovedTable td:nth-child(7),
-  table#travelSkipApprovedTable td:nth-child(8),
-  table#travelSkipApprovedTable td:nth-child(9),
-  table#travelSkipApprovedTable td:nth-child(10),
-  table#travelSkipApprovedTable td:nth-child(13),
-  table#travelSkipApprovedTable td:nth-child(14),
-  table#travelSkipApprovedTable td:nth-child(15),
-  table#travelSkipApprovedTable td:nth-child(16),
-  table#travelSkipApprovedTable td:nth-child(17),
-  table#travelSkipApprovedTable td:nth-child(18),
-  table#travelSkipApprovedTable td:nth-child(19) {
+  table#travelRPApprovedTable td:nth-child(4),
+  table#travelRPApprovedTable td:nth-child(5),
+  table#travelRPApprovedTable td:nth-child(6),
+  table#travelRPApprovedTable td:nth-child(7),
+  table#travelRPApprovedTable td:nth-child(8),
+  table#travelRPApprovedTable td:nth-child(9),
+  table#travelRPApprovedTable td:nth-child(10),
+  table#travelRPApprovedTable td:nth-child(13),
+  table#travelRPApprovedTable td:nth-child(14),
+  table#travelRPApprovedTable td:nth-child(15),
+  table#travelRPApprovedTable td:nth-child(16),
+  table#travelRPApprovedTable td:nth-child(17),
+  table#travelRPApprovedTable td:nth-child(18),
+  table#travelRPApprovedTable td:nth-child(19) {
     text-align: center;
   }
 
   /* Checkbox column for approved records */
-  table#travelSkipApprovedTable td:first-child {
+  table#travelRPApprovedTable td:first-child {
     text-align: center;
     width: 50px;
     font-weight: bold;
@@ -216,26 +294,26 @@
   }
 
   /* Highlighting total column for approved records */
-  table#travelSkipApprovedTable td:last-child {
+  table#travelRPApprovedTable td:last-child {
     font-weight: bold;
     color: #155724;
     background-color: #c3e6cb; /* Light green background for totals */
   }
 
   /* Table header alignment */
-  table#travelSkipApprovedTable th {
+  table#travelRPApprovedTable th {
     text-align: center;
   }
 
   /* Styling for no records row in approved table */
-  table#travelSkipApprovedTable .text-center {
+  table#travelRPApprovedTable .text-center {
     text-align: center;
     font-weight: bold;
     color: #999;
   }
 
   /* Table styles for rejected records */
-  table#travelSkipRejectTable {
+  table#travelRPRejectTable {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
@@ -244,8 +322,8 @@
   }
 
   /* Rejected table headers and cells */
-  table#travelSkipRejectTable th,
-  table#travelSkipRejectTable td {
+  table#travelRPRejectTable th,
+  table#travelRPRejectTable td {
     padding: 12px 15px;
     border: 1px solid #ddd;
     white-space: nowrap; /* Prevent line wrapping */
@@ -253,7 +331,7 @@
   }
 
   /* Header styling for rejected records */
-  table#travelSkipRejectTable thead th {
+  table#travelRPRejectTable thead th {
     background-color: #f8d7da; /* Light red header to indicate rejected status */
     color: #721c24; /* Dark red text color */
     font-weight: bold;
@@ -261,30 +339,30 @@
   }
 
   /* Hover effects for rejected records */
-  table#travelSkipRejectTable tbody tr:hover {
+  table#travelRPRejectTable tbody tr:hover {
     background-color: #f1f1f1;
   }
 
   /* Center align specific columns for rejected records */
-  table#travelSkipRejectTable td:nth-child(4),
-  table#travelSkipRejectTable td:nth-child(5),
-  table#travelSkipRejectTable td:nth-child(6),
-  table#travelSkipRejectTable td:nth-child(7),
-  table#travelSkipRejectTable td:nth-child(8),
-  table#travelSkipRejectTable td:nth-child(9),
-  table#travelSkipRejectTable td:nth-child(10),
-  table#travelSkipRejectTable td:nth-child(13),
-  table#travelSkipRejectTable td:nth-child(14),
-  table#travelSkipRejectTable td:nth-child(15),
-  table#travelSkipRejectTable td:nth-child(16),
-  table#travelSkipRejectTable td:nth-child(17),
-  table#travelSkipRejectTable td:nth-child(18),
-  table#travelSkipRejectTable td:nth-child(19) {
+  table#travelRPRejectTable td:nth-child(4),
+  table#travelRPRejectTable td:nth-child(5),
+  table#travelRPRejectTable td:nth-child(6),
+  table#travelRPRejectTable td:nth-child(7),
+  table#travelRPRejectTable td:nth-child(8),
+  table#travelRPRejectTable td:nth-child(9),
+  table#travelRPRejectTable td:nth-child(10),
+  table#travelRPRejectTable td:nth-child(13),
+  table#travelRPRejectTable td:nth-child(14),
+  table#travelRPRejectTable td:nth-child(15),
+  table#travelRPRejectTable td:nth-child(16),
+  table#travelRPRejectTable td:nth-child(17),
+  table#travelRPRejectTable td:nth-child(18),
+  table#travelRPRejectTable td:nth-child(19) {
     text-align: center;
   }
 
   /* Checkbox column for rejected records */
-  table#travelSkipRejectTable td:first-child {
+  table#travelRPRejectTable td:first-child {
     text-align: center;
     width: 50px;
     font-weight: bold;
@@ -293,19 +371,19 @@
   }
 
   /* Highlighting total column for rejected records */
-  table#travelSkipRejectTable td:last-child {
+  table#travelRPRejectTable td:last-child {
     font-weight: bold;
     color: #721c24;
     background-color: #f5c6cb; /* Light red background for totals */
   }
 
   /* Table header alignment */
-  table#travelSkipRejectTable th {
+  table#travelRPRejectTable th {
     text-align: center;
   }
 
   /* Styling for no records row in rejected table */
-  table#travelSkipRejectTable .text-center {
+  table#travelRPRejectTable .text-center {
     text-align: center;
     font-weight: bold;
     color: #999;
@@ -318,7 +396,7 @@
     right: 10px;
     z-index: 100;
   }
-  .no-skip-records {
+  .no-records {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -330,14 +408,14 @@
     margin-bottom: 40px;
   }
 
-  #no-skip-records-message {
+  #no-rp-records-message {
     height: 100%;
     text-align: center;
-    margin: auto;
+    padding: 15px;
     font-size: 18px;
     justify-content: center;
     align-items: center;
-    padding: 20px 10px;
+
     display: none; /* Message is hidden by default */
     font-weight: bold;
     color: #495057;
@@ -369,11 +447,11 @@
   .fixed-serial {
     position: sticky;
     left: 0;
-    background-color: #302727; 
+    background-color: #302727;
     z-index: 2;
   }
 
-  
+ 
   .fixed-total {
     position: sticky;
     right: 0;
@@ -444,7 +522,7 @@
   }
 </style>
 
-<div class="main_skip_content">
+<div class="main_rp_content">
   <div class="container-fluid">
     <div class="row">
       <div class="col-12 d-flex px-0">
@@ -461,42 +539,42 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ta-skip-nav me-auto">
-              <li class="nav-item ta-skip-nav-item">
+            <ul class="navbar-nav ta-rp-nav me-auto">
+              <li class="nav-item ta-rp-nav-item">
                 <a
-                  class="nav-link ta-skip-nav-link active"
+                  class="nav-link ta-rp-nav-link active"
                   aria-current="page"
-                  id="pendingSkipTab"
-                  data-tab-type="pendingSkip"
+                  id="pendingRPTab"
+                  data-tab-type="pendingRP"
                 >
                   Pending
-                  <span class="pending-count" id="pendingSkipCount"></span>
+                  <span class="pending-count" id="pendingRPCount"></span>
                 </a>
               </li>
-              <li class="nav-item ta-skip-nav-item">
+              <li class="nav-item ta-rp-nav-item">
                 <a
-                  class="nav-link ta-skip-nav-link"
-                  id="approvedSkipTab"
-                  data-tab-type="approvedSkip"
+                  class="nav-link ta-rp-nav-link"
+                  id="approvedRPTab"
+                  data-tab-type="approvedRP"
                 >
                   Approved
-                  <span class="approved-count" id="approvedSkipCount"></span>
+                  <span class="approved-count" id="approvedRPCount"></span>
                 </a>
               </li>
-              <li class="nav-item ta-skip-nav-item">
+              <li class="nav-item ta-rp-nav-item">
                 <a
-                  class="nav-link ta-skip-nav-link"
-                  id="rejectSkipTab"
-                  data-tab-type="rejectedSkip"
+                  class="nav-link ta-rp-nav-link"
+                  id="rejectRPTab"
+                  data-tab-type="rejectedRP"
                 >
-                  Reject <span class="reject-count" id="rejectSkipCount"></span>
+                  Reject <span class="reject-count" id="rejectRPCount"></span>
                 </a>
               </li>
             </ul>
           </div>
         </nav>
 
-        <div class="action-skip text-end py-3 ms-auto">
+        <div class="action-rp text-end py-3 ms-auto">
           <!-- Collapsible button visible only on small screens -->
           <button
             class="btn btn-primary mb-2 d-lg-none"
@@ -511,21 +589,19 @@
 
           <!-- Actions buttons visible on larger screens -->
           <div class="d-none d-lg-block">
-            <button class="btn btn-approve me-2" id="approveButtonSkip">
+            <button class="btn btn-approve me-2" id="approveButtonRP">
               Approve
             </button>
-            <button class="btn btn-reject" id="rejectButtonSkip">Reject</button>
+            <button class="btn btn-reject" id="rejectButtonRP">Reject</button>
           </div>
 
           <!-- Collapsible container for small screens -->
           <div class="collapse d-lg-none" id="actionsCollapse">
             <div class="card card-body">
-              <button class="btn btn-success me-2" id="approveButtonSkip">
+              <button class="btn btn-success me-2" id="approveButtonRP">
                 Approve
               </button>
-              <button class="btn btn-danger" id="rejectButtonSkip">
-                Reject
-              </button>
+              <button class="btn btn-danger" id="rejectButtonRP">Reject</button>
             </div>
           </div>
         </div>
@@ -534,19 +610,19 @@
   </div>
 
   <!--Employee Tabs -->
-  <div class="container-fluid main-skip-container">
+  <div class="container-fluid main-rp-container">
     <div class="row">
-      <ul class="nav nav-tabs ta_skip_navbar" id="skipEmpTabs" role="tablist">
-        <li class="ta-skip-nav-item">
+      <ul class="nav nav-tabs ta_rp_navbar" id="rpEmpTabs" role="tablist">
+        <li class="ta-rp-nav-item">
           <button
-            class="ta-skip-nav-link active"
-            id="all-skip-tab"
+            class="ta-rp-nav-link active"
+            id="all-rp-tab"
             data-bs-toggle="tab"
             data-employee-name="all"
-            onclick="handleSkipTabClick('all', this)"
+            onclick="handleRPTabClick('all', this)"
           >
             All
-            <span class="all-pending-count" id="allSkipPendingCount"></span>
+            <span class="all-pending-count" id="allRPPendingCount"></span>
           </button>
         </li>
         <!-- Employee tabs will be generated dynamically -->
@@ -554,8 +630,8 @@
     </div>
 
     <!-- Table for travel allowances fetch pending record request-->
-    <div class="table-responsive" id="travelSkipPending">
-      <table class="table table-bordered" id="travelSkipPendingTable">
+    <div class="table-responsive" id="travelRPPending">
+      <table class="table table-bordered" id="travelRPPendingTable">
         <thead>
           <tr>
             <th class="fixed-serial">#</th>
@@ -590,17 +666,14 @@
         </thead>
         <tbody></tbody>
       </table>
-      <div
-        class="no-skip-pending-records text-center py-3"
-        style="display: none"
-      >
+      <div class="no-rp-pending-records text-center py-3" style="display: none">
         You have no Pending records.
       </div>
     </div>
 
     <!-- Table for travel allowances fetch approved record -->
-    <div class="table-responsive" id="travelSkipApproved" style="display: none">
-      <table class="table table-bordered" id="travelSkipApprovedTable">
+    <div class="table-responsive" id="travelRPApproved" style="display: none">
+      <table class="table table-bordered" id="travelRPApprovedTable">
         <thead>
           <tr>
             <th class="fixed-serial">#</th>
@@ -632,7 +705,7 @@
         <tbody></tbody>
       </table>
       <div
-        class="no-skip-approved-records text-center py-3"
+        class="no-rp-approved-records text-center py-3"
         style="display: none"
       >
         You have no Approved records.
@@ -640,8 +713,8 @@
     </div>
 
     <!-- Table for travel allowances fetch Rejected record -->
-    <div class="table-responsive" id="travelSkipReject" style="display: none">
-      <table class="table table-bordered" id="travelSkipRejectTable">
+    <div class="table-responsive" id="travelRPReject" style="display: none">
+      <table class="table table-bordered" id="travelRPRejectTable">
         <thead>
           <tr>
             <th class="fixed-serial">#</th>
@@ -672,46 +745,34 @@
         </thead>
         <tbody></tbody>
       </table>
-      <div
-        class="no-skip-reject-records text-center py-3"
-        style="display: none"
-      >
+      <div class="no-rp-reject-records text-center py-3" style="display: none">
         You have no Rejected records.
       </div>
     </div>
 
     <!-- No records message  for particular employee tab-->
-    <div id="no-skip-records-message" style="display: none">
+    <div id="no-rp-records-message" style="display: none">
       No records available for this employee.
     </div>
   </div>
-  <!-- Add this to your HTML to include a modal or input for remarks -->
-  <!--<div id="remarkModal" style="display: none">
-      <h3>Enter a Remark</h3>
-      <textarea
-        id="remarkInput"
-        rows="4"
-        cols="50"
-        placeholder="Enter your remark here..."
-      ></textarea>
-      <button onclick="submitRejection()">Submit</button>
-      <button onclick="closeRemarkModal()">Cancel</button>
-    </div>-->
 </div>
 
 <!--display message for all three Tab data empty-->
-<div class="no-skip-records text-center mt-3" style="display: none">
+<div class="no-rp-records text-center mt-3" style="display: none">
   <div><img src="/assets/travel_allowance/images/not-found.webp" alt="" /></div>
   You have no Request.
 </div>
 
 <script>
-  fetchPendingSkipRecords();
-  fetchTabCounts();
-  async function fetchTabCounts() {
+  //fetch the pending records and tab count on page load by default
+  fetchPendingRPRecords();
+  fetchRPTabCounts();
+
+  //Fetch the count of Main tabs Pending, Reject, Approved
+  async function fetchRPTabCounts() {
     try {
       const response = await fetch(
-        `/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_skip_records?user_id={{ frappe.session.user }}`
+        `/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_rp_records?user_id={{ frappe.session.user }}`
       );
 
       if (!response.ok) {
@@ -725,107 +786,107 @@
       const approvedRecord = data.message.approved;
       const rejectedRecord = data.message.rejected;
 
-      const pendingSkipCount = document.getElementById("pendingSkipCount");
-      const approvedSkipCount = document.getElementById("approvedSkipCount");
-      const rejectSkipCount = document.getElementById("rejectSkipCount");
+      const pendingRPCount = document.getElementById("pendingRPCount");
+      const approvedRPCount = document.getElementById("approvedRPCount");
+      const rejectRPCount = document.getElementById("rejectRPCount");
 
-      pendingSkipCount.textContent = pendingRecord.length || "";
-      approvedSkipCount.textContent = approvedRecord.length || "";
-      rejectSkipCount.textContent = rejectedRecord.length || "";
+      pendingRPCount.textContent = pendingRecord.length || "";
+      approvedRPCount.textContent = approvedRecord.length || "";
+      rejectRPCount.textContent = rejectedRecord.length || "";
     } catch (error) {
       console.error("Error fetching employee names:", error);
     }
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    const pendingSkipTab = document.getElementById("pendingSkipTab");
-    const approvedSkipTab = document.getElementById("approvedSkipTab");
-    const rejectSkipTab = document.getElementById("rejectSkipTab");
+    const pendingRPTab = document.getElementById("pendingRPTab");
+    const approvedRPTab = document.getElementById("approvedRPTab");
+    const rejectRPTab = document.getElementById("rejectRPTab");
 
-    const pendingSkipTable = document.getElementById("travelSkipPendingTable");
-    const approvedSkipTable = document.getElementById("travelSkipApproved");
-    const rejectSkipTable = document.getElementById("travelSkipReject");
+    const pendingRPTable = document.getElementById("travelRPPendingTable");
+    const approvedRPTable = document.getElementById("travelRPApproved");
+    const rejectRPTable = document.getElementById("travelRPReject");
 
     //get action buttons
-    const actionSkipMenu = document.querySelector(".action-skip");
+    const actionRPMenu = document.querySelector(".action-rp");
 
-    const noSkipPendingRecordsMsg = document.querySelector(
-      ".no-skip-pending-records"
+    const noRPPendingRecordsMsg = document.querySelector(
+      ".no-rp-pending-records"
     );
-    const noSkipApprovedRecordsMsg = document.querySelector(
-      ".no-skip-approved-records"
+    const noRPApprovedRecordsMsg = document.querySelector(
+      ".no-rp-approved-records"
     );
-    const noSkipRejectRecordsMsg = document.querySelector(
-      ".no-skip-reject-records"
+    const noRPRejectRecordsMsg = document.querySelector(
+      ".no-rp-reject-records"
     );
 
     // Initially show the pending table
-    pendingSkipTable.style.display = "block";
-    approvedSkipTable.style.display = "none";
-    rejectSkipTable.style.display = "none";
+    pendingRPTable.style.display = "block";
+    approvedRPTable.style.display = "none";
+    rejectRPTable.style.display = "none";
 
     // Add event listeners for tab clicks
-    pendingSkipTab.addEventListener("click", function () {
-      toggleActiveTab(pendingSkipTab);
-      showTable("pending"); // Show pending records table
-      fetchPendingSkipRecords(); // Fetch pending records
-      noSkipApprovedRecordsMsg.style.display = "none";
-      noSkipRejectRecordsMsg.style.display = "none";
-      actionSkipMenu.style.display = "block";
+    pendingRPTab.addEventListener("click", function () {
+      toggleActiveRPTab(pendingRPTab);
+      showRPTable("pending"); // Show pending records table
+      fetchPendingRPRecords(); // Fetch pending records
+      noRPApprovedRecordsMsg.style.display = "none";
+      noRPRejectRecordsMsg.style.display = "none";
+      actionRPMenu.style.display = "block";
     });
 
-    approvedSkipTab.addEventListener("click", function () {
-      toggleActiveTab(approvedSkipTab);
-      showTable("approved"); // Show approved records table
-      fetchApprovedSkipRecords(); // Fetch approved records
-      noSkipPendingRecordsMsg.style.display = "none";
-      noSkipRejectRecordsMsg.style.display = "none";
-      actionSkipMenu.style.display = "none";
+    approvedRPTab.addEventListener("click", function () {
+      toggleActiveRPTab(approvedRPTab);
+      showRPTable("approved"); // Show approved records table
+      fetchApprovedRPRecords(); // Fetch approved records
+      noRPPendingRecordsMsg.style.display = "none";
+      noRPRejectRecordsMsg.style.display = "none";
+      actionRPMenu.style.display = "none";
     });
 
-    rejectSkipTab.addEventListener("click", function () {
-      toggleActiveTab(rejectSkipTab);
-      showTable("rejected"); // Show rejected records table
-      fetchRejectedSkipRecords(); // Fetch rejected records
-      noSkipApprovedRecordsMsg.style.display = "none";
-      noSkipPendingRecordsMsg.style.display = "none";
-      actionSkipMenu.style.display = "none";
+    rejectRPTab.addEventListener("click", function () {
+      toggleActiveRPTab(rejectRPTab);
+      showRPTable("rejected"); // Show rejected records table
+      fetchRejectedRPRecords(); // Fetch rejected records
+      noRPApprovedRecordsMsg.style.display = "none";
+      noRPPendingRecordsMsg.style.display = "none";
+      actionRPMenu.style.display = "none";
     });
 
     // Function to toggle the active class
-    function toggleActiveTab(activeTab) {
-      pendingSkipTab.classList.remove("active");
-      approvedSkipTab.classList.remove("active");
-      rejectSkipTab.classList.remove("active");
+    function toggleActiveRPTab(activeTab) {
+      pendingRPTab.classList.remove("active");
+      approvedRPTab.classList.remove("active");
+      rejectRPTab.classList.remove("active");
 
       activeTab.classList.add("active");
     }
 
     // Function to manage table visibility
-    function showTable(type) {
+    function showRPTable(type) {
       if (type === "pending") {
-        pendingSkipTable.style.display = "block";
-        approvedSkipTable.style.display = "none";
-        rejectSkipTable.style.display = "none";
+        pendingRPTable.style.display = "block";
+        approvedRPTable.style.display = "none";
+        rejectRPTable.style.display = "none";
       } else if (type === "approved") {
-        pendingSkipTable.style.display = "none";
-        approvedSkipTable.style.display = "block";
-        rejectSkipTable.style.display = "none";
+        pendingRPTable.style.display = "none";
+        approvedRPTable.style.display = "block";
+        rejectRPTable.style.display = "none";
       } else if (type === "rejected") {
-        pendingSkipTable.style.display = "none";
-        approvedSkipTable.style.display = "none";
-        rejectSkipTable.style.display = "block";
+        pendingRPTable.style.display = "none";
+        approvedRPTable.style.display = "none";
+        rejectRPTable.style.display = "block";
       }
     }
   });
 
   // Handle employee tab click
-  function handleSkipTabClick(skipEmpName, element) {
-    console.log(`Tab clicked: ${skipEmpName}`);
+  function handleRPTabClick(rpEmpName, element) {
+    console.log(`Tab clicked: ${rpEmpName}`);
 
     // Remove "active" class from all nav-links
-    const buttons = document.querySelectorAll("#skipEmpTabs .ta-skip-nav-link");
-    buttons.forEach((button) => {
+    const rpButtons = document.querySelectorAll("#rpEmpTabs .ta-rp-nav-link");
+    rpButtons.forEach((button) => {
       button.classList.remove("active");
     });
 
@@ -833,46 +894,44 @@
     element.classList.add("active");
 
     // Find the currently active main tab (Pending, Approved, Rejected)
-    const activeMainTab = document.querySelector(
-      ".ta-skip-nav .ta-skip-nav-link.active"
+    const activeMainRPTab = document.querySelector(
+      ".ta-rp-nav .ta-rp-nav-link.active"
     );
-    console.log("active tab", activeMainTab);
-    const mainTabType = activeMainTab
-      ? activeMainTab.getAttribute("data-tab-type")
+    console.log("active tab", activeMainRPTab);
+    const mainRPTabType = activeMainRPTab
+      ? activeMainRPTab.getAttribute("data-tab-type")
       : null;
 
-    console.log("Active Main Tab Type:", mainTabType);
-    if (!mainTabType) {
+    console.log("Active Main Tab Type:", mainRPTabType);
+    if (!mainRPTabType) {
       console.error("No main tab found.");
       return;
     }
 
     // Pass the employee name and main tab type to filter function
-    filterSkipTableByEmployee(skipEmpName, mainTabType);
+    filterRPTableByEmployee(rpEmpName, mainRPTabType);
   }
 
   // Filter table based on employee name and main tab (Pending, Approved, Rejected)
-  function filterSkipTableByEmployee(employeeName, tabType) {
+  function filterRPTableByEmployee(employeeName, tabType) {
     let tableBody;
     let noRecordsMessage;
-    let tableSkip;
+    let tableRP;
 
-    const noRecordsByEmpMsg = document.getElementById(
-      "no-skip-records-message"
-    );
+    const noRecordsByEmpMsg = document.getElementById("no-rp-records-message");
     // Determine the table and message elements based on the active tab
-    if (tabType === "pendingSkip") {
-      tableBody = document.querySelector("#travelSkipPendingTable tbody");
-      noRecordsMessage = document.querySelector(".no-skip-pending-records");
-      tableSkip = document.getElementById("travelSkipPending");
-    } else if (tabType === "approvedSkip") {
-      tableBody = document.querySelector("#travelSkipApprovedTable tbody");
-      noRecordsMessage = document.querySelector(".no-skip-approved-records");
-      tableSkip = document.getElementById("travelSkipApproved");
-    } else if (tabType === "rejectedSkip") {
-      tableBody = document.querySelector("#travelSkipRejectTable tbody");
-      noRecordsMessage = document.querySelector(".no-skip-reject-records");
-      tableSkip = document.getElementById("travelSkipReject");
+    if (tabType === "pendingRP") {
+      tableBody = document.querySelector("#travelRPPendingTable tbody");
+      noRecordsMessage = document.querySelector(".no-rp-pending-records");
+      tableRP = document.getElementById("travelRPPending");
+    } else if (tabType === "approvedRP") {
+      tableBody = document.querySelector("#travelRPApprovedTable tbody");
+      noRecordsMessage = document.querySelector(".no-rp-approved-records");
+      tableRP = document.getElementById("travelRPApproved");
+    } else if (tabType === "rejectedRP") {
+      tableBody = document.querySelector("#travelRPRejectTable tbody");
+      noRecordsMessage = document.querySelector(".no-rp-reject-records");
+      tableRP = document.getElementById("travelRPReject");
     }
     console.log("table", tableBody);
     console.log("tabtype", tabType);
@@ -909,10 +968,10 @@
     // Handle no records message visibility
     if (visibleRows === 0) {
       noRecordsByEmpMsg.style.display = "block"; // Show "no records" message
-      tableSkip.style.display = "none"; // Hide table if no records found
+      tableRP.style.display = "none"; // Hide table if no records found
     } else {
       noRecordsByEmpMsg.style.display = "none"; // Hide "no records" message
-      tableSkip.style.display = "block"; // Show table if records are found
+      tableRP.style.display = "block"; // Show table if records are found
     }
     if (employeeName.toLowerCase() === "all") {
       noRecordsByEmpMsg.style.display = "none"; // Hide "no records" message
@@ -920,33 +979,31 @@
   }
 
   // fetch the count according to emp names
-  function renderSkipEmployeeTabs(empNames, countByEmp, tabType) {
-    const skipEmpTabs = document.getElementById("skipEmpTabs");
-    skipEmpTabs.innerHTML = ""; // Clear previous tabs
+  function renderRPEmployeeTabs(empNames, countByEmp, tabType) {
+    const rpEmpTabs = document.getElementById("rpEmpTabs");
+    rpEmpTabs.innerHTML = ""; // Clear previous tabs
 
     // Initialize total count for "All" tab
     let totalCount = 0;
 
     // Check if "All" tab already exists
-    const allTabExists = document.getElementById("all-skip-tab");
+    const allTabExists = document.getElementById("all-rp-tab");
 
     if (!allTabExists) {
       // Create the "All" tab
       const allTabItem = document.createElement("li");
-      allTabItem.className = "ta-skip-nav-item";
-      allTabItem.innerHTML = `
-            <button
-                class="ta-skip-nav-link active"
-                id="all-skip-tab"
-                data-bs-toggle="tab"
-                data-employee-name="all"
-                onclick="handleSkipTabClick('all', this)"
-            >
-                All
-                <span class="all-pending-count" id="allSkipPendingCount"></span>
-            </button>
-        `;
-      skipEmpTabs.appendChild(allTabItem);
+      allTabItem.className = "ta-rp-nav-item";
+      allTabItem.innerHTML = `<button
+                  class="ta-rp-nav-link active"
+                  id="all-rp-tab"
+                  data-bs-toggle="tab"
+                  data-employee-name="all"
+                  onclick="handleRPTabClick('all', this)"
+              >
+                  All
+                  <span class="all-pending-count" id="allRPPendingCount"></span>
+              </button>`;
+      rpEmpTabs.appendChild(allTabItem);
     }
 
     empNames.forEach((employee) => {
@@ -957,22 +1014,22 @@
       totalCount += count; // Add to total count
 
       const tabItem = document.createElement("li");
-      tabItem.className = "ta-skip-nav-item";
+      tabItem.className = "ta-rp-nav-item";
       tabItem.innerHTML = `<button
-                class="ta-skip-nav-link"
-                id="emp-skip-tab-${employeeId}"
-                data-bs-toggle="tab"
-                data-employee-name="${employeeFullName}"
-                onclick="handleSkipTabClick('${employeeFullName}', this)"
-              >
-                ${capitalizeFirstLetterOfEachWord(employeeFullName)}
-                <span class="emp-pending-count">${count || ""} </span>
-              </button>`;
-      skipEmpTabs.appendChild(tabItem);
+                  class="ta-rp-nav-link"
+                  id="emp-rp-tab-${employeeId}"
+                  data-bs-toggle="tab"
+                  data-employee-name="${employeeFullName}"
+                  onclick="handleRPTabClick('${employeeFullName}', this)"
+                >
+                  ${capitalizeFirstLetterOfEachWord(employeeFullName)}
+                  <span class="emp-pending-count">${count || ""} </span>
+                </button>`;
+      rpEmpTabs.appendChild(tabItem);
     });
 
     // Update "All" tab count
-    const allCountElement = document.getElementById("allSkipPendingCount");
+    const allCountElement = document.getElementById("allRPPendingCount");
     if (totalCount != 0) {
       allCountElement.innerText = totalCount; // Set total count for "All" tab
     } else {
@@ -980,15 +1037,14 @@
     }
   }
 
-  async function fetchPendingSkipRecords() {
-    const noRecordsByEmpMsg = document.getElementById(
-      "no-skip-records-message"
-    );
+  //Function to Fetch the pending records
+  async function fetchPendingRPRecords() {
+    const noRecordsByEmpMsg = document.getElementById("no-rp-records-message");
     noRecordsByEmpMsg.style.display = "none";
     try {
       // Fetch pending records
       const response = await fetch(
-        `/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_skip_records?user_id={{ frappe.session.user }}`
+        `/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_rp_records?user_id={{ frappe.session.user }}`
       );
 
       // Check if the response is ok (status code 200-299)
@@ -999,7 +1055,7 @@
       // Parse the JSON data from the response
       const data = await response.json();
 
-      console.log("data from skip:", data);
+      console.log("data from RP:", data);
 
       const pendingRecord = data.message.pending;
       const approvedRecord = data.message.approved;
@@ -1007,21 +1063,17 @@
       const empNames = data.message.employee_names;
       const countByEmp = data.message.employee_counts;
       const empPendingCount = countByEmp.pending;
-      console.log("skip data:", pendingRecord);
+      console.log("RP data:", pendingRecord);
       console.log("countByEmp:", countByEmp.pending);
 
       // Render employee tabs
-      renderSkipEmployeeTabs(empNames, countByEmp, "pending");
+      renderRPEmployeeTabs(empNames, countByEmp, "pending");
 
-      const tableBody = document.querySelector("#travelSkipPendingTable tbody");
-      const noRecordsMessage = document.querySelector(".no-skip-records");
-      const noPendingRecord = document.querySelector(
-        ".no-skip-pending-records"
-      );
+      const tableBody = document.querySelector("#travelRPPendingTable tbody");
+      const noRecordsMessage = document.querySelector(".no-rp-records");
+      const noPendingRecord = document.querySelector(".no-rp-pending-records");
 
-      const pendingTableHead = document.querySelector(
-        "#travelSkipPendingTable"
-      );
+      const pendinRPTableHead = document.querySelector("#travelRPPendingTable");
 
       if (!tableBody) {
         console.error("Error: Table body element not found.");
@@ -1033,16 +1085,16 @@
 
       if (pendingRecord.length === 0) {
         console.log("pendingRecord length:", pendingRecord.length);
-        pendingTableHead.style.display = "none";
+        pendinRPTableHead.style.display = "none";
         noPendingRecord.style.display = "block";
-        // document.querySelector(".main_skip_content").style.display = "none";
+        // document.querySelector(".main_rp_content").style.display = "none";
 
         if (approvedRecord.length != 0 || rejectedRecord.length != 0) {
           noRecordsMessage.style.display = "none";
-          document.querySelector(".main_skip_content").style.display = "block";
+          document.querySelector(".main_rp_content").style.display = "block";
         } else {
           noRecordsMessage.style.display = "block";
-          document.querySelector(".main_skip_content").style.display = "none";
+          document.querySelector(".main_rp_content").style.display = "none";
         }
       } else {
         noPendingRecord.style.display = "none";
@@ -1050,75 +1102,75 @@
           const row = document.createElement("tr");
 
           row.innerHTML = `
-                  <td class="fixed-serial">${index + 1}</td>
-                  <td><input type="checkbox" class="skipRowCheckbox" onclick="handleSkipCheckboxClick(this, '${
-                    record.name
-                  }')" /></td>
-
-                  
-                  <td>${record.first_name} ${record.last_name}</td>
-                  <td>${record.status}</td>
-                  <td>
-                    ${
-                      record.from_location === "Other"
-                        ? record.from_location_other
-                        : record.from_location
-                    }
-                  </td>
-
-                  <td>${formatDate(record.from_date)}</td>
-                  <td>${record.from_time}</td>
-                  <td>
-                    ${
-                      record.to_location === "Other"
-                        ? record.to_location_other
-                        : record.to_location
-                    }
-                  </td>
-                  <td>${formatDate(record.to_date)}</td>
-                  <td>${record.to_time}</td>
-                  <td>${record.total_time}</td>
-                  <td>${record.purpose}</td>
-                  <td>${record.travel_mode}</td>
-                  <td>${record.total_km}</td>
-                  <td>${record.ticket_amount}</td>
-                  <td>${
-                    record.upload_ticket
-                      ? `<a href="${record.upload_ticket}" target="_blank">View</a>`
-                      : "-"
-                  }</td>
-                  <td>${record.fare_amount}</td>
-                 <!-- <td>${record.allowance_type}</td>-->
-                  <td>${record.final_da_amount}</td>
-                  <td>${record.final_halt_amount}</td>
-                  <td>${record.final_lodge_amount}</td>
-                  <td>${
-                    record.upload_lodging
-                      ? `<a href="${record.upload_lodging}" target="_blank">View</a>`
-                      : "-"
-                  }</td>
-                  <td class="${
-                    record.final_local_amount &&
-                    record.final_local_amount.trim() !== "-" &&
-                    parseFloat(record.final_local_amount) !== 0
-                      ? "clickable"
-                      : ""
-                  }"
-                    data-record-id="${record.name}"
-                    ${
+                    <td class="fixed-serial">${index + 1}</td>
+                    <td><input type="checkbox" class="rpRowCheckbox" onclick="handleRPCheckboxClick(this, '${
+                      record.name
+                    }')" /></td>
+  
+                    
+                    <td>${record.first_name} ${record.last_name}</td>
+                    <td>${record.status}</td>
+                    <td>
+                      ${
+                        record.from_location === "Other"
+                          ? record.from_location_other
+                          : record.from_location
+                      }
+                    </td>
+  
+                    <td>${formatDate(record.from_date)}</td>
+                    <td>${record.from_time}</td>
+                    <td>
+                      ${
+                        record.to_location === "Other"
+                          ? record.to_location_other
+                          : record.to_location
+                      }
+                    </td>
+                    <td>${formatDate(record.to_date)}</td>
+                    <td>${record.to_time}</td>
+                    <td>${record.total_time}</td>
+                    <td>${record.purpose}</td>
+                    <td>${record.travel_mode}</td>
+                    <td>${record.total_km}</td>
+                    <td>${record.ticket_amount}</td>
+                    <td>${
+                      record.upload_ticket
+                        ? `<a href="${record.upload_ticket}" target="_blank">View</a>`
+                        : "-"
+                    }</td>
+                    <td>${record.fare_amount}</td>
+                   <!-- <td>${record.allowance_type}</td>-->
+                    <td>${record.final_da_amount}</td>
+                    <td>${record.final_halt_amount}</td>
+                    <td>${record.final_lodge_amount}</td>
+                    <td>${
+                      record.upload_lodging
+                        ? `<a href="${record.upload_lodging}" target="_blank">View</a>`
+                        : "-"
+                    }</td>
+                    <td class="${
                       record.final_local_amount &&
                       record.final_local_amount.trim() !== "-" &&
                       parseFloat(record.final_local_amount) !== 0
-                        ? `title="Click for Local details"`
+                        ? "clickable"
                         : ""
-                    }>
-                    ${record.final_local_amount || "-"}
-                  </td>
-                  <td class="fixed-total">${record.total_amount}</td>
-                  <td class="d-none" data-record-name="${record.name}">${
+                    }"
+                      data-record-id="${record.name}"
+                      ${
+                        record.final_local_amount &&
+                        record.final_local_amount.trim() !== "-" &&
+                        parseFloat(record.final_local_amount) !== 0
+                          ? `title="Click for Local details"`
+                          : ""
+                      }>
+                      ${record.final_local_amount || "-"}
+                    </td>
+                    <td class="fixed-total">${record.total_amount}</td>
+                    <td class="d-none" data-record-name="${record.name}">${
             record.name
           }</td>
-                `;
+                  `;
 
           // Add event listener to the final_local_amount cell if it has a clickable class
           const localConveyanceCell = row.querySelector(".clickable");
@@ -1150,17 +1202,19 @@
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize the first letter
       .join(" "); // Join the array back into a string
   }
-  // Function to handle checkbox click
-  window.handleSkipCheckboxClick = function (checkbox, recordName) {
+
+  // Function to handle checkbox click (check/unchecked)
+  window.handleRPCheckboxClick = function (checkbox, recordName) {
     if (checkbox.checked) {
-      console.log("Selected Skip Record Name: ", recordName);
+      console.log("Selected RP Record Name: ", recordName);
       checkbox.dataset.recordId = recordName; // Store record ID in checkbox dataset
     }
   };
 
-  function getSelectedSkipRows() {
+  // Get the select records as array....
+  function getSelectedRPRows() {
     const selectedRecords = [];
-    const checkboxes = document.querySelectorAll(".skipRowCheckbox:checked"); // Find all checked checkboxes
+    const checkboxes = document.querySelectorAll(".rpRowCheckbox:checked"); // Find all checked checkboxes
 
     checkboxes.forEach((checkbox) => {
       const recordName = checkbox
@@ -1173,12 +1227,12 @@
     return selectedRecords;
   }
 
-  // Function to handle the approval process for skip-level records
-  async function approveSelectedSkipRecords() {
-    const selectedRows = getSelectedSkipRows();
-    console.log("selected rows:", selectedRows);
+  // Function to handle the approval process for RP-level records
+  async function approveSelectedRPRecords() {
+    const selectedRPRows = getSelectedRPRows();
+    console.log("selected rows:", selectedRPRows);
 
-    if (selectedRows.length === 0) {
+    if (selectedRPRows.length === 0) {
       Swal.fire({
         icon: "warning",
         title: "No records selected",
@@ -1190,7 +1244,7 @@
     // Ask for confirmation before proceeding with approval
     const { value: confirm } = await Swal.fire({
       title: "Are you sure?",
-      text: `You are about to approve ${selectedRows.length} record(s).`,
+      text: `You are about to approve ${selectedRPRows.length} record(s).`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Yes, approve!",
@@ -1222,13 +1276,13 @@
 
           // Pass the selected rows and remark to your server in the fetch call
           const response = await fetch(
-            "/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.bulk_skip_approve",
+            "/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.bulk_rp_approve",
             {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ ids: selectedRows, remark: remark }),
+              body: JSON.stringify({ ids: selectedRPRows, remark: remark }),
             }
           );
 
@@ -1263,7 +1317,7 @@
               // Refresh the entire page
               window.location.reload();
               // Optionally, refresh other data if needed
-              //fetchPendingSkipRecords();
+              //fetchPendingRPRecords();
               //fetchTabCounts();
 
               // Close the loading message after the refresh
@@ -1284,15 +1338,15 @@
 
   // Event listener for the approve button
   document
-    .getElementById("approveButtonSkip")
-    .addEventListener("click", approveSelectedSkipRecords);
+    .getElementById("approveButtonRP")
+    .addEventListener("click", approveSelectedRPRecords);
 
-  // Function to handle the rejection process
-  async function rejectSelectedSkipRecords() {
-    const selectedRows = getSelectedSkipRows();
-    console.log("selected rows:", selectedRows);
+  // Function to handle the rejection process for RP-level records
+  async function rejectSelectedRPRecords() {
+    const selectedRPRows = getSelectedRPRows();
+    console.log("selected rows:", selectedRPRows);
 
-    if (selectedRows.length === 0) {
+    if (selectedRPRows.length === 0) {
       Swal.fire({
         icon: "warning",
         title: "No records selected",
@@ -1326,7 +1380,7 @@
       // Ask for confirmation before proceeding with rejection
       const { value: confirm } = await Swal.fire({
         title: "Are you sure?",
-        text: `You are about to reject ${selectedRows.length} record(s).`,
+        text: `You are about to reject ${selectedRPRows.length} record(s).`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: "Yes, reject!",
@@ -1337,13 +1391,13 @@
         try {
           // Pass these record names and remark to your server in the fetch call
           const response = await fetch(
-            "/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.bulk_skip_reject",
+            "/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.bulk_rp_reject",
             {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ ids: selectedRows, remark: remark }), // Include remark
+              body: JSON.stringify({ ids: selectedRPRows, remark: remark }), // Include remark
             }
           );
 
@@ -1372,8 +1426,8 @@
             setTimeout(() => {
               // Refresh the entire page
               window.location.reload();
-              fetchPendingRecords(); // Refresh the table
-              fetchTabCounts();
+              // fetchPendingRecords(); // Refresh the table
+              //fetchTabCounts();
               Swal.close(); // Close the loading message
             }, 1500); // Adjust the delay time as needed
           });
@@ -1391,15 +1445,15 @@
 
   // Event listener for the reject button
   document
-    .getElementById("rejectButtonSkip")
-    .addEventListener("click", rejectSelectedSkipRecords);
+    .getElementById("rejectButtonRP")
+    .addEventListener("click", rejectSelectedRPRecords);
 
-  //Fetch Approved Records
-  async function fetchApprovedSkipRecords() {
+  //function to Fetch Approved Records
+  async function fetchApprovedRPRecords() {
     try {
-      // Make a fetch request to get approved skip records
+      // Make a fetch request to get approved RP records
       const response = await fetch(
-        `/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_skip_records?user_id={{ frappe.session.user }}`
+        `/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_rp_records?user_id={{ frappe.session.user }}`
       );
 
       // Check if the response status is okay
@@ -1409,7 +1463,7 @@
 
       // Parse the JSON data from the response
       const data = await response.json();
-      console.log("Approved skip records:", data.message.approved);
+      console.log("Approved RP records:", data.message.approved);
 
       // Process the approved records (assuming the data structure contains an 'approved' field)
       const approvedRecords = data.message.approved;
@@ -1417,39 +1471,37 @@
       const countByEmp = data.message.employee_counts;
 
       // Render employee tabs with names and count
-      renderSkipEmployeeTabs(empNames, countByEmp, "approved");
+      renderRPEmployeeTabs(empNames, countByEmp, "approved");
 
       // Check if "All" emp tab exists
-      const allTabExists = document.getElementById("all-skip-tab");
+      const allTabExists = document.getElementById("all-rp-tab");
 
       const noRecordsByEmpMsg = document.getElementById(
-        "no-skip-records-message"
+        "no-rp-records-message"
       );
       noRecordsByEmpMsg.style.display = "none";
 
-      const tableSkipPending = document.getElementById(
-        "travelSkipPendingTable"
-      );
-      if (tableSkipPending) {
-        tableSkipPending.style.display = "none"; // hide pending records table
+      const tableRPPending = document.getElementById("travelRPPendingTable");
+      if (tableRPPending) {
+        tableRPPending.style.display = "none"; // hide pending records table
       }
 
-      const tableSkipBody = document.querySelector(
-        "#travelSkipApprovedTable tbody"
+      const tableRPBody = document.querySelector(
+        "#travelRPApprovedTable tbody"
       );
 
-      const noSkipApprovedRecords = document.querySelector(
-        ".no-skip-approved-records"
+      const noRPApprovedRecords = document.querySelector(
+        ".no-rp-approved-records"
       );
-      const approvedTableHead = document.querySelector(
-        "#travelSkipApprovedTable"
+      const approvedRPTableHead = document.querySelector(
+        "#travelRPApprovedTable"
       );
 
-      if (!tableSkipBody) {
+      if (!tableRPBody) {
         console.error("Error: Table body element not found.");
         return;
       }
-      tableSkipBody.innerHTML = "";
+      tableRPBody.innerHTML = "";
 
       // Perform necessary actions, e.g., updating the UI with approved records
       if (approvedRecords.length > 0) {
@@ -1460,70 +1512,70 @@
           const row = document.createElement("tr");
 
           row.innerHTML = `
-                <td class="fixed-serial">${index + 1}</td>
-                <td class="d-none" data-record-name="${record.name}">${
+                  <td class="fixed-serial">${index + 1}</td>
+                  <td class="d-none" data-record-name="${record.name}">${
             record.name
           }</td>
-                <td>${record.first_name} ${record.last_name}</td>
-                <td>${record.status}</td>
-                <td>
-                  ${
-                    record.from_location === "Other"
-                      ? record.from_location_other
-                      : record.from_location
-                  }
-                </td>
-
-                <td>${formatDate(record.from_date)}</td>
-                <td>${record.from_time}</td>
-                <td>
-                  ${
-                    record.to_location === "Other"
-                      ? record.to_location_other
-                      : record.to_location
-                  }
-                </td>
-                <td>${formatDate(record.to_date)}</td>
-                <td>${record.to_time}</td>
-                <td>${record.total_time}</td>
-                <td>${record.purpose}</td>
-                <td>${record.travel_mode}</td>
-                <td>${record.total_km}</td>
-                <td>${record.ticket_amount}</td>
-                <td>${
-                  record.upload_ticket
-                    ? `<a href="${record.upload_ticket}" target="_blank">View</a>`
-                    : "-"
-                }</td>
-                <td>${record.fare_amount}</td>
-                <!-- <td>${record.allowance_type}</td>-->
-                <td>${record.final_da_amount}</td>
-                <td>${record.final_halt_amount}</td>
-                <td>${record.final_lodge_amount}</td>
-                <td>${
-                  record.upload_lodging
-                    ? `<a href="${record.upload_lodging}" target="_blank">View</a>`
-                    : "-"
-                }</td>
-                <td class="${
-                  record.final_local_amount &&
-                  record.final_local_amount.trim() !== "-" &&
-                  parseFloat(record.final_local_amount) !== 0
-                    ? "clickable"
-                    : ""
-                }"
-                  data-record-id="${record.name}"
-                  ${
+                  <td>${record.first_name} ${record.last_name}</td>
+                  <td>${record.status}</td>
+                  <td>
+                    ${
+                      record.from_location === "Other"
+                        ? record.from_location_other
+                        : record.from_location
+                    }
+                  </td>
+  
+                  <td>${formatDate(record.from_date)}</td>
+                  <td>${record.from_time}</td>
+                  <td>
+                    ${
+                      record.to_location === "Other"
+                        ? record.to_location_other
+                        : record.to_location
+                    }
+                  </td>
+                  <td>${formatDate(record.to_date)}</td>
+                  <td>${record.to_time}</td>
+                  <td>${record.total_time}</td>
+                  <td>${record.purpose}</td>
+                  <td>${record.travel_mode}</td>
+                  <td>${record.total_km}</td>
+                  <td>${record.ticket_amount}</td>
+                  <td>${
+                    record.upload_ticket
+                      ? `<a href="${record.upload_ticket}" target="_blank">View</a>`
+                      : "-"
+                  }</td>
+                  <td>${record.fare_amount}</td>
+                  <!-- <td>${record.allowance_type}</td>-->
+                  <td>${record.final_da_amount}</td>
+                  <td>${record.final_halt_amount}</td>
+                  <td>${record.final_lodge_amount}</td>
+                  <td>${
+                    record.upload_lodging
+                      ? `<a href="${record.upload_lodging}" target="_blank">View</a>`
+                      : "-"
+                  }</td>
+                  <td class="${
                     record.final_local_amount &&
                     record.final_local_amount.trim() !== "-" &&
                     parseFloat(record.final_local_amount) !== 0
-                      ? `title="Click for Local details"`
+                      ? "clickable"
                       : ""
-                  }>
-                  ${record.final_local_amount || "-"}
-                </td>
-                <td class="fixed-total">${record.total_amount}</td>
-              `;
+                  }"
+                    data-record-id="${record.name}"
+                    ${
+                      record.final_local_amount &&
+                      record.final_local_amount.trim() !== "-" &&
+                      parseFloat(record.final_local_amount) !== 0
+                        ? `title="Click for Local details"`
+                        : ""
+                    }>
+                    ${record.final_local_amount || "-"}
+                  </td>
+                  <td class="fixed-total">${record.total_amount}</td>
+                `;
           // Add event listener to the final_local_amount cell if it has a clickable class
           const localConveyanceCell = row.querySelector(".clickable");
           if (localConveyanceCell) {
@@ -1536,17 +1588,17 @@
           }
 
           // Append the row to the approved table body
-          tableSkipBody.appendChild(row);
+          tableRPBody.appendChild(row);
         });
       } else {
         approvedTableHead.style.display = "none";
-        noSkipApprovedRecords.style.display = "block"; // show the no record message
+        noRPApprovedRecords.style.display = "block"; // show the no record message
         if (allTabExists.classList.contains("active")) {
           noRecordsByEmpMsg.style.display = "none";
         }
       }
     } catch (error) {
-      console.error("Error fetching approved skip records:", error);
+      console.error("Error fetching approved RP records:", error);
       Swal.fire({
         icon: "error",
         title: "Error",
@@ -1555,12 +1607,12 @@
     }
   }
 
-  //Fetch Reject Records
-  async function fetchRejectedSkipRecords() {
+  //Function to Fetch Rejected Records
+  async function fetchRejectedRPRecords() {
     try {
-      // Make a fetch request to get approved skip records
+      // Make a fetch request to get approved RP records
       const response = await fetch(
-        `/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_skip_records?user_id={{ frappe.session.user }}`
+        `/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_rp_records?user_id={{ frappe.session.user }}`
       );
 
       // Check if the response status is okay
@@ -1570,7 +1622,7 @@
 
       // Parse the JSON data from the response
       const data = await response.json();
-      console.log("Approved skip records:", data.message.rejected);
+      console.log("Approved RP records:", data.message.rejected);
 
       // Process the approved records (assuming the data structure contains an 'approved' field)
       const rejetedRecords = data.message.rejected;
@@ -1578,29 +1630,25 @@
       const countByEmp = data.message.employee_counts;
 
       // Render employee tabs to fetch count by emp
-      renderSkipEmployeeTabs(empNames, countByEmp, "rejected");
+      renderRPEmployeeTabs(empNames, countByEmp, "rejected");
 
       // Check if "All" emp tab exists
-      const allTabExists = document.getElementById("all-skip-tab");
+      const allTabExists = document.getElementById("all-rp-tab");
 
       const noRecordsByEmpMsg = document.getElementById(
-        "no-skip-records-message"
+        "no-rp-records-message"
       );
 
-      const tableSkipBody = document.querySelector(
-        "#travelSkipRejectTable tbody"
-      );
+      const tableRPBody = document.querySelector("#travelRPRejectTable tbody");
 
-      const noSkipRejectRecords = document.querySelector(
-        ".no-skip-reject-records"
-      );
-      const rejectTableHead = document.querySelector("#travelSkipRejectTable");
+      const noRPRejectRecords = document.querySelector(".no-rp-reject-records");
+      const rejectRPTableHead = document.querySelector("#travelRPRejectTable");
 
-      if (!tableSkipBody) {
+      if (!tableRPBody) {
         console.error("Error: Table body element not found.");
         return;
       }
-      tableSkipBody.innerHTML = "";
+      tableRPBody.innerHTML = "";
 
       // Perform necessary actions, e.g., updating the UI with approved records
       if (rejetedRecords.length > 0) {
@@ -1611,70 +1659,70 @@
           const row = document.createElement("tr");
 
           row.innerHTML = `
-                <td class="fixed-serial">${index + 1}</td>
-                <td class="d-none" data-record-name="${record.name}">${
+                  <td class="fixed-serial">${index + 1}</td>
+                  <td class="d-none" data-record-name="${record.name}">${
             record.name
           }</td>
-                <td>${record.first_name} ${record.last_name}</td>
-                <td>${record.status}</td>
-                <td>
-                  ${
-                    record.from_location === "Other"
-                      ? record.from_location_other
-                      : record.from_location
-                  }
-                </td>
-
-                <td>${formatDate(record.from_date)}</td>
-                <td>${record.from_time}</td>
-                <td>
-                  ${
-                    record.to_location === "Other"
-                      ? record.to_location_other
-                      : record.to_location
-                  }
-                </td>
-                <td>${formatDate(record.to_date)}</td>
-                <td>${record.to_time}</td>
-                <td>${record.total_time}</td>
-                <td>${record.purpose}</td>
-                <td>${record.travel_mode}</td>
-                <td>${record.total_km}</td>
-                <td>${record.ticket_amount}</td>
-                <td>${
-                  record.upload_ticket
-                    ? `<a href="${record.upload_ticket}" target="_blank">View</a>`
-                    : "-"
-                }</td>
-                <td>${record.fare_amount}</td>
-                <!-- <td>${record.allowance_type}</td>-->
-                <td>${record.final_da_amount}</td>
-                <td>${record.final_halt_amount}</td>
-                <td>${record.final_lodge_amount}</td>
-                <td>${
-                  record.upload_lodging
-                    ? `<a href="${record.upload_lodging}" target="_blank">View</a>`
-                    : "-"
-                }</td>
-                <td class="${
-                  record.final_local_amount &&
-                  record.final_local_amount.trim() !== "-" &&
-                  parseFloat(record.final_local_amount) !== 0
-                    ? "clickable"
-                    : ""
-                }"
-                  data-record-id="${record.name}"
-                  ${
+                  <td>${record.first_name} ${record.last_name}</td>
+                  <td>${record.status}</td>
+                  <td>
+                    ${
+                      record.from_location === "Other"
+                        ? record.from_location_other
+                        : record.from_location
+                    }
+                  </td>
+  
+                  <td>${formatDate(record.from_date)}</td>
+                  <td>${record.from_time}</td>
+                  <td>
+                    ${
+                      record.to_location === "Other"
+                        ? record.to_location_other
+                        : record.to_location
+                    }
+                  </td>
+                  <td>${formatDate(record.to_date)}</td>
+                  <td>${record.to_time}</td>
+                  <td>${record.total_time}</td>
+                  <td>${record.purpose}</td>
+                  <td>${record.travel_mode}</td>
+                  <td>${record.total_km}</td>
+                  <td>${record.ticket_amount}</td>
+                  <td>${
+                    record.upload_ticket
+                      ? `<a href="${record.upload_ticket}" target="_blank">View</a>`
+                      : "-"
+                  }</td>
+                  <td>${record.fare_amount}</td>
+                  <!-- <td>${record.allowance_type}</td>-->
+                  <td>${record.final_da_amount}</td>
+                  <td>${record.final_halt_amount}</td>
+                  <td>${record.final_lodge_amount}</td>
+                  <td>${
+                    record.upload_lodging
+                      ? `<a href="${record.upload_lodging}" target="_blank">View</a>`
+                      : "-"
+                  }</td>
+                  <td class="${
                     record.final_local_amount &&
                     record.final_local_amount.trim() !== "-" &&
                     parseFloat(record.final_local_amount) !== 0
-                      ? `title="Click for Local details"`
+                      ? "clickable"
                       : ""
-                  }>
-                  ${record.final_local_amount || "-"}
-                </td>
-                <td class="fixed-total">${record.total_amount}</td>
-              `;
+                  }"
+                    data-record-id="${record.name}"
+                    ${
+                      record.final_local_amount &&
+                      record.final_local_amount.trim() !== "-" &&
+                      parseFloat(record.final_local_amount) !== 0
+                        ? `title="Click for Local details"`
+                        : ""
+                    }>
+                    ${record.final_local_amount || "-"}
+                  </td>
+                  <td class="fixed-total">${record.total_amount}</td>
+                `;
           // Add event listener to the final_local_amount cell if it has a clickable class
           const localConveyanceCell = row.querySelector(".clickable");
           if (localConveyanceCell) {
@@ -1687,17 +1735,17 @@
           }
 
           // Append the row to the approved table body
-          tableSkipBody.appendChild(row);
+          tableRPBody.appendChild(row);
         });
       } else {
-        rejectTableHead.style.display = "none";
-        noSkipRejectRecords.style.display = "block"; // show the no record message
+        rejectRPTableHead.style.display = "none";
+        noRPRejectRecords.style.display = "block"; // show the no record message
         if (allTabExists.classList.contains("active")) {
           noRecordsByEmpMsg.style.display = "none";
         }
       }
     } catch (error) {
-      console.error("Error fetching approved skip records:", error);
+      console.error("Error fetching approved RP records:", error);
       Swal.fire({
         icon: "error",
         title: "Error",

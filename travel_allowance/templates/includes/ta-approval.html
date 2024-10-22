@@ -137,7 +137,7 @@
 
   /* Pending count styles */
   .pending-count {
-    color: red;
+    /*color: red;*/
     font-weight: bold;
     margin-left: 5px;
   }
@@ -153,7 +153,7 @@
     margin-left: 5px;
   }
 
-  .main-container {
+  .main-rp-container {
     border-radius: 8px;
     border: 1px solid #999393;
   }
@@ -185,15 +185,6 @@
     color: #333;
     font-weight: bold;
     text-align: center;
-  }
-
-  /* Zebra striping */
-  table#travelAllowancesTable tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-
-  table#travelAllowancesTable tbody tr:nth-child(odd) {
-    background-color: #fff;
   }
 
   /* Hover effects */
@@ -272,15 +263,6 @@
     text-align: center;
   }
 
-  /* Zebra striping for approved records */
-  table#travelAllowancesApprovedTable tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-
-  table#travelAllowancesApprovedTable tbody tr:nth-child(odd) {
-    background-color: #fff;
-  }
-
   /* Hover effects for approved records */
   table#travelAllowancesApprovedTable tbody tr:hover {
     background-color: #f1f1f1;
@@ -356,15 +338,6 @@
     color: #721c24; /* Dark red text color */
     font-weight: bold;
     text-align: center;
-  }
-
-  /* Zebra striping for rejected records */
-  table#travelAllowancesRejectTable tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-
-  table#travelAllowancesRejectTable tbody tr:nth-child(odd) {
-    background-color: #fff;
   }
 
   /* Hover effects for rejected records */
@@ -472,21 +445,21 @@
     outline: none;
   }
 
-  /* Fixed Serial Number Column */
+  /* Fixed Serial Number Column 
   .fixed-serial {
     position: sticky;
     left: 0;
-    background-color: #302727; /* Adjust based on your design */
+    background-color: #302727;
     z-index: 2;
   }
 
-  /* Fixed Total Column */
+ 
   .fixed-total {
     position: sticky;
     right: 0;
 
     z-index: 2;
-  }
+  }*/
 
   .hidden {
     display: none;
@@ -551,7 +524,7 @@
   }
 </style>
 
-<div class="main_content">
+<div class="main_rp_content">
   <div class="container-fluid">
     <div class="row">
       <div class="col-12 d-flex px-0">
@@ -568,7 +541,7 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
+            <ul class="navbar-nav me-auto ta-rp-nav">
               <li class="nav-item">
                 <a
                   class="nav-link active"
@@ -630,7 +603,7 @@
   </div>
 
   <!--Employee Tabs -->
-  <div class="container-fluid main-container">
+  <div class="container-fluid main-rp-container">
     <div class="row">
       <ul class="nav nav-tabs ta_navbar" id="employeeTabs" role="tablist">
         <li class="ta-nav-item">
@@ -938,7 +911,7 @@
 
       tableContainer.style.display = "block";
 
-      const mainContent = document.querySelector(".main_content");
+      const mainContent = document.querySelector(".main_rp_content");
 
       //const noRecordsMessage = document.querySelector(".ta_navbar");
 
@@ -1234,7 +1207,7 @@
         "#travelAllowancesApprovedTable tbody"
       );
       const noRecordsMessage = document.querySelector(".no-approved-records");
-      const mainContent = document.querySelector(".main_content");
+      const mainContent = document.querySelector(".main_rp_content");
 
       approvedTableContainer.style.display = "block";
 
@@ -1320,7 +1293,16 @@
                 </td>
                 <td class="fixed-total">${record.total_amount}</td>
               `;
-
+          // Add event listener to the final_local_amount cell if it has a clickable class
+          const localConveyanceCell = row.querySelector(".clickable");
+          if (localConveyanceCell) {
+            localConveyanceCell.addEventListener("click", () => {
+              const recordId =
+                localConveyanceCell.getAttribute("data-record-id");
+              console.log(recordId);
+              fetchLocalConveyance(recordId); // Fetch the local conveyance records
+            });
+          }
           // Append the row to the approved table body
           approvedTableBody.appendChild(row);
         });
@@ -1398,7 +1380,7 @@
         "#travelAllowancesRejectTable tbody"
       );
       const noRecordsMessage = document.querySelector(".no-rejected-records");
-      const mainContent = document.querySelector(".main_content");
+      const mainContent = document.querySelector(".main_rp_content");
 
       rejectedTableContainer.style.display = "block";
 
@@ -1484,6 +1466,16 @@
                 </td>
                 <td class="fixed-total">${record.total_amount}</td>
               `;
+          // Add event listener to the final_local_amount cell if it has a clickable class
+          const localConveyanceCell = row.querySelector(".clickable");
+          if (localConveyanceCell) {
+            localConveyanceCell.addEventListener("click", () => {
+              const recordId =
+                localConveyanceCell.getAttribute("data-record-id");
+              console.log(recordId);
+              fetchLocalConveyance(recordId); // Fetch the local conveyance records
+            });
+          }
 
           // Append the row to the rejected table body
           rejectedTableBody.appendChild(row);
@@ -1522,6 +1514,7 @@
   }
 
   // Function to handle the approval process
+  // Function to handle the approval process
   async function approveSelectedRecords() {
     const selectedRows = getSelectedRows();
     console.log("selected rows:", selectedRows);
@@ -1546,73 +1539,85 @@
     });
 
     if (confirm) {
-      try {
-        // Show the "Please wait" message during the approval process
-        Swal.fire({
-          title: "Please wait...",
-          text: "Approving records...",
-          allowOutsideClick: false,
-          didOpen: () => {
-            Swal.showLoading();
-          },
-        });
+      // Ask for a remark or comment
+      const { value: remark } = await Swal.fire({
+        title: "Add Remark",
+        input: "textarea",
+        inputPlaceholder: "Enter your remark or comment here...",
+        showCancelButton: true,
+        confirmButtonText: "Submit Remark",
+        cancelButtonText: "Cancel",
+      });
 
-        // Pass the record names to your server in the fetch call
-        const response = await fetch(
-          "/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.bulk_approve",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ ids: selectedRows }),
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const result = await response.json();
-
-        // Close the previous "Please wait" message
-        Swal.close();
-
-        // Show the success message and then a "Please wait" message while refreshing
-        Swal.fire({
-          title: "Approved!",
-          text: "All records have been processed for approval.",
-          icon: "success",
-          confirmButtonText: "OK",
-        }).then(() => {
+      if (remark) {
+        try {
+          // Show the "Please wait" message during the approval process
           Swal.fire({
-            title: "Please wait",
-            text: "Refreshing the page...",
+            title: "Please wait...",
+            text: "Approving records...",
             allowOutsideClick: false,
-            allowEscapeKey: false,
             didOpen: () => {
               Swal.showLoading();
             },
           });
 
-          // Add a delay before refreshing the table
-          setTimeout(() => {
-            // Refresh the entire page
-            window.location.reload();
-            // Refresh the table
-            fetchPendingRecords();
-            fetchTabCounts();
-            // Close the loading message after the refresh
-            Swal.close();
-          }, 1500); // Adjust the delay time as needed
-        });
-      } catch (error) {
-        console.error("Error:", error);
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "An error occurred while approving records.",
-        });
+          // Pass the selected rows and remark to your server in the fetch call
+          const response = await fetch(
+            "/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.bulk_approve",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ ids: selectedRows, remark: remark }),
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+
+          const result = await response.json();
+
+          // Close the previous "Please wait" message
+          Swal.close();
+
+          // Show the success message and then a "Please wait" message while refreshing
+          Swal.fire({
+            title: "Approved!",
+            text: "Records have been processed for approval.",
+            icon: "success",
+            confirmButtonText: "OK",
+          }).then(() => {
+            Swal.fire({
+              title: "Please wait",
+              text: "Refreshing the page...",
+              allowOutsideClick: false,
+              allowEscapeKey: false,
+              didOpen: () => {
+                Swal.showLoading();
+              },
+            });
+
+            // Add a delay before refreshing the table
+            setTimeout(() => {
+              // Refresh the entire page
+              window.location.reload();
+              // Refresh the table
+              fetchPendingRecords();
+              fetchTabCounts();
+              // Close the loading message after the refresh
+              Swal.close();
+            }, 1500); // Adjust the delay time as needed
+          });
+        } catch (error) {
+          console.error("Error:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "An error occurred while approving records.",
+          });
+        }
       }
     }
   }
@@ -1621,88 +1626,6 @@
   document
     .getElementById("approveButton")
     .addEventListener("click", approveSelectedRecords);
-
-  // Function to handle the rejection process
-  /*async function rejectSelectedRecords() {
-        const selectedRows = getSelectedRows();
-        console.log("selected rows:", selectedRows);
-        if (selectedRows.length === 0) {
-          Swal.fire({
-            icon: "warning",
-            title: "No records selected",
-            text: "Please select at least one record to reject.",
-          });
-          return;
-        }
-
-        // Ask for confirmation before proceeding with rejection
-        const { value: confirm } = await Swal.fire({
-          title: "Are you sure?",
-          text: `You are about to reject ${selectedRows.length} record(s).`,
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonText: "Yes, reject!",
-          cancelButtonText: "Cancel",
-        });
-
-        if (confirm) {
-          try {
-            // Pass these record names to your server in the fetch call
-            const response = await fetch(
-              "/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.bulk_reject",
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ ids: selectedRows }), // 'ids' contains record names
-              }
-            );
-
-            if (!response.ok) {
-              throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            const result = await response.json();
-
-            Swal.fire({
-              title: "Rejected!",
-              text: "Selected records have been rejected.",
-              icon: "success",
-              confirmButtonText: "OK", // Show the confirm button with 'OK' text
-            }).then(() => {
-              Swal.fire({
-                title: "Please wait",
-                text: "Refreshing the page...",
-                allowOutsideClick: false, // Prevent users from closing the alert
-                allowEscapeKey: false, // Prevent closing by pressing the escape key
-                didOpen: () => {
-                  Swal.showLoading(); // Show loading spinner
-                },
-              });
-              // Add a delay before refreshing the table
-              setTimeout(() => {
-                // Refresh the table
-                fetchPendingRecords();
-
-                // Close the loading message after the refresh
-                Swal.close();
-              }, 1500); // Adjust the delay time as needed
-            });
-          } catch (error) {
-            console.error("Error:", error);
-            Swal.fire({
-              icon: "error",
-              title: "Error",
-              text: "An error occurred while rejecting records.",
-            });
-          }
-        }
-      }*/
-  // Event listener for the approve button
-  /* document
-        .getElementById("rejectButton")
-        .addEventListener("click", rejectSelectedRecords);*/
 
   // Function to handle the rejection process
   async function rejectSelectedRecords() {
