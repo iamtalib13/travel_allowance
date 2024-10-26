@@ -17,6 +17,10 @@ class TravelAllowances(Document):
         self.first_name= frappe.db.get_value('Employee', self.employee_id, 'first_name')
         self.last_name= frappe.db.get_value('Employee', self.employee_id, 'last_name')
         
+        self.emp_branch= frappe.db.get_value('Employee', self.employee_id, 'branch')
+        self.region= frappe.db.get_value('Employee', self.employee_id, 'region')
+        self.division= frappe.db.get_value('Employee', self.employee_id, 'division')
+        
         # Retrieve the designation from the Employee doctype
         self.designation = frappe.db.get_value('Employee', self.employee_id, 'designation')
         
@@ -24,10 +28,29 @@ class TravelAllowances(Document):
         
         self.higher_reporting_person_user_id= frappe.db.get_value('Employee', self.employee_id, 'higher_reporting_employee_id')
 
+        # Retrieve the branch for the reporting person
+        if self.reporting_person_user_id:
+            reporting_person_id = self.reporting_person_user_id.split('@')[0]  # Extracting employee ID
+            reporting_person_branch = frappe.db.get_value('Employee', reporting_person_id, 'branch')
+
+        # Retrieve the branch for the higher reporting person
+        if self.higher_reporting_person_user_id:
+            higher_reporting_person_id = self.higher_reporting_person_user_id.split('@')[0]  # Extracting employee ID
+            higher_reporting_person_branch = frappe.db.get_value('Employee', higher_reporting_person_id, 'branch')
         
+        # Logic to set level_3_user_id based on branch conditions
+        # if reporting_person_branch == higher_reporting_person_branch == 'Gondia HO':
+        #     self.level_3_user_id = '38@sahayog.com'
+        # elif reporting_person_branch != 'Gondia HO' and higher_reporting_person_branch == 'Gondia HO':
+        #     self.level_3_user_id = '38@sahayog.com'
+        # elif reporting_person_branch == higher_reporting_person_branch != 'Gondia HO':
+        #     # Fetch the Branch Officer user ID of the respective employee's branch
+        #     branch_officer_user_id = frappe.db.get_value('Employee', {'branch': reporting_person_branch, 'designation':'Branch Officer'}, 'user_id')  # Adjust the field name accordingly
+        #     self.level_3_user_id = branch_officer_user_id if branch_officer_user_id else None
+            
         # Retrieve the ta_category from the Designation doctype based on the designation
         if self.designation:
-            self.ta_category = frappe.db.get_value('Designation', self.designation, 'ta_category')
+                self.ta_category = frappe.db.get_value('Designation', self.designation, 'ta_category')
         
 
         # Extract month and year from self.from_date
@@ -35,6 +58,7 @@ class TravelAllowances(Document):
             from_date = datetime.strptime(self.from_date, '%Y-%m-%d')
             self.month = from_date.strftime('%B')  # Full month name, e.g., 'January'
             self.year = from_date.year
+
 
 
 @frappe.whitelist()
@@ -998,6 +1022,9 @@ def get_rp_records(user_id):
         frappe.log_error(f"Error in get_rp_records: {str(e)}")
         frappe.throw("An error occurred while fetching data.")
         
+        
+
+        
 #For higher Reporting person get reportee(emp) names
 @frappe.whitelist()
 def get_employee_names_for_rp(user_id):
@@ -1163,6 +1190,59 @@ def get_employee_names_for_skip(user_id):
     except Exception as e:
         frappe.log_error(f"Error in get_employee_names: {str(e)}")
         frappe.throw("An error occurred while fetching data.")
+        
+        
+# Get records for Finance department for approval
+@frappe.whitelist(allow_guest=True)
+def get_taTeam_records():
+    # Hardcoded user_id
+    user_id = "38@sahayog.com"
+
+    try:
+        # Query for pending travel allowance records for the hardcoded user_id
+        ta_pending_query = """
+            SELECT *
+            FROM `tabTravel Allowances` 
+            WHERE reporting_person_user_id = %s
+            AND status = 'Pending' AND status_stage_1 = 'Pending'
+            ORDER BY modified DESC
+        """
+        ta_pending_result = frappe.db.sql(ta_pending_query, user_id, as_dict=True)
+
+        # Query for approved travel allowance records
+        ta_approved_query = """
+            SELECT *
+            FROM `tabTravel Allowances`
+            WHERE reporting_person_user_id = %s
+            AND status_stage_1 = 'Approved' 
+            AND approved_by_stage_1 = %s
+            ORDER BY modified DESC
+        """
+        ta_approved_result = frappe.db.sql(ta_approved_query, (user_id, user_id), as_dict=True)
+
+        # Query for rejected travel allowance records
+        ta_rejected_query = """
+            SELECT *
+            FROM `tabTravel Allowances`
+            WHERE reporting_person_user_id = %s
+            AND status_stage_1 = 'Reject'
+            AND rejected_by_stage_1 = %s
+            ORDER BY modified DESC
+        """
+        ta_rejected_result = frappe.db.sql(ta_rejected_query, (user_id, user_id), as_dict=True)
+
+        # Return the records as a dictionary
+        return {
+            "pending": ta_pending_result,
+            "approved": ta_approved_result,
+            "rejected": ta_rejected_result
+        }
+
+    except Exception as e:
+        frappe.log_error(f"Error in get_taTeam_records: {str(e)}")
+        frappe.throw("An error occurred while fetching data.")
+
+    
 
 
 # Get the user type
@@ -1224,3 +1304,34 @@ def get_user_roles():
         'is_finance_user': len(is_finance_user) > 0 and user_id == finance_user_id,  # True if user is Finance User
         'user_type': user_type  # List of roles the user has
     }
+
+
+@frappe.whitelist(allow_guest=True)
+def get_user_info():
+    user = frappe.session.user
+    
+    # Fetch detailed user information from Employee doctype
+    employee_info = frappe.db.get_value('Employee', 
+                                        {'user_id': user}, 
+                                        ['department', 'division', 'zone', 'region', 'branch', 'district', 
+                                         'employee_name', 'reporting_employee', 'reporting_employee_user_id', 
+                                         'reporting_employee_email', 'reporting_person_designation', 
+                                         'designation', 'first_name', 'last_name', 'user_id'], 
+                                        as_dict=True)
+
+    if employee_info:
+        # Optionally, fetch additional details from User doctype if needed
+        user_info = frappe.db.get_value('User', 
+                                        {'name': user}, 
+                                        ['email'], 
+                                        as_dict=True)
+        
+        # Combine both results (if needed)
+        if user_info:
+            employee_info.update({'email': user_info.get('email')})
+
+        return employee_info
+    else:
+        frappe.throw("Employee information not found for the current user.")
+
+

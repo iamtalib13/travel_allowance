@@ -10,14 +10,18 @@
  "field_order": [
   "employee_details_section",
   "user",
+  "employee_id",
+  "first_name",
+  "last_name",
+  "column_break_4kawi",
+  "designation",
   "ta_category",
   "reporting_person_user_id",
   "higher_reporting_person_user_id",
-  "first_name",
-  "last_name",
+  "level_3_user_id",
   "column_break_pz44l",
-  "employee_id",
-  "designation",
+  "emp_branch",
+  "region",
   "month",
   "year",
   "travel_allowance_details_section",
@@ -558,11 +562,30 @@
   {
    "fieldname": "column_break_bx5go",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_4kawi",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "region",
+   "fieldtype": "Data",
+   "label": "Region"
+  },
+  {
+   "fieldname": "level_3_user_id",
+   "fieldtype": "Data",
+   "label": "Level 3 User Id"
+  },
+  {
+   "fieldname": "emp_branch",
+   "fieldtype": "Data",
+   "label": "Branch"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-30 16:26:33.748963",
+ "modified": "2024-10-25 15:42:25.002024",
  "modified_by": "Administrator",
  "module": "Travel Allowance",
  "name": "Travel Allowances",
