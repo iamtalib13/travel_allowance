@@ -1019,7 +1019,7 @@
         ".no-skip-pending-records"
       );
 
-      const pendingTableHead = document.querySelector(
+      const pendingSkipTableHead = document.querySelector(
         "#travelSkipPendingTable"
       );
 
@@ -1033,7 +1033,7 @@
 
       if (pendingRecord.length === 0) {
         console.log("pendingRecord length:", pendingRecord.length);
-        pendingTableHead.style.display = "none";
+        pendingSkipTableHead.style.display = "none";
         noPendingRecord.style.display = "block";
         // document.querySelector(".main_skip_content").style.display = "none";
 
@@ -1441,7 +1441,7 @@
       const noSkipApprovedRecords = document.querySelector(
         ".no-skip-approved-records"
       );
-      const approvedTableHead = document.querySelector(
+      const approvedSkipTableHead = document.querySelector(
         "#travelSkipApprovedTable"
       );
 
@@ -1539,7 +1539,7 @@
           tableSkipBody.appendChild(row);
         });
       } else {
-        approvedTableHead.style.display = "none";
+        approvedSkipTableHead.style.display = "none";
         noSkipApprovedRecords.style.display = "block"; // show the no record message
         if (allTabExists.classList.contains("active")) {
           noRecordsByEmpMsg.style.display = "none";
@@ -1594,7 +1594,9 @@
       const noSkipRejectRecords = document.querySelector(
         ".no-skip-reject-records"
       );
-      const rejectTableHead = document.querySelector("#travelSkipRejectTable");
+      const rejectSkipTableHead = document.querySelector(
+        "#travelSkipRejectTable"
+      );
 
       if (!tableSkipBody) {
         console.error("Error: Table body element not found.");
@@ -1690,7 +1692,7 @@
           tableSkipBody.appendChild(row);
         });
       } else {
-        rejectTableHead.style.display = "none";
+        rejectSkipTableHead.style.display = "none";
         noSkipRejectRecords.style.display = "block"; // show the no record message
         if (allTabExists.classList.contains("active")) {
           noRecordsByEmpMsg.style.display = "none";
