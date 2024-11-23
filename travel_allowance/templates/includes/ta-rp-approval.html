@@ -20,15 +20,13 @@
     border-bottom: 2px solid rgba(0, 128, 222, 1);
   }
 
-  .ta_skip_navbar {
+  .ta_rp_navbar {
     display: flex;
     font-size: 15px;
     top: 0;
     align-items: center;
     flex-wrap: wrap;
     padding: 0 5px;
-    height: 200px; /* Fixed height (adjust as needed) */
-    overflow-y: auto; /* Enables vertical scrolling */
   }
 
   .ta_rp_navbar div {
@@ -1073,7 +1071,9 @@
       const noRecordsMessage = document.querySelector(".no-rp-records");
       const noPendingRecord = document.querySelector(".no-rp-pending-records");
 
-      const pendinRPTableHead = document.querySelector("#travelRPPendingTable");
+      const pendingRPTableHead = document.querySelector(
+        "#travelRPPendingTable"
+      );
 
       if (!tableBody) {
         console.error("Error: Table body element not found.");
@@ -1085,7 +1085,7 @@
 
       if (pendingRecord.length === 0) {
         console.log("pendingRecord length:", pendingRecord.length);
-        pendinRPTableHead.style.display = "none";
+        pendingRPTableHead.style.display = "none";
         noPendingRecord.style.display = "block";
         // document.querySelector(".main_rp_content").style.display = "none";
 

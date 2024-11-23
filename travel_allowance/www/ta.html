@@ -8,21 +8,13 @@
     <!--HTMX Link-->
     <script src="https://unpkg.com/htmx.org@2.0.1"></script>
 
-    <!-- Bootstrap CSS (replace with your version if necessary) -->
+    <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!--Include the Flatpickr CSS and JS:
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
-    />
-
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>-->
 
     <style>
       body {
@@ -546,7 +538,7 @@
         color: #ffffff;
         text-decoration: none;
         display: block;
-        padding: 12px;
+        padding: 14px 6px;
         margin-bottom: 0.5rem;
         border-radius: 0.25rem;
         transition: background-color 0.2s;
@@ -802,7 +794,7 @@
         }
         a.tab img {
           vertical-align: middle;
-          margin-right: 0;
+          
         }
         a.tab:hover,
         a.tab.active {
@@ -916,7 +908,7 @@
                   alt="Requests"
                   title="Reporting Person Approval"
                 />
-                RP Approval <span class="" id="requestCount"></span>
+                RP Approval <span class="" id="requestRPCount"></span>
               </a>
 
               <a
@@ -930,7 +922,7 @@
                   width="25"
                   alt="skipRequest"
                 />
-                Skip Approval <span class="" id="requestCount"></span>
+                Skip Approval <span class="" id="requestSkipCount"></span>
               </a>
 
               <a
@@ -1672,7 +1664,7 @@
                 title="Reporting Person Approval"
               />
               <h6 class="m-0">RP Approval</h6>
-              <span class="" id="requestCount"></span>
+              <span class="" id="requestRPCount"></span>
             </a>
 
             <a href="#" class="nav-link tab" id="skipRequest">
@@ -1682,7 +1674,7 @@
                 alt="Skip Approval"
               />
               <h6 class="m-0">Skip Approval</h6>
-              <span class="" id="requestCount"></span>
+              <span class="" id="requestSkipCount"></span>
             </a>
 
             <a href="#" class="nav-link tab" id="taPolicy">
@@ -1695,7 +1687,6 @@
     </footer>
 
     <!-- Bootstrap Modal for dialog to show ta record-->
-    <!-- Bootstrap Modal -->
     <div
       class="modal fade"
       id="dataDialog"
@@ -1710,28 +1701,18 @@
             <h5 class="modal-title" id="modalTitle">Record Details</h5>
             <button
               type="button"
-              class="close"
-              data-dismiss="modal"
+              class="btn-close"
               aria-label="Close"
               onclick="closeDialog()"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
+            ></button>
           </div>
           <div class="modal-body" id="dialogContent">
             <!-- Dynamic content will be inserted here -->
           </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-              onclick="closeDialog()"
-            >
-              Close
-            </button>
+          <!-- <div class="modal-footer">
+            <button type="button" class="btn-close" aria-label="Close"></button>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
 
@@ -1867,9 +1848,18 @@
         }
       }
 
+      // Fetch pending count immediately on page load
+      fetchPendingCount();
+      fetchPendingSkipCount();
+
+      // Set interval to fetch the pending count every 5 minutes (300000 milliseconds)
+      setInterval(fetchPendingCount, 120000);
+      // Set interval to fetch the pending count every 5 minutes (300000 milliseconds)
+      setInterval(fetchPendingSkipCount, 120000);
+
       // funtion to get the count as notification in the Request tab of sidebar tab
       function fetchPendingCount() {
-        const requestCount = document.getElementById("requestCount");
+        const requestRPCount = document.getElementById("requestRPCount");
         fetch(
           "/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_pending_count"
         )
@@ -1885,11 +1875,43 @@
             const count = data.message[0]; // Access the first element of the message array
             if (count > 0) {
               // Update the count in the HTML
-              requestCount.innerText = count;
-              requestCount.classList.add("count"); // Add a class for styling if needed
+              requestRPCount.innerText = count;
+              requestRPCount.classList.add("count"); // Add a class for styling if needed
             } else {
-              requestCount.innerText = ""; // Clear count if no pending requests
-              requestCount.classList.remove("count"); // Remove the class if count is zero
+              requestRPCount.innerText = ""; // Clear count if no pending requests
+              requestRPCount.classList.remove("count"); // Remove the class if count is zero
+            }
+          })
+          .catch((error) => {
+            console.error(
+              "There was a problem with the fetch operation:",
+              error
+            );
+          });
+      }
+       // funtion to get the count as notification in the Request tab of sidebar tab
+       function fetchPendingSkipCount() {
+        const requestSkipCount = document.getElementById("requestSkipCount");
+        fetch(
+          "/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_pending_skip_count"
+        )
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json(); // Parse the JSON response
+          })
+          .then((data) => {
+            console.log("data", data);
+            // Extract the count from the message array
+            const count = data.message[0]; // Access the first element of the message array
+            if (count > 0) {
+              // Update the count in the HTML
+              requestSkipCount.innerText = count;
+              requestSkipCount.classList.add("count"); // Add a class for styling if needed
+            } else {
+              requestSkipCount.innerText = ""; // Clear count if no pending requests
+              requestSkipCount.classList.remove("count"); // Remove the class if count is zero
             }
           })
           .catch((error) => {
@@ -1900,11 +1922,7 @@
           });
       }
 
-      // Fetch pending count immediately on page load
-      fetchPendingCount();
-
-      // Set interval to fetch the pending count every 5 minutes (300000 milliseconds)
-      setInterval(fetchPendingCount, 120000);
+      
 
       //Check TA category is set or not...onload event
       checkTACategory();
@@ -2001,6 +2019,7 @@
           "Reporting Person": ["rp-approval"], // Show specific tabs for Reporting Person
           "Higher Reporting Person": ["skip-approval"], // Show specific tabs for Higher Reporting Person
           "Finance User": ["rp-approval", "finance-approval"], // Show specific tabs for Finance User
+          "Branch Officer User": ["finance-approval"], // Show specific tabs for Finance User
           employee: ["my-travel"], // Show specific tabs for Employees
         };
 
@@ -3039,7 +3058,7 @@
             totalKmInput.required = true; // Make total km input mandatory
             ticketAmountInput.required = false; // Remove requirement from ticket amount
             uploadTicketInput.required = false;
-          } else if (selectedValue === "Train" || selectedValue === "Bus") {
+          } else if (selectedValue === "Train" || selectedValue === "Bus" || selectedValue==="Cab") {
             document.getElementById("total_km").value = 0;
             ticketAmountGroup.classList.remove("hidden");
             uploadTicketGroup.classList.remove("hidden");
@@ -3791,22 +3810,171 @@
       function openDialogWithRowData(record) {
         const dialogContent = document.getElementById("dialogContent");
 
-        // Populate the modal body with labels and input fields for the record details
+        // Populate the modal body with grouped sections for the record details in two columns
         dialogContent.innerHTML = `
-         <div class="form-group">
-           <label for="fromLocation">From Location:</label>
-           <input type="text" class="form-control" id="fromLocation" value="${record.from_location}" readonly>
-         </div>
-         <div class="form-group">
-           <label for="toLocation">To Location:</label>
-           <input type="text" class="form-control" id="toLocation" value="${record.to_location}" readonly>
-         </div>
-         <div class="form-group">
-           <label for="totalKM">Total KM:</label>
-           <input type="text" class="form-control" id="totalKM" value="${record.total_km}" readonly>
-         </div>
-         <!-- Add other fields as needed -->
-       `;
+  <div class="container-fluid">
+    <!-- Travel Details Section -->
+ 
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="fromLocation">From Location:</label>
+          <input type="text" class="form-control" id="fromLocation" value="${
+            record.from_location
+          }" readonly>
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="toLocation">To Location:</label>
+          <input type="text" class="form-control" id="toLocation" value="${
+            record.to_location
+          }" readonly>
+        </div>
+      </div>
+    </div>
+    <div class="row pt-2">
+      <div class="col-md-6">
+          <div class="form-group">
+            <label for="fromDate">From Date:</label>
+            <input type="text" class="form-control" id="fromDate" value="${
+              record.from_date
+            }" readonly>
+          </div>
+        </div>
+         <div class="col-md-6">
+          <div class="form-group">
+            <label for="toDate">To Date:</label>
+            <input type="text" class="form-control" id="toDate" value="${
+              record.to_date
+            }" readonly>
+          </div>
+        </div>
+    </div>
+     <div class="row pt-2">
+      <div class="col-md-6">
+          <div class="form-group">
+            <label for="fromTime">From Time:</label>
+            <input type="text" class="form-control" id="fromTime" value="${
+              record.from_time
+            }" readonly>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="toTime">To Time:</label>
+            <input type="text" class="form-control" id="toTime" value="${
+              record.to_time
+            }" readonly>
+          </div>
+        </div>
+     
+     </div>
+    <div class="row pt-2">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="total_time">Total Time in hr.</label>
+          <input type="number" class="form-control" id="total_time" value="${
+            record.total_time
+          }" readonly>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="purpose">Purpose:</label>
+          <input type="text" class="form-control" id="purpose" value="${
+            record.purpose
+          }" readonly>
+        </div>
+      </div>
+    </div>
+
+    <div class="row pt-2">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="travelMode">Travel Mode:</label>
+          <input type="text" class="form-control" id="travelMode" value="${
+            record.travel_mode
+          }" readonly>
+        </div>
+      </div>
+       <div class="col-md-6">
+        <div class="form-group">
+          <label for="totalKM">Total KM:</label>
+          <input type="text" class="form-control" id="totalKM" value="${
+            record.total_km
+          }" readonly>
+        </div>
+      </div>
+      
+    </div>
+    
+    <!-- Expense Details Section -->
+   
+    <div class="row pt-2">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="ticketAmount">Ticket Amount:</label>
+          <input type="text" class="form-control" id="ticketAmount" value="${
+            record.ticket_amount
+          }" readonly>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="fareAmount">Fare Amount:</label>
+          <input type="text" class="form-control" id="fareAmount" value="${
+            record.fare_amount
+          }" readonly>
+        </div>
+      </div>
+    </div>
+    <div class="row pt-2">
+      <div class="col-md-12">
+        <h6>Local Conveyance Details</h6>
+        <table class="table table-bordered local-table">
+          <thead class="local-head">
+            <tr style="font-size: small;">
+              <th style="width: 10%">Date</th>
+              <th style="width: 10%">From</th>
+              <th style="width: 10%">To</th>
+              <th style="width: 15%">Purpose</th>
+              <th style="width: 10%">Travel Mode</th>
+              <th style="width: 10%">Amount</th>
+              <th style="width: 10%">Action</th>
+            </tr>
+          </thead>
+          <tbody id="local-conveyance-body">
+            <!-- Rows will be added here dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row pt-3">
+      <h5>Allowances:</h5>
+      <div class="col-md-4">
+        <label for="daAmount">DA</label>
+        <input type="currency" class="form-control" id="daAmount" value="${
+          record.final_da_amount
+        }" readonly>
+      </div>
+      <div class="col-md-4">
+        <label for="haltAmount">Halting</label>
+        <input type="currency" class="form-control" id="haltAmount" value="${
+          record.final_halt_amount
+        }" readonly>
+      </div>
+      <div class="col-md-4">
+        <label for="lodgeAmount">Loadging</label>
+        <input type="currency" class="form-control" id="lodgeAmount" value="${
+          record.final_lodge_amount
+        }" readonly>
+      </div>
+    </div>
+  </div>
+`;
 
         // Show the modal using Bootstrap's modal method
         $("#dataDialog").modal("show");
@@ -3814,7 +3982,6 @@
 
       // Function to close the Bootstrap modal
       function closeDialog() {
-        // Hide the modal using Bootstrap's modal method
         $("#dataDialog").modal("hide");
       }
 

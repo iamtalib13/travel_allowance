@@ -39,14 +39,14 @@ class TravelAllowances(Document):
             higher_reporting_person_branch = frappe.db.get_value('Employee', higher_reporting_person_id, 'branch')
         
         # Logic to set level_3_user_id based on branch conditions
-        # if reporting_person_branch == higher_reporting_person_branch == 'Gondia HO':
-        #     self.level_3_user_id = '38@sahayog.com'
-        # elif reporting_person_branch != 'Gondia HO' and higher_reporting_person_branch == 'Gondia HO':
-        #     self.level_3_user_id = '38@sahayog.com'
-        # elif reporting_person_branch == higher_reporting_person_branch != 'Gondia HO':
-        #     # Fetch the Branch Officer user ID of the respective employee's branch
-        #     branch_officer_user_id = frappe.db.get_value('Employee', {'branch': reporting_person_branch, 'designation':'Branch Officer'}, 'user_id')  # Adjust the field name accordingly
-        #     self.level_3_user_id = branch_officer_user_id if branch_officer_user_id else None
+        if reporting_person_branch == higher_reporting_person_branch == 'Gondia HO':
+            self.level_3_user_id = '38@sahayog.com'
+        elif reporting_person_branch != 'Gondia HO' and higher_reporting_person_branch == 'Gondia HO':
+            self.level_3_user_id = '38@sahayog.com'
+        elif reporting_person_branch == higher_reporting_person_branch != 'Gondia HO':
+            # Fetch the Branch Officer user ID of the respective employee's branch
+            branch_officer_user_id = frappe.db.get_value('Employee', {'branch': reporting_person_branch, 'designation':'Branch Officer'}, 'user_id')  # Adjust the field name accordingly
+            self.level_3_user_id = branch_officer_user_id if branch_officer_user_id else None
             
         # Retrieve the ta_category from the Designation doctype based on the designation
         if self.designation:
@@ -65,9 +65,6 @@ class TravelAllowances(Document):
 def get_current_month():
     current_month = datetime.now().strftime("%B")
     return Response(current_month)
-
-
-
 
 @frappe.whitelist()
 def get_employee_name(email):
@@ -249,16 +246,25 @@ def get_child_records(parent_id):
 @frappe.whitelist(allow_guest=True)
 def get_rejection_reason(record):
     try:
-        # Fetch the record
+        # Check if the record exists in "Travel Allowances"
         if frappe.db.exists("Travel Allowances", record):
-            # Get the rejection reason
-            reason = frappe.db.get_value("Travel Allowances", record, "rejection_remark_stage_1")
-            return {"status": "success", "reason": reason}
+            # Fetch rejection remarks from each stage
+            fields = ["rejection_remark_stage_1", "reject_reason_by_stage_2", "reject_reason_by_stage_3"]
+            reason = None
+            for field in fields:
+                reason = frappe.db.get_value("Travel Allowances", record, field)
+                if reason:  # If a non-empty reason is found, break the loop
+                    break
+            if reason:
+                return {"status": "success", "reason": reason}
+            else:
+                return {"status": "error", "message": "No rejection reason found"}
         else:
             return {"status": "error", "message": "Record does not exist"}
     except Exception as e:
         frappe.log_error(frappe.get_traceback(), "get_rejection_reason_error")
         return {"status": "error", "message": str(e)}
+
 
 from datetime import datetime
 # fetch list of ta-records
@@ -879,6 +885,32 @@ def get_pending_count():
         frappe.log_error(message=str(e), title="Error in get_pending_count")
         frappe.response.set_content_type("text/plain")
         return ["Error"]  # Return error as an array
+    
+@frappe.whitelist(allow_guest=True)
+def get_pending_skip_count():
+    user = frappe.session.user
+    user_id_number = user.split('@')[0]
+    
+    try:
+        # Use Frappe's get_all method to count records with additional user filter
+        count = frappe.get_all(
+            "Travel Allowances",
+            filters={
+                "status": "Pending",
+                "status_stage_2": "Pending",
+                "higher_reporting_person_user_id": user_id_number  # Add user to filter
+            },
+            fields=["name"] 
+        )
+        
+        # Return the count in an array
+        return [len(count)]  # Wrap the count in a list
+
+    except Exception as e:
+        # Log the error for debugging
+        frappe.log_error(message=str(e), title="Error in get_pending_skip_count")
+        frappe.response.set_content_type("text/plain")
+        return ["Error"]  # Return error as an array
 
 # For Reporting person fetch pending records for approval 
 @frappe.whitelist()
@@ -1022,9 +1054,7 @@ def get_rp_records(user_id):
         frappe.log_error(f"Error in get_rp_records: {str(e)}")
         frappe.throw("An error occurred while fetching data.")
         
-        
-
-        
+              
 #For higher Reporting person get reportee(emp) names
 @frappe.whitelist()
 def get_employee_names_for_rp(user_id):
@@ -1144,6 +1174,101 @@ def get_skip_records(user_id):
     except Exception as e:
         frappe.log_error(f"Error in get_skip_records: {str(e)}")
         frappe.throw("An error occurred while fetching data.")
+        
+# For Higher Reporting person fetch pending, approved, rejected records for approval of skip
+@frappe.whitelist()
+def get_level_3_records(user_id):
+    
+    try:
+        # Get employee names
+        employee_names = get_employee_names_for_skip(user_id)
+
+        # Query for pending travel allowance records
+        ta_pending_query = """
+            SELECT *
+            FROM `tabTravel Allowances` 
+            WHERE level_3_user_id = %s
+            AND status = 'Pending' AND status_stage_3 = 'Pending'
+            ORDER BY modified DESC
+        """
+        ta_pending_result = frappe.db.sql(ta_pending_query, user_id, as_dict=True)
+
+        # Prepare dictionaries to hold counts for each employee
+        employee_counts = {
+            "pending": {},
+            "approved": {},
+            "rejected": {}
+        }
+
+        # Calculate counts for each employee
+        for employee in employee_names:
+            employee_id = employee['employee_id']  # Assuming 'employee_id' is in the result
+            
+            # Count pending records
+            pending_count_query = """
+                SELECT COUNT(*) AS pending_count
+                FROM `tabTravel Allowances`
+                WHERE employee_id = %s
+                AND status = 'Pending'
+                AND status_stage_3 = 'Pending'
+            """
+            pending_count_result = frappe.db.sql(pending_count_query, employee_id, as_dict=True)
+            employee_counts["pending"][employee_id] = pending_count_result[0]['pending_count'] if pending_count_result else 0
+            
+            # Count approved records
+            approved_count_query = """
+                SELECT COUNT(*) AS approved_count
+                FROM `tabTravel Allowances`
+                WHERE employee_id = %s
+                AND status_stage_3 = 'Approved'
+            """
+            approved_count_result = frappe.db.sql(approved_count_query, employee_id, as_dict=True)
+            employee_counts["approved"][employee_id] = approved_count_result[0]['approved_count'] if approved_count_result else 0
+            
+            # Count rejected records
+            rejected_count_query = """
+                SELECT COUNT(*) AS rejected_count
+                FROM `tabTravel Allowances`
+                WHERE employee_id = %s
+                AND status_stage_3 = 'Reject'
+            """
+            rejected_count_result = frappe.db.sql(rejected_count_query, employee_id, as_dict=True)
+            employee_counts["rejected"][employee_id] = rejected_count_result[0]['rejected_count'] if rejected_count_result else 0
+
+        # Query for approved travel allowance records
+        ta_approved_query = """
+            SELECT *
+            FROM `tabTravel Allowances`
+            WHERE level_3_user_id = %s
+            AND status_stage_3 = 'Approved' 
+            AND approved_by_stage_3 = %s
+            ORDER BY modified DESC
+        """
+        ta_approved_result = frappe.db.sql(ta_approved_query, (user_id, user_id), as_dict=True)
+
+        # Query for rejected travel allowance records
+        ta_rejected_query = """
+            SELECT *
+            FROM `tabTravel Allowances`
+            WHERE level_3_user_id = %s
+            AND status_stage_3 = 'Reject'
+            AND rejected_by_stage_3 = %s
+            ORDER BY modified DESC
+        """
+        ta_rejected_result = frappe.db.sql(ta_rejected_query, (user_id, user_id), as_dict=True)
+
+        # Return all records as a dictionary with separate keys, employee names, and counts
+        return {
+            "pending": ta_pending_result,
+            "approved": ta_approved_result,
+            "rejected": ta_rejected_result,
+            "employee_names": employee_names,  # Add employee names to the response
+            "employee_counts": employee_counts  # Add counts for each employee
+        }
+
+    except Exception as e:
+        frappe.log_error(f"Error in get_level_3_records: {str(e)}")
+        frappe.throw("An error occurred while fetching data.")
 
 
 @frappe.whitelist()
@@ -1243,8 +1368,6 @@ def get_taTeam_records():
         frappe.throw("An error occurred while fetching data.")
 
     
-
-
 # Get the user type
 @frappe.whitelist(allow_guest=True)
 def get_user_roles():
@@ -1282,6 +1405,14 @@ def get_user_roles():
         AND status = 'Active'
     """, user_id)
     
+    # Check if the user is a Finance User (based on a specific finance user email or other criteria)
+    is_bo_user = frappe.db.sql("""
+        SELECT employee_id
+        FROM `tabEmployee`
+        WHERE user_id= %s AND designation = 'Branch Officer'
+        AND status = 'Active'
+    """, user_id)
+    
     # Initialize an empty list for user types
     user_type = []
     
@@ -1290,8 +1421,10 @@ def get_user_roles():
         user_type.append('Reporting Person')
     if len(is_higher_reporting_person) > 0:
         user_type.append('Higher Reporting Person')
-    if len(is_finance_user) > 0 and user_id == finance_user_id:
+    if len(is_finance_user) > 0 and user_id == finance_user_id :
         user_type.append('Finance User')
+    if len(is_bo_user) > 0:
+        user_type.append('Branch Officer User')
         
     # If no roles match, classify the user as 'Employee'
     if not user_type:
@@ -1302,10 +1435,11 @@ def get_user_roles():
         'is_reporting_person': len(is_reporting_person) > 0,  # True if user is a Reporting Person
         'is_higher_reporting_person': len(is_higher_reporting_person) > 0,  # True if user is a Higher Reporting Person
         'is_finance_user': len(is_finance_user) > 0 and user_id == finance_user_id,  # True if user is Finance User
+        'is_bo_user': len(is_bo_user) > 0,
         'user_type': user_type  # List of roles the user has
     }
 
-
+#get employee info
 @frappe.whitelist(allow_guest=True)
 def get_user_info():
     user = frappe.session.user

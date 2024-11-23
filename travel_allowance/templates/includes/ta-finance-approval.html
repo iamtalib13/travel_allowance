@@ -1,280 +1,1072 @@
-<body>
-  <div class="main_taTeam_content">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12 d-flex px-0">
-          <nav class="navbar navbar-expand-lg navbar-light py-2">
-            <button
-              class="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="navbar-nav ta-taTeam-nav me-auto">
-                <li class="nav-item ta-taTeam-nav-item">
-                  <a
-                    class="nav-link ta-taTeam-nav-link active"
-                    aria-current="page"
-                    id="pendingtaTeamTab"
-                    data-tab-type="pendingtaTeam"
-                  >
-                    Pending
-                    <span class="pending-count" id="pendingtaTeamCount"></span>
-                  </a>
-                </li>
-                <li class="nav-item ta-taTeam-nav-item">
-                  <a
-                    class="nav-link ta-taTeam-nav-link"
-                    id="approvedtaTeamTab"
-                    data-tab-type="approvedtaTeam"
-                  >
-                    Approved
-                    <span
-                      class="approved-count"
-                      id="approvedtaTeamCount"
-                    ></span>
-                  </a>
-                </li>
-                <li class="nav-item ta-taTeam-nav-item">
-                  <a
-                    class="nav-link ta-taTeam-nav-link"
-                    id="rejecttaTeamTab"
-                    data-tab-type="rejectedtaTeam"
-                  >
-                    Reject
-                    <span class="reject-count" id="rejecttaTeamCount"></span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </nav>
+<style>
+  /* Navbar styles */
 
-          <div class="action-taTeam text-end py-3 ms-auto">
-            <!-- Collapsible button visible only on small screens -->
-            <button
-              class="btn btn-primary mb-2 d-lg-none"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#actionsCollapse"
-              aria-expanded="false"
-              aria-controls="actionsCollapse"
-            >
-              Actions
-            </button>
+  ul.navbar-nav {
+    font-size: large;
+  }
+  ul.navbar-nav .nav-item .nav-link.active {
+    font-weight: bold;
+    border-bottom: 2px solid rgba(0, 128, 222, 1);
+  }
+  ul.navbar-nav .nav-item {
+    padding: 0 10px;
+    cursor: pointer;
+  }
+  ul.navbar-nav .nav-item .nav-link {
+    background: aliceblue;
+  }
+  ul.navbar-nav .nav-item .nav-link:hover {
+    font-weight: bold;
+    border-bottom: 2px solid rgba(0, 128, 222, 1);
+  }
 
-            <!-- Actions buttons visible on larger screens -->
-            <div class="d-none d-lg-block">
-              <button class="btn btn-approve me-2" id="approveButtontaTeam">
+  .ta_taTeam_navbar {
+    display: flex;
+    font-size: 15px;
+    top: 0;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0 5px;
+    min-height: 20vh;
+    overflow-y: auto; /* Enables vertical scrolling */
+  }
+
+  .ta_taTeam_navbar div {
+    padding: 10px 0px;
+    font-size: large;
+    cursor: pointer;
+  }
+
+  .ta_taTeam_navbar .active {
+    font-weight: bold;
+    border-bottom: 2px solid rgba(0, 128, 222, 1);
+  }
+
+  .ta-taTeam-nav-item {
+    list-style: none;
+    margin: 5px 0;
+  }
+  .ta-taTeam-nav-link {
+    border: 1px solid transparent;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    padding: 5px 10px;
+    margin-right: 0.2rem;
+    color: #495057;
+    background-color: #f8f9fa;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+      border-color 0.15s ease-in-out;
+  }
+  .ta-taTeam-nav-link:hover,
+  .ta-taTeam-nav-link:focus {
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom: 2px solid rgba(0, 128, 222, 1);
+    outline: none;
+  }
+  .btn-approve,
+  .btn-reject {
+    padding: 5px 14px;
+    border: none;
+    border-radius: 40px;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  .btn-approve {
+    padding: 6px 16px; /* Adequate padding for a comfortable click area */
+    border: none;
+    border-radius: 8px; /* Rounded corners for a modern look */
+    color: #fff; /* White text color for contrast */
+    font-size: 16px; /* Readable font size */
+    font-weight: 700; /* Bold text for emphasis */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effects */
+
+    background: #007486; /* Base background color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  }
+
+  .btn-approve:hover {
+    background: #007486; /* Slightly darker shade on hover for feedback */
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
+    color: #fff;
+  }
+
+  .btn-approve:focus {
+    outline: none; /* Remove default focus outline */
+  }
+
+  .btn-approve:active {
+    background: #007486; /* Even darker shade when pressed for feedback */
+    transform: scale(0.98); /* Slightly shrink the button when pressed */
+  }
+  .btn-reject {
+    padding: 6px 16px; /* Adequate padding for a comfortable click area */
+    border: none;
+    border-radius: 8px; /* Rounded corners for a modern look */
+    color: #fff; /* White text color for contrast */
+    font-size: 16px; /* Readable font size */
+    font-weight: 700; /* Bold text for emphasis */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effects */
+
+    background: #cb4e45; /* Base background color (red) */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  }
+
+  .btn-reject:hover {
+    background: #cb4e45; /* Slightly darker shade on hover for feedback */
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
+    color: #fff;
+  }
+
+  .btn-reject:focus {
+    outline: none; /* Remove default focus outline */
+  }
+
+  .btn-reject:active {
+    background: #c62828; /* Even darker shade when pressed for feedback */
+    transform: scale(0.98); /* Slightly shrink the button when pressed */
+  }
+  .no-taTeam-records {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    margin: auto;
+    font-size: 18px;
+    color: #495057;
+    margin-bottom: 40px;
+  }
+
+  .approved-count {
+    color: green;
+    font-weight: bold;
+    margin-left: 5px;
+  }
+
+  /* Count span styles */
+  .count {
+    font-weight: bold;
+    margin-left: 5px;
+  }
+
+  .main-taTeam-container {
+    border-radius: 8px;
+    border: 1px solid #999393;
+  }
+
+  /* Table styles */
+  table#traveltaTeamPendingTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+    text-align: left;
+  }
+
+  table#traveltaTeamPendingTable th,
+  table#traveltaTeamPendingTable td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    white-space: nowrap; /* Prevent line wrapping */
+    text-align: center;
+  }
+
+  /* Header styling */
+  table#traveltaTeamPendingTable thead th {
+    background-color: #f2f2f2;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  /* Hover effects */
+  table#traveltaTeamPendingTable tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+
+  /* Center align specific columns */
+  table#traveltaTeamPendingTable td:nth-child(4),
+  table#traveltaTeamPendingTable td:nth-child(5),
+  table#traveltaTeamPendingTable td:nth-child(6),
+  table#traveltaTeamPendingTable td:nth-child(7),
+  table#traveltaTeamPendingTable td:nth-child(8),
+  table#traveltaTeamPendingTable td:nth-child(9),
+  table#traveltaTeamPendingTable td:nth-child(10),
+  table#traveltaTeamPendingTable td:nth-child(13),
+  table#traveltaTeamPendingTable td:nth-child(14),
+  table#traveltaTeamPendingTable td:nth-child(15),
+  table#traveltaTeamPendingTable td:nth-child(16),
+  table#traveltaTeamPendingTable td:nth-child(17),
+  table#traveltaTeamPendingTable td:nth-child(18),
+  table#traveltaTeamPendingTable td:nth-child(19) {
+    text-align: center;
+  }
+
+  /* Checkbox column */
+  table#traveltaTeamPendingTable td:first-child {
+    text-align: center;
+    width: 50px;
+    font-weight: bold;
+    color: #000;
+    background-color: #e6e7e7;
+  }
+
+  /* Highlighting total column */
+  table#traveltaTeamPendingTable td:last-child {
+    font-weight: bold;
+    color: #000;
+    background-color: #e7f3ff;
+  }
+
+  /* Table header alignment */
+  table#traveltaTeamPendingTable th {
+    text-align: center;
+  }
+
+  /* Styling for no records row */
+  table#traveltaTeamPendingTable .text-center {
+    text-align: center;
+    font-weight: bold;
+    color: #999;
+  }
+
+  /* Table styles for approved records */
+  table#traveltaTeamApprovedTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+    text-align: left;
+  }
+
+  table#traveltaTeamApprovedTable th,
+  table#traveltaTeamApprovedTable td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    white-space: nowrap; /* Prevent line wrapping */
+    text-align: center;
+  }
+
+  /* Header styling for approved records */
+  table#traveltaTeamApprovedTable thead th {
+    background-color: #d4edda; /* Light green header to indicate approved status */
+    color: #155724; /* Dark green text color */
+    font-weight: bold;
+    text-align: center;
+  }
+
+  /* Hover effects for approved records */
+  table#traveltaTeamApprovedTable tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+
+  /* Center align specific columns for approved records */
+  table#traveltaTeamApprovedTable td:nth-child(4),
+  table#traveltaTeamApprovedTable td:nth-child(5),
+  table#traveltaTeamApprovedTable td:nth-child(6),
+  table#traveltaTeamApprovedTable td:nth-child(7),
+  table#traveltaTeamApprovedTable td:nth-child(8),
+  table#traveltaTeamApprovedTable td:nth-child(9),
+  table#traveltaTeamApprovedTable td:nth-child(10),
+  table#traveltaTeamApprovedTable td:nth-child(13),
+  table#traveltaTeamApprovedTable td:nth-child(14),
+  table#traveltaTeamApprovedTable td:nth-child(15),
+  table#traveltaTeamApprovedTable td:nth-child(16),
+  table#traveltaTeamApprovedTable td:nth-child(17),
+  table#traveltaTeamApprovedTable td:nth-child(18),
+  table#traveltaTeamApprovedTable td:nth-child(19) {
+    text-align: center;
+  }
+
+  /* Checkbox column for approved records */
+  table#traveltaTeamApprovedTable td:first-child {
+    text-align: center;
+    width: 50px;
+    font-weight: bold;
+    color: #000;
+    background-color: #e6e7e7;
+  }
+
+  /* Highlighting total column for approved records */
+  table#traveltaTeamApprovedTable td:last-child {
+    font-weight: bold;
+    color: #155724;
+    background-color: #c3e6cb; /* Light green background for totals */
+  }
+
+  /* Table header alignment */
+  table#traveltaTeamApprovedTable th {
+    text-align: center;
+  }
+
+  /* Styling for no records row in approved table */
+  table#traveltaTeamApprovedTable .text-center {
+    text-align: center;
+    font-weight: bold;
+    color: #999;
+  }
+
+  /* Table styles for rejected records */
+  table#traveltaTeamRejectTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+    text-align: left;
+  }
+
+  /* Rejected table headers and cells */
+  table#traveltaTeamRejectTable th,
+  table#traveltaTeamRejectTable td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    white-space: nowrap; /* Prevent line wrapping */
+    text-align: center;
+  }
+
+  /* Header styling for rejected records */
+  table#traveltaTeamRejectTable thead th {
+    background-color: #f8d7da; /* Light red header to indicate rejected status */
+    color: #721c24; /* Dark red text color */
+    font-weight: bold;
+    text-align: center;
+  }
+
+  /* Hover effects for rejected records */
+  table#traveltaTeamRejectTable tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+
+  /* Center align specific columns for rejected records */
+  table#traveltaTeamRejectTable td:nth-child(4),
+  table#traveltaTeamRejectTable td:nth-child(5),
+  table#traveltaTeamRejectTable td:nth-child(6),
+  table#traveltaTeamRejectTable td:nth-child(7),
+  table#traveltaTeamRejectTable td:nth-child(8),
+  table#traveltaTeamRejectTable td:nth-child(9),
+  table#traveltaTeamRejectTable td:nth-child(10),
+  table#traveltaTeamRejectTable td:nth-child(13),
+  table#traveltaTeamRejectTable td:nth-child(14),
+  table#traveltaTeamRejectTable td:nth-child(15),
+  table#traveltaTeamRejectTable td:nth-child(16),
+  table#traveltaTeamRejectTable td:nth-child(17),
+  table#traveltaTeamRejectTable td:nth-child(18),
+  table#traveltaTeamRejectTable td:nth-child(19) {
+    text-align: center;
+  }
+
+  /* Checkbox column for rejected records */
+  table#traveltaTeamRejectTable td:first-child {
+    text-align: center;
+    width: 50px;
+    font-weight: bold;
+    color: #000;
+    background-color: #e6e7e7;
+  }
+
+  /* Highlighting total column for rejected records */
+  table#traveltaTeamRejectTable td:last-child {
+    font-weight: bold;
+    color: #721c24;
+    background-color: #f5c6cb; /* Light red background for totals */
+  }
+
+  /* Table header alignment */
+  table#traveltaTeamRejectTable th {
+    text-align: center;
+  }
+
+  /* Styling for no records row in rejected table */
+  table#traveltaTeamRejectTable .text-center {
+    text-align: center;
+    font-weight: bold;
+    color: #999;
+  }
+
+  .approve-btn {
+    display: none;
+    position: absolute;
+    top: 35px;
+    right: 10px;
+    z-index: 100;
+  }
+  .no-records {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    margin: auto;
+    font-size: 18px;
+    color: #495057;
+    margin-bottom: 40px;
+  }
+
+  #no-taTeam-records-message {
+    height: 100%;
+    text-align: center;
+    padding: 15px;
+    font-size: 18px;
+    justify-content: center;
+    align-items: center;
+
+    display: none; /* Message is hidden by default */
+    font-weight: bold;
+    color: #495057;
+  }
+  .action_menu {
+    display: flex;
+    text-align: right;
+    justify-content: end;
+  }
+  .btn_bulk_approve {
+    margin-right: 10px;
+    font-size: 15px;
+  }
+  .btn_bulk_reject {
+    margin-right: 10px;
+    font-size: 15px;
+  }
+
+  .btn_select_all {
+    font-size: 15px;
+  }
+
+  button.swal2-confirm.swal2-styled:focus,
+  button.swal2-cancel.swal2-styled:focus {
+    outline: none;
+  }
+
+  /* Fixed Serial Number Column 
+  .fixed-serial {
+    position: sticky;
+    left: 0;
+    background-color: #302727;
+    z-index: 2;
+  }
+
+ 
+  .fixed-total {
+    position: sticky;
+    right: 0;
+
+    z-index: 2;
+  }*/
+
+  .hidden {
+    display: none;
+  }
+  /* Popup styles */
+  .dynamic-popup {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+  }
+
+  .dynamic-popup-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 800px;
+    font-size: 14px;
+    font-family: inherit;
+  }
+
+  .dynamic-popup-close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .dynamic-popup-close-btn:hover,
+  .dynamic-popup-close-btn:focus {
+    color: black;
+    text-decoration: none;
+  }
+
+  .dynamic-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .dynamic-table th,
+  .dynamic-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  .dynamic-table th {
+    background-color: #f2f2f2;
+  }
+
+  .clickable {
+    cursor: pointer; /* Change cursor to pointer */
+    position: relative; /* Positioning for the indicator */
+    padding: 10px; /* Add some padding */
+  }
+</style>
+
+<div class="main_taTeam_content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 d-flex px-0">
+        <nav class="navbar navbar-expand-lg navbar-light py-2">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ta-taTeam-nav me-auto">
+              <li class="nav-item ta-taTeam-nav-item">
+                <a
+                  class="nav-link ta-taTeam-nav-link active"
+                  aria-current="page"
+                  id="pendingtaTeamTab"
+                  data-tab-type="pendingtaTeam"
+                >
+                  Pending
+                  <span class="pending-count" id="pendingtaTeamCount"></span>
+                </a>
+              </li>
+              <li class="nav-item ta-taTeam-nav-item">
+                <a
+                  class="nav-link ta-taTeam-nav-link"
+                  id="approvedtaTeamTab"
+                  data-tab-type="approvedtaTeam"
+                >
+                  Approved
+                  <span class="approved-count" id="approvedtaTeamCount"></span>
+                </a>
+              </li>
+              <li class="nav-item ta-taTeam-nav-item">
+                <a
+                  class="nav-link ta-taTeam-nav-link"
+                  id="rejecttaTeamTab"
+                  data-tab-type="rejectedtaTeam"
+                >
+                  Reject
+                  <span class="reject-count" id="rejecttaTeamCount"></span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <div class="action-taTeam text-end py-3 ms-auto">
+          <!-- Collapsible button visible only on small screens -->
+          <button
+            class="btn btn-primary mb-2 d-lg-none"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#actionsCollapse"
+            aria-expanded="false"
+            aria-controls="actionsCollapse"
+          >
+            Actions
+          </button>
+
+          <!-- Actions buttons visible on larger screens -->
+          <div class="d-none d-lg-block">
+            <button class="btn btn-approve me-2" id="approveButtontaTeam">
+              Approve
+            </button>
+            <button class="btn btn-reject" id="rejectButtontaTeam">
+              Reject
+            </button>
+          </div>
+
+          <!-- Collapsible container for small screens -->
+          <div class="collapse d-lg-none" id="actionsCollapse">
+            <div class="card card-body">
+              <button class="btn btn-success me-2" id="approveButtontaTeam">
                 Approve
               </button>
-              <button class="btn btn-reject" id="rejectButtontaTeam">
+              <button class="btn btn-danger" id="rejectButtontaTeam">
                 Reject
               </button>
-            </div>
-
-            <!-- Collapsible container for small screens -->
-            <div class="collapse d-lg-none" id="actionsCollapse">
-              <div class="card card-body">
-                <button class="btn btn-success me-2" id="approveButtontaTeam">
-                  Approve
-                </button>
-                <button class="btn btn-danger" id="rejectButtontaTeam">
-                  Reject
-                </button>
-              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!--filters-->
-    <div class="container-fluid">
-      <!-- Filters Section -->
-      <div class="row mb-3">
-        <div class="col-md-3">
-          <select class="form-select" id="monthFilter">
-            <option selected>Select Month</option>
-            <option value="January">January</option>
-            <option value="February">February</option>
-            <option value="March">March</option>
-            <option value="April">April</option>
-            <option value="May">May</option>
-            <option value="June">June</option>
-            <option value="July">July</option>
-            <option value="August">August</option>
-            <option value="September">September</option>
-            <option value="October">October</option>
-            <option value="November">November</option>
-            <option value="December">December</option>
-          </select>
-        </div>
-        <div class="col-md-3">
-          <select class="form-select" id="yearFilter">
-            <option selected>Select Year</option>
-            <option value="2024">2024</option>
-            <option value="2023">2023</option>
-            <option value="2022">2022</option>
-            <!-- Add more years as needed -->
-          </select>
-        </div>
+  <!--filters-->
+  <div class="container-fluid">
+    <!-- Filters Section -->
+    <div class="row mb-3">
+      <div class="col-md-3">
+        <select class="form-select" id="monthFilter">
+          <option selected>Select Month</option>
+          <option value="January">January</option>
+          <option value="February">February</option>
+          <option value="March">March</option>
+          <option value="April">April</option>
+          <option value="May">May</option>
+          <option value="June">June</option>
+          <option value="July">July</option>
+          <option value="August">August</option>
+          <option value="September">September</option>
+          <option value="October">October</option>
+          <option value="November">November</option>
+          <option value="December">December</option>
+        </select>
       </div>
-    </div>
-
-    <div class="container-fluid main-taTeam-container">
-      <!-- Table for travel allowances fetch pending record request-->
-      <div class="table-responsive" id="traveltaTeamPending">
-        <table class="table table-bordered" id="traveltaTeamPendingTable">
-          <thead>
-            <tr>
-              <th class="fixed-serial">#</th>
-              <th>
-                <input type="checkbox" id="selectAll" />
-              </th>
-
-              <th>Employee Name</th>
-              <th>Status</th>
-              <th>From Location</th>
-              <th>Start Date</th>
-              <th>Start Time</th>
-              <th>To Location</th>
-              <th>End Date</th>
-              <th>End Time</th>
-              <th>Total Time</th>
-              <th>Purpose</th>
-              <th>Mode of Travel</th>
-              <th>Total KM</th>
-              <th>Ticket Amount</th>
-              <th>Uploaded Ticket</th>
-              <th>Fare Amount</th>
-              <!-- <th>Allowance Type</th>-->
-              <th>DA</th>
-              <th>Halting</th>
-              <th>Lodging</th>
-              <th>Uploaded Lodging Bill</th>
-              <th>Local Conveyance</th>
-              <th class="fixed-total">Total</th>
-              <th class="d-none">Name</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-        <div
-          class="no-taTeam-pending-records text-center py-3"
-          style="display: none"
-        >
-          You have no Pending records.
-        </div>
-      </div>
-
-      <!-- Table for travel allowances fetch approved record -->
-      <div
-        class="table-responsive"
-        id="traveltaTeamApproved"
-        style="display: none"
-      >
-        <table class="table table-bordered" id="traveltaTeamApprovedTable">
-          <thead>
-            <tr>
-              <th class="fixed-serial">#</th>
-              <th class="d-none">Name</th>
-              <th>Employee Name</th>
-              <th>Status</th>
-              <th>From Location</th>
-              <th>Start Date</th>
-              <th>Start Time</th>
-              <th>To Location</th>
-              <th>End Date</th>
-              <th>End Time</th>
-              <th>Total Time</th>
-              <th>Purpose</th>
-              <th>Mode of Travel</th>
-              <th>Total KM</th>
-              <th>Ticket Amount</th>
-              <th>Uploaded Ticket</th>
-              <th>Fare Amount</th>
-              <!-- <th>Allowance Type</th>-->
-              <th>DA</th>
-              <th>Halting</th>
-              <th>Lodging</th>
-              <th>Uploaded Lodging Bill</th>
-              <th>Local Conveyance</th>
-              <th class="fixed-total">Total</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-        <div
-          class="no-taTeam-approved-records text-center py-3"
-          style="display: none"
-        >
-          You have no Approved records.
-        </div>
-      </div>
-
-      <!-- Table for travel allowances fetch Rejected record -->
-      <div
-        class="table-responsive"
-        id="traveltaTeamReject"
-        style="display: none"
-      >
-        <table class="table table-bordered" id="traveltaTeamRejectTable">
-          <thead>
-            <tr>
-              <th class="fixed-serial">#</th>
-              <th class="d-none">Name</th>
-              <th>Employee Name</th>
-              <th>Status</th>
-              <th>From Location</th>
-              <th>Start Date</th>
-              <th>Start Time</th>
-              <th>To Location</th>
-              <th>End Date</th>
-              <th>End Time</th>
-              <th>Total Time</th>
-              <th>Purpose</th>
-              <th>Mode of Travel</th>
-              <th>Total KM</th>
-              <th>Ticket Amount</th>
-              <th>Uploaded Ticket</th>
-              <th>Fare Amount</th>
-              <!-- <th>Allowance Type</th>-->
-              <th>DA</th>
-              <th>Halting</th>
-              <th>Lodging</th>
-              <th>Uploaded Lodging Bill</th>
-              <th>Local Conveyance</th>
-              <th class="fixed-total">Total</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-        <div
-          class="no-taTeam-reject-records text-center py-3"
-          style="display: none"
-        >
-          You have no Rejected records.
-        </div>
-      </div>
-
-      <!-- No records message  for particular employee tab-->
-      <div id="no-taTeam-records-message" style="display: none">
-        No records available for this employee.
+      <div class="col-md-3">
+        <select class="form-select" id="yearFilter">
+          <option selected>Select Year</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+          <option value="2022">2022</option>
+          <!-- Add more years as needed -->
+        </select>
       </div>
     </div>
   </div>
 
-  <!--display message for all three Tab data empty-->
-  <div class="no-taTeam-records text-center mt-3" style="display: none">
-    <div>
-      <img src="/assets/travel_allowance/images/not-found.webp" alt="" />
+  <div class="container-fluid main-taTeam-container">
+    <!-- Table for travel allowances fetch pending record request-->
+    <div class="table-responsive" id="traveltaTeamPending">
+      <table class="table table-bordered" id="traveltaTeamPendingTable">
+        <thead>
+          <tr>
+            <th class="fixed-serial">#</th>
+            <th>
+              <input type="checkbox" id="selectAll" />
+            </th>
+
+            <th>Employee Name</th>
+            <th>Status</th>
+            <th>From Location</th>
+            <th>Start Date</th>
+            <th>Start Time</th>
+            <th>To Location</th>
+            <th>End Date</th>
+            <th>End Time</th>
+            <th>Total Time</th>
+            <th>Purpose</th>
+            <th>Mode of Travel</th>
+            <th>Total KM</th>
+            <th>Ticket Amount</th>
+            <th>Uploaded Ticket</th>
+            <th>Fare Amount</th>
+            <!-- <th>Allowance Type</th>-->
+            <th>DA</th>
+            <th>Halting</th>
+            <th>Lodging</th>
+            <th>Uploaded Lodging Bill</th>
+            <th>Local Conveyance</th>
+            <th class="fixed-total">Total</th>
+            <th class="d-none">Name</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div
+        class="no-taTeam-pending-records text-center py-3"
+        style="display: none"
+      >
+        You have no Pending records.
+      </div>
     </div>
-    You have no Request.
+
+    <!-- Table for travel allowances fetch approved record -->
+    <div
+      class="table-responsive"
+      id="traveltaTeamApproved"
+      style="display: none"
+    >
+      <table class="table table-bordered" id="traveltaTeamApprovedTable">
+        <thead>
+          <tr>
+            <th class="fixed-serial">#</th>
+            <th class="d-none">Name</th>
+            <th>Employee Name</th>
+            <th>Status</th>
+            <th>From Location</th>
+            <th>Start Date</th>
+            <th>Start Time</th>
+            <th>To Location</th>
+            <th>End Date</th>
+            <th>End Time</th>
+            <th>Total Time</th>
+            <th>Purpose</th>
+            <th>Mode of Travel</th>
+            <th>Total KM</th>
+            <th>Ticket Amount</th>
+            <th>Uploaded Ticket</th>
+            <th>Fare Amount</th>
+            <!-- <th>Allowance Type</th>-->
+            <th>DA</th>
+            <th>Halting</th>
+            <th>Lodging</th>
+            <th>Uploaded Lodging Bill</th>
+            <th>Local Conveyance</th>
+            <th class="fixed-total">Total</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div
+        class="no-taTeam-approved-records text-center py-3"
+        style="display: none"
+      >
+        You have no Approved records.
+      </div>
+    </div>
+
+    <!-- Table for travel allowances fetch Rejected record -->
+    <div class="table-responsive" id="traveltaTeamReject" style="display: none">
+      <table class="table table-bordered" id="traveltaTeamRejectTable">
+        <thead>
+          <tr>
+            <th class="fixed-serial">#</th>
+            <th class="d-none">Name</th>
+            <th>Employee Name</th>
+            <th>Status</th>
+            <th>From Location</th>
+            <th>Start Date</th>
+            <th>Start Time</th>
+            <th>To Location</th>
+            <th>End Date</th>
+            <th>End Time</th>
+            <th>Total Time</th>
+            <th>Purpose</th>
+            <th>Mode of Travel</th>
+            <th>Total KM</th>
+            <th>Ticket Amount</th>
+            <th>Uploaded Ticket</th>
+            <th>Fare Amount</th>
+            <!-- <th>Allowance Type</th>-->
+            <th>DA</th>
+            <th>Halting</th>
+            <th>Lodging</th>
+            <th>Uploaded Lodging Bill</th>
+            <th>Local Conveyance</th>
+            <th class="fixed-total">Total</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div
+        class="no-taTeam-reject-records text-center py-3"
+        style="display: none"
+      >
+        You have no Rejected records.
+      </div>
+    </div>
+
+    <!-- No records message  for particular employee tab-->
+    <div id="no-taTeam-records-message" style="display: none">
+      No records available for this employee.
+    </div>
   </div>
-</body>
+</div>
+
+<!--display message for all three Tab data empty-->
+<div class="no-taTeam-records text-center mt-3" style="display: none">
+  <div>
+    <img src="/assets/travel_allowance/images/not-found.webp" alt="" />
+  </div>
+  You have no Request.
+</div>
+
+<script>
+  fetchPendingtaTeamRecords();
+  fetchTabCounts();
+  async function fetchTabCounts() {
+    try {
+      const response = await fetch(
+        `/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_level_3_records?user_id={{ frappe.session.user }}`
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const empNames = data.message.employee_names;
+      const countByEmp = data.message.employee_counts;
+      const pendingRecord = data.message.pending;
+      const approvedRecord = data.message.approved;
+      const rejectedRecord = data.message.rejected;
+
+      const pendingtaTeamCount = document.getElementById("pendingtaTeamCount");
+      const approvedtaTeamCount = document.getElementById(
+        "approvedtaTeamCount"
+      );
+      const rejecttaTeamCount = document.getElementById("rejecttaTeamCount");
+
+      pendingtaTeamCount.textContent = pendingRecord.length || "";
+      approvedtaTeamCount.textContent = approvedRecord.length || "";
+      rejecttaTeamCount.textContent = rejectedRecord.length || "";
+    } catch (error) {
+      console.error("Error fetching employee names:", error);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const pendingtaTeamTab = document.getElementById("pendingtaTeamTab");
+    const approvedtaTeamTab = document.getElementById("approvedtaTeamTab");
+    const rejecttaTeamTab = document.getElementById("rejecttaTeamTab");
+
+    const pendingtaTeamTable = document.getElementById(
+      "traveltaTeamPendingTable"
+    );
+    const approvedtaTeamTable = document.getElementById("traveltaTeamApproved");
+    const rejecttaTeamTable = document.getElementById("traveltaTeamReject");
+
+    //get action buttons
+    const actiontaTeamMenu = document.querySelector(".action-taTeam");
+
+    const notaTeamPendingRecordsMsg = document.querySelector(
+      ".no-taTeam-pending-records"
+    );
+    const notaTeamApprovedRecordsMsg = document.querySelector(
+      ".no-taTeam-approved-records"
+    );
+    const notaTeamRejectRecordsMsg = document.querySelector(
+      ".no-taTeam-reject-records"
+    );
+
+    // Initially show the pending table
+    pendingtaTeamTable.style.display = "block";
+    approvedtaTeamTable.style.display = "none";
+    rejecttaTeamTable.style.display = "none";
+
+    // Add event listeners for tab clicks
+    pendingtaTeamTab.addEventListener("click", function () {
+      toggleActiveTab(pendingtaTeamTab);
+      showTable("pending"); // Show pending records table
+      fetchPendingtaTeamRecords(); // Fetch pending records
+      notaTeamApprovedRecordsMsg.style.display = "none";
+      notaTeamRejectRecordsMsg.style.display = "none";
+      actiontaTeamMenu.style.display = "block";
+    });
+
+    approvedtaTeamTab.addEventListener("click", function () {
+      toggleActiveTab(approvedtaTeamTab);
+      showTable("approved"); // Show approved records table
+      fetchApprovedtaTeamRecords(); // Fetch approved records
+      notaTeamPendingRecordsMsg.style.display = "none";
+      notaTeamRejectRecordsMsg.style.display = "none";
+      actiontaTeamMenu.style.display = "none";
+    });
+
+    rejecttaTeamTab.addEventListener("click", function () {
+      toggleActiveTab(rejecttaTeamTab);
+      showTable("rejected"); // Show rejected records table
+      fetchRejectedtaTeamRecords(); // Fetch rejected records
+      notaTeamApprovedRecordsMsg.style.display = "none";
+      notaTeamPendingRecordsMsg.style.display = "none";
+      actiontaTeamMenu.style.display = "none";
+    });
+
+    // Function to toggle the active class
+    function toggleActiveTab(activeTab) {
+      pendingtaTeamTab.classList.remove("active");
+      approvedtaTeamTab.classList.remove("active");
+      rejecttaTeamTab.classList.remove("active");
+
+      activeTab.classList.add("active");
+    }
+
+    // Function to manage table visibility
+    function showTable(type) {
+      if (type === "pending") {
+        pendingtaTeamTable.style.display = "block";
+        approvedtaTeamTable.style.display = "none";
+        rejecttaTeamTable.style.display = "none";
+      } else if (type === "approved") {
+        pendingtaTeamTable.style.display = "none";
+        approvedtaTeamTable.style.display = "block";
+        rejecttaTeamTable.style.display = "none";
+      } else if (type === "rejected") {
+        pendingtaTeamTable.style.display = "none";
+        approvedtaTeamTable.style.display = "none";
+        rejecttaTeamTable.style.display = "block";
+      }
+    }
+  });
+  async function fetchPendingtaTeamRecords() {
+    const noRecordsByEmpMsg = document.getElementById(
+      "no-taTeam-records-message"
+    );
+    noRecordsByEmpMsg.style.display = "none";
+    try {
+      // Fetch pending records
+      const response = await fetch(
+        `/api/method/travel_allowance.travel_allowance.doctype.travel_allowances.travel_allowances.get_level_3_records?user_id={{ frappe.session.user }}`
+      );
+
+      // Check if the response is ok (status code 200-299)
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      // Parse the JSON data from the response
+      const data = await response.json();
+
+      console.log("data from taTeam:", data);
+
+      const pendingRecord = data.message.pending;
+      const approvedRecord = data.message.approved;
+      const rejectedRecord = data.message.rejected;
+      const empNames = data.message.employee_names;
+      const countByEmp = data.message.employee_counts;
+      const empPendingCount = countByEmp.pending;
+      console.log("taTeam data:", pendingRecord);
+      console.log("countByEmp:", countByEmp.pending);
+
+      const tableBody = document.querySelector(
+        "#traveltaTeamPendingTable tbody"
+      );
+      const noRecordsMessage = document.querySelector(".no-taTeam-records");
+      const noPendingRecord = document.querySelector(
+        ".no-taTeam-pending-records"
+      );
+
+      const pendingtaTeamTableHead = document.querySelector(
+        "#traveltaTeamPendingTable"
+      );
+
+      if (!tableBody) {
+        console.error("Error: Table body element not found.");
+        return;
+      }
+
+      // Clear existing rows
+      tableBody.innerHTML = "";
+
+      if (pendingRecord.length === 0) {
+        console.log("pendingRecord length:", pendingRecord.length);
+        pendingtaTeamTableHead.style.display = "none";
+        noPendingRecord.style.display = "block";
+        // document.querySelector(".main_rp_content").style.display = "none";
+
+        if (approvedRecord.length != 0 || rejectedRecord.length != 0) {
+          noRecordsMessage.style.display = "none";
+          document.querySelector(".main_taTeam_content").style.display =
+            "block";
+        } else {
+          noRecordsMessage.style.display = "block";
+          document.querySelector(".main_taTeam_content").style.display = "none";
+        }
+      } else {
+        noPendingRecord.style.display = "none";
+        pendingRecord.forEach((record, index) => {
+          const row = document.createElement("tr");
+
+          row.innerHTML = `
+                    <td class="fixed-serial">${index + 1}</td>
+                    <td><input type="checkbox" class="taTeamRowCheckbox" onclick="handletaTeamCheckboxClick(this, '${
+                      record.name
+                    }')" /></td>
+  
+                    
+                    <td>${record.first_name} ${record.last_name}</td>
+                    <td>${record.status}</td>
+                    <td>
+                      ${
+                        record.from_location === "Other"
+                          ? record.from_location_other
+                          : record.from_location
+                      }
+                    </td>
+  
+                    <td>${formatDate(record.from_date)}</td>
+                    <td>${record.from_time}</td>
+                    <td>
+                      ${
+                        record.to_location === "Other"
+                          ? record.to_location_other
+                          : record.to_location
+                      }
+                    </td>
+                    <td>${formatDate(record.to_date)}</td>
+                    <td>${record.to_time}</td>
+                    <td>${record.total_time}</td>
+                    <td>${record.purpose}</td>
+                    <td>${record.travel_mode}</td>
+                    <td>${record.total_km}</td>
+                    <td>${record.ticket_amount}</td>
+                    <td>${
+                      record.upload_ticket
+                        ? `<a href="${record.upload_ticket}" target="_blank">View</a>`
+                        : "-"
+                    }</td>
+                    <td>${record.fare_amount}</td>
+                   <!-- <td>${record.allowance_type}</td>-->
+                    <td>${record.final_da_amount}</td>
+                    <td>${record.final_halt_amount}</td>
+                    <td>${record.final_lodge_amount}</td>
+                    <td>${
+                      record.upload_lodging
+                        ? `<a href="${record.upload_lodging}" target="_blank">View</a>`
+                        : "-"
+                    }</td>
+                    <td class="${
+                      record.final_local_amount &&
+                      record.final_local_amount.trim() !== "-" &&
+                      parseFloat(record.final_local_amount) !== 0
+                        ? "clickable"
+                        : ""
+                    }"
+                      data-record-id="${record.name}"
+                      ${
+                        record.final_local_amount &&
+                        record.final_local_amount.trim() !== "-" &&
+                        parseFloat(record.final_local_amount) !== 0
+                          ? `title="Click for Local details"`
+                          : ""
+                      }>
+                      ${record.final_local_amount || "-"}
+                    </td>
+                    <td class="fixed-total">${record.total_amount}</td>
+                    <td class="d-none" data-record-name="${record.name}">${
+            record.name
+          }</td>
+                  `;
+
+          // Add event listener to the final_local_amount cell if it has a clickable class
+          const localConveyanceCell = row.querySelector(".clickable");
+          if (localConveyanceCell) {
+            localConveyanceCell.addEventListener("click", () => {
+              const recordId =
+                localConveyanceCell.getAttribute("data-record-id");
+              console.log(recordId);
+              fetchLocalConveyance(recordId); // Fetch the local conveyance records
+            });
+          }
+
+          tableBody.appendChild(row);
+        });
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+</script>
